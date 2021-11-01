@@ -28,51 +28,77 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.figures_box = new System.Windows.Forms.ListBox();
             this.showFigure_btn = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.proj_box = new System.Windows.Forms.ComboBox();
+            this.figures_box = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
-            // 
-            // figures_box
-            // 
-            this.figures_box.BackColor = System.Drawing.SystemColors.Menu;
-            this.figures_box.FormattingEnabled = true;
-            this.figures_box.ItemHeight = 16;
-            this.figures_box.Items.AddRange(new object[] {
-            "Тетраэдр",
-            "Гексаэдр",
-            "Октаэдр"});
-            this.figures_box.Location = new System.Drawing.Point(13, 26);
-            this.figures_box.Name = "figures_box";
-            this.figures_box.Size = new System.Drawing.Size(111, 52);
-            this.figures_box.TabIndex = 0;
             // 
             // showFigure_btn
             // 
-            this.showFigure_btn.Location = new System.Drawing.Point(12, 85);
+            this.showFigure_btn.Location = new System.Drawing.Point(9, 110);
             this.showFigure_btn.Name = "showFigure_btn";
-            this.showFigure_btn.Size = new System.Drawing.Size(112, 29);
+            this.showFigure_btn.Size = new System.Drawing.Size(155, 29);
             this.showFigure_btn.TabIndex = 1;
             this.showFigure_btn.Text = "Отобразить";
             this.showFigure_btn.UseVisualStyleBackColor = true;
             this.showFigure_btn.Click += new System.EventHandler(this.showFigure_btn_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 50);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(77, 17);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Проекция:";
+            // 
+            // proj_box
+            // 
+            this.proj_box.FormattingEnabled = true;
+            this.proj_box.Items.AddRange(new object[] {
+            "Перспективная",
+            "Изометрическая",
+            "Триметрическая"});
+            this.proj_box.Location = new System.Drawing.Point(9, 70);
+            this.proj_box.Name = "proj_box";
+            this.proj_box.Size = new System.Drawing.Size(155, 24);
+            this.proj_box.TabIndex = 3;
+            this.proj_box.SelectedIndexChanged += new System.EventHandler(this.proj_box_SelectedIndexChanged);
+            // 
+            // figures_box
+            // 
+            this.figures_box.FormattingEnabled = true;
+            this.figures_box.Items.AddRange(new object[] {
+            "Тетраэдр",
+            "Гексаэдр",
+            "Октаэдр"});
+            this.figures_box.Location = new System.Drawing.Point(9, 12);
+            this.figures_box.Name = "figures_box";
+            this.figures_box.Size = new System.Drawing.Size(155, 24);
+            this.figures_box.TabIndex = 4;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1444, 858);
-            this.Controls.Add(this.showFigure_btn);
             this.Controls.Add(this.figures_box);
+            this.Controls.Add(this.proj_box);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.showFigure_btn);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox figures_box;
         private System.Windows.Forms.Button showFigure_btn;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox proj_box;
+        private System.Windows.Forms.ComboBox figures_box;
     }
 }
 

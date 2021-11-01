@@ -10,50 +10,60 @@ using System.Windows.Forms;
 
 namespace AffineTransforms_3D
 {
+    enum Projection { Perspective, Isometric, Trimetric };
     public partial class Form1 : Form
     {
         Graphics g;
+        Projection selectedProjetion;
+        Figure currentFigure;
         public Form1()
         {
             InitializeComponent();
             g = CreateGraphics();
+            proj_box.SelectedIndex = 0;
+            figures_box.SelectedIndex = 0;
+            selectedProjetion = Projection.Perspective;
+            currentFigure = new Figure();
         }
 
         private void showFigure_btn_Click(object sender, EventArgs e)
         {
             string figure = (string)figures_box.SelectedItem;
-            var selectedFigure = new Figure();
             if (figure == "Тетраэдр")
-            {
-                PointF3D a = new PointF3D(0, 0, 0);
-                PointF3D b = new PointF3D(200, 0, 200);
-                PointF3D c = new PointF3D(200, 200, 0);
-                PointF3D d = new PointF3D(0, 200, 200);
-                Figure tetrahedron = new Figure();
-                tetrahedron.AddEdges(a, new List<PointF3D> { b, d, c });
-                tetrahedron.AddEdges(b, new List<PointF3D> { d });
-                tetrahedron.AddEdges(c, new List<PointF3D> { b, d });
-                selectedFigure = tetrahedron;
-                
-            }
+                currentFigure = Figures.Tetrahedron;
+
             if (figure == "Гексаэдр")
-            {
 
-            }
+                currentFigure = Figures.Hexahedron;
+
             if (figure == "Октаэдр")
-            {
+                currentFigure = Figures.Octahedron;
 
-            }
-            var res = Projections.Apply(selectedFigure, true);
+            ReDraw();
+        }
+
+        void ReDraw()
+        {
+            if (currentFigure == null)
+                return;
+            g.Clear(BackColor); 
             var centerX = Size.Width / 2;
-            var centerY = Size.Height / 2;
-         
-            foreach (var r in res.edges)
+            var centerY = Size.Height / 2 - 150;
+            currentFigure = Projections.Apply(currentFigure, selectedProjetion);
+            foreach (var r in currentFigure.edges)
             {
+                
                 g.DrawLine(Pens.Black, (int)(r.begin.GetPoint().X + centerX), (int)(r.begin.GetPoint().Y + centerY),
                    (int)(r.end.GetPoint().X + centerX), (int)(r.end.GetPoint().Y + centerY));
             }
+        }
 
+        private void proj_box_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectedProjetion = (Projection)proj_box.SelectedIndex;
         }
     }
+
+
+    
 }

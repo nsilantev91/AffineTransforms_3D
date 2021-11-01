@@ -19,16 +19,38 @@ namespace AffineTransforms_3D
 
         static double[,] isometric =
         {
-              { Math.Sqrt(0.5), 0, -Math.Sqrt(0.5), 0 },
-               { 1 / Math.Sqrt(6), 2 /Math.Sqrt(6), 1 / Math.Sqrt(6), 0 },
-               { 1 / Math.Sqrt(3), -1 /Math.Sqrt(3), 1 / Math.Sqrt(3), 0 },
+              { 0.707, -0.408, 0, 0 },
+               { 0, 0.816, 0, 0 },
+               { -0.707, -0.408, 0, 0 },
+               { 0, 0, 0, 1 }
+
+
+        };
+
+        static double[,] trimetric =
+        {
+             { Math.Sqrt(3)/2, Math.Sqrt(2)/4, 0, 0 },
+               { 0, Math.Sqrt(2)/2, 0, 0 },
+               { 1/2, -Math.Sqrt(6)/4, 0, 0 },
                { 0, 0, 0, 1 }
 
         };
 
-        public static Figure Apply(Figure fig, bool isPerspective)
+        public static Figure Apply(Figure fig, Projection selectedProjection)
         {
-            var matrProj = isPerspective ? perspective : isometric;
+            double[,] matrProj = { { 0 } };
+            if (selectedProjection == Projection.Perspective)
+            {
+                matrProj = perspective;
+            }
+            if (selectedProjection == Projection.Isometric)
+            {
+                matrProj = isometric;
+            }
+            if (selectedProjection == Projection.Trimetric)
+            {
+                matrProj = trimetric;
+            }
             Figure resFigure = new Figure();
             var adjMatr = fig.adjacencyMatrix;
             foreach (var val in adjMatr)
