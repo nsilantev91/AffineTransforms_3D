@@ -16,12 +16,22 @@ namespace AffineTransforms_3D
             return rotator;
         }
 
-        static public void Transform(Figure f, Transform3D transform)
+        static public Figure Transform(Figure f, Transform3D transform)
         {
-            for (var i=0;i<f.vertexes.Count; i++)
+            var figure = new Figure();
+            var adjMatr = f.adjacencyMatrix;
+            foreach (var val in adjMatr)
             {
-                f.vertexes[i] = transform.Transform(f.vertexes[i]);
+                var key = val.Key;
+                var value = val.Value;
+                var beginPoint = transform.Transform(key);
+                foreach (var ed in value)
+                {
+                    var endPoint = transform.Transform(ed);
+                    figure.AddEdge(beginPoint, endPoint);
+                }
             }
+            return figure;
         }
     }
 }

@@ -53,7 +53,7 @@ namespace AffineTransforms_3D
             var centerY = Size.Height / 2 - 150;
             foreach (var i in transforms)
             {
-                AffineTransforms.Transform(currentFigure, i);
+                currentFigure = AffineTransforms.Transform(currentFigure, i);
             }
             currentFigure = Projections.Apply(currentFigure, selectedProjetion);
             foreach (var r in currentFigure.edges)
