@@ -75,4 +75,45 @@ namespace AffineTransforms_3D
         }
 
     }
+
+    class Icosahedron : Figure
+    {
+        const double X = 0.525731112119133606;
+        const double Z = 0.850650808352039932;
+        const double N = 0.0;
+
+        static Point3D[] vertices = new Point3D [12]
+        {
+            new Point3D(-X,N,Z), new Point3D(X,N,Z),new Point3D(-X,N,-Z), new Point3D(X,N,-Z),
+            new Point3D(N,Z,X), new Point3D(N,Z,-X), new Point3D(N,-Z,X), new Point3D(N,-Z,-X),
+            new Point3D (Z,X,N), new Point3D(-Z,X, N), new Point3D(Z,-X,N), new Point3D(-Z,-X, N)
+        };
+
+        static int[,] triangles = new int[20,3]
+        {
+            {0,4,1},{0,9,4},{9,5,4},{4,5,8},{4,8,1},
+            {8,10,1},{8,3,10},{5,3,8},{5,2,3},{2,7,3},
+            {7,10,3},{7,6,10},{7,11,6},{11,0,6},{0,1,6},
+            {6,1,10},{9,0,11},{9,11,2},{9,2,5},{7,2,11}
+        };
+
+        public Icosahedron(double c)
+        {
+            for(int i = 0; i < 20; i++)
+            {
+                for(int j = 0; j < 3; j++)
+                {
+                    var p1 = vertices[triangles[i, j]];
+                    var p2 = vertices[triangles[i, (j + 1) % 3]];
+                    p1.X *= c;
+                    p1.Y *= c;
+                    p1.Z*= c;
+                    p2.X *= c;
+                    p2.Y *= c;
+                    p2.Z *= c;
+                    AddEdge(p1, p2);
+                }
+            }
+        }
+    }
 }

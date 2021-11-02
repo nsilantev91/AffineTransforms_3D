@@ -37,9 +37,10 @@
             // 
             // showFigure_btn
             // 
-            this.showFigure_btn.Location = new System.Drawing.Point(9, 110);
+            this.showFigure_btn.Location = new System.Drawing.Point(10, 138);
+            this.showFigure_btn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.showFigure_btn.Name = "showFigure_btn";
-            this.showFigure_btn.Size = new System.Drawing.Size(155, 29);
+            this.showFigure_btn.Size = new System.Drawing.Size(174, 36);
             this.showFigure_btn.TabIndex = 1;
             this.showFigure_btn.Text = "Отобразить";
             this.showFigure_btn.UseVisualStyleBackColor = true;
@@ -48,9 +49,9 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 50);
+            this.label1.Location = new System.Drawing.Point(7, 62);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(77, 17);
+            this.label1.Size = new System.Drawing.Size(87, 20);
             this.label1.TabIndex = 2;
             this.label1.Text = "Проекция:";
             // 
@@ -62,9 +63,10 @@
             "Изометрическая",
             "Триметрическая",
             "Диметрическая"});
-            this.proj_box.Location = new System.Drawing.Point(9, 70);
+            this.proj_box.Location = new System.Drawing.Point(10, 88);
+            this.proj_box.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.proj_box.Name = "proj_box";
-            this.proj_box.Size = new System.Drawing.Size(155, 24);
+            this.proj_box.Size = new System.Drawing.Size(174, 28);
             this.proj_box.TabIndex = 3;
             this.proj_box.SelectedIndexChanged += new System.EventHandler(this.proj_box_SelectedIndexChanged);
             // 
@@ -74,17 +76,20 @@
             this.figures_box.Items.AddRange(new object[] {
             "Тетраэдр",
             "Гексаэдр",
-            "Октаэдр"});
-            this.figures_box.Location = new System.Drawing.Point(9, 12);
+            "Октаэдр",
+            "Икосаэдр"});
+            this.figures_box.Location = new System.Drawing.Point(10, 15);
+            this.figures_box.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.figures_box.Name = "figures_box";
-            this.figures_box.Size = new System.Drawing.Size(155, 24);
+            this.figures_box.Size = new System.Drawing.Size(174, 28);
             this.figures_box.TabIndex = 4;
             // 
             // clear_btn
             // 
-            this.clear_btn.Location = new System.Drawing.Point(9, 155);
+            this.clear_btn.Location = new System.Drawing.Point(10, 194);
+            this.clear_btn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.clear_btn.Name = "clear_btn";
-            this.clear_btn.Size = new System.Drawing.Size(155, 29);
+            this.clear_btn.Size = new System.Drawing.Size(174, 36);
             this.clear_btn.TabIndex = 5;
             this.clear_btn.Text = "Очистить";
             this.clear_btn.UseVisualStyleBackColor = true;
@@ -92,14 +97,15 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1444, 858);
+            this.ClientSize = new System.Drawing.Size(1624, 1050);
             this.Controls.Add(this.clear_btn);
             this.Controls.Add(this.figures_box);
             this.Controls.Add(this.proj_box);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.showFigure_btn);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
