@@ -53,8 +53,8 @@ namespace AffineTransforms_3D
             foreach (var r in currentFigure.edges)
             {
                 
-                g.DrawLine(Pens.Black, (int)(r.begin.GetPoint().X + centerX), (int)(r.begin.GetPoint().Y + centerY),
-                   (int)(r.end.GetPoint().X + centerX), (int)(r.end.GetPoint().Y + centerY));
+                g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
+                   (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
             }
         }
 

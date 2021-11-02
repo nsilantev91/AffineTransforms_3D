@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Media.Media3D;
 
 namespace AffineTransforms_3D
 {
@@ -76,13 +76,13 @@ namespace AffineTransforms_3D
                 var value = val.Value;
                 var matr = new double[,] { { key.X, key.Y, key.Z, 1 } };
                 var res = Helpers.MultiplyMatrix(matr, matrProj);
-                var beginPoint = new PointF3D(res[0, 0] / res[0, 3], res[0, 1] / res[0, 3]);
+                var beginPoint = new Point3D(res[0, 0] / res[0, 3], res[0, 1] / res[0, 3],0);
                 foreach (var ed in value)
                 {
                     matr = new double[,] { { ed.X, ed.Y, ed.Z, 1 } };
 
                     res = Helpers.MultiplyMatrix(matr, matrProj);
-                    var endPoint = new PointF3D(res[0, 0] / res[0, 3], res[0, 1] / res[0, 3]);
+                    var endPoint = new Point3D(res[0, 0] / res[0, 3], res[0, 1] / res[0, 3],0);
                     resFigure.AddEdge(beginPoint, endPoint);
                 }
             }

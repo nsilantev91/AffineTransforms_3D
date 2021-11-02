@@ -4,36 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Windows.Media.Media3D;
 
 namespace AffineTransforms_3D
 {
     //точка
-    public class PointF3D
-    {
-        public double X { get; set; } = 0;
-        public double Y { get; set; } = 0;
-        public double Z { get; set; } = 0;
 
-        public PointF3D(double X, double Y, double Z = 0)
-        {
-            this.X = X;
-            this.Y = Y;
-            this.Z = Z;
-        }
-
-        public Point GetPoint()
-        {
-            return new Point((int)X, (int)Y);
-        }
-    }
 
     //ребро
     public class Edge
     {
-        public PointF3D begin { get; set; }
-        public PointF3D end { get; set; }
+        public Point3D begin { get; set; }
+        public Point3D end { get; set; }
 
-        public Edge(PointF3D beg, PointF3D end)
+        public Edge(Point3D beg, Point3D end)
         {
             begin = beg;
             this.end = end;
@@ -69,27 +53,27 @@ namespace AffineTransforms_3D
         public List<Edge> edges { get; }
 
         //список вершин
-        public List<PointF3D> vertexes { get; set; }
+        public List<Point3D> vertexes { get; set; }
 
        
         //матрица смежности
-        public Dictionary<PointF3D, List<PointF3D>> adjacencyMatrix { get; }
+        public Dictionary<Point3D, List<Point3D>> adjacencyMatrix { get; }
 
         public Figure()
         {
             edges = new List<Edge>();
-            vertexes = new List<PointF3D>();
-            adjacencyMatrix = new Dictionary<PointF3D, List<PointF3D>>();
+            vertexes = new List<Point3D>();
+            adjacencyMatrix = new Dictionary<Point3D, List<Point3D>>();
         }
 
-        public Figure(List<PointF3D> points) : this()
+        public Figure(List<Point3D> points) : this()
         {
             vertexes = points;
             foreach (var p in points)
-                adjacencyMatrix.Add(p, new List<PointF3D>());
+                adjacencyMatrix.Add(p, new List<Point3D>());
         }
 
-        public void AddEdge(PointF3D p1, PointF3D p2)
+        public void AddEdge(Point3D p1, Point3D p2)
         {
             if (!vertexes.Contains(p1))
                 vertexes.Add(p1);
@@ -98,24 +82,24 @@ namespace AffineTransforms_3D
             if (!edges.Contains(new Edge(p1, p2)))
                 edges.Add(new Edge(p1, p2));
             if (!adjacencyMatrix.ContainsKey(p1))
-                adjacencyMatrix.Add(p1, new List<PointF3D> { p2 });
+                adjacencyMatrix.Add(p1, new List<Point3D> { p2 });
             else
                 adjacencyMatrix[p1].Add(p2);
     
         }
        
-        public void AddEdges(PointF3D startPoint, List<PointF3D> pointsList)
+        public void AddEdges(Point3D startPoint, List<Point3D> pointsList)
         {
             foreach (var point in pointsList)
                 AddEdge(startPoint, point);
         }
 
-        public PointF3D FigureCenter()
+        public Point3D FigureCenter()
         {
             var x = vertexes.Average(point => point.X);
             var y = vertexes.Average(point => point.Y);
             var z = vertexes.Average(point => point.Z);
-            return new PointF3D(x, y, z);
+            return new Point3D(x, y, z);
         }
         
     }
