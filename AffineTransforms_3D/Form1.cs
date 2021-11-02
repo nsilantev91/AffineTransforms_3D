@@ -51,11 +51,11 @@ namespace AffineTransforms_3D
             g.Clear(BackColor); 
             var centerX = Size.Width / 2;
             var centerY = Size.Height / 2 - 150;
+            currentFigure = Projections.Apply(currentFigure, selectedProjetion);
             foreach (var i in transforms)
             {
                 currentFigure = AffineTransforms.Transform(currentFigure, i);
             }
-            currentFigure = Projections.Apply(currentFigure, selectedProjetion);
             foreach (var r in currentFigure.edges)
             {
                 
@@ -79,6 +79,7 @@ namespace AffineTransforms_3D
         {
             var t = AffineTransforms.RotateTransform3D(currentFigure.FigureCenter(), 40, 0,1,0);
             transforms.Add(t);
+
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
