@@ -39,7 +39,7 @@ namespace AffineTransforms_3D
             if (figure == "Октаэдр")
                 currentFigure = Figures.Octahedron;
 
-            ReDraw();
+s            ReDraw();
         }
 
         void ReDraw()
