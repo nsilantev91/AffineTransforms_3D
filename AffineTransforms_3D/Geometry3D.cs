@@ -8,9 +8,27 @@ using System.Windows.Media.Media3D;
 
 namespace AffineTransforms_3D
 {
-    //точка
+    /*public class Point3D
+    {
+        Point3D point;
 
+        public double X { get; set; } = 0;
+        public double Y { get; set; } = 0;
+        public double Z { get; set; } = 0;
 
+        public Point3D(double X, double Y, double Z = 0)
+        {
+            this.X = X;
+            this.Y = Y;
+            this.Z = Z;
+        }
+
+        public Point GetPoint()
+        {
+            return new Point((int)X, (int)Y);
+        }
+    }
+    */
     //ребро
     public class Edge
     {
