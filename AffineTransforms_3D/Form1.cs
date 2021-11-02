@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Media.Media3D;
 
 namespace AffineTransforms_3D
 {
@@ -14,6 +15,7 @@ namespace AffineTransforms_3D
     public partial class Form1 : Form
     {
         Graphics g;
+        List<AffineTransform3D> transforms = new List<AffineTransform3D>();
         Projection selectedProjetion;
         Figure currentFigure;
         public Form1()
@@ -49,6 +51,10 @@ namespace AffineTransforms_3D
             g.Clear(BackColor); 
             var centerX = Size.Width / 2;
             var centerY = Size.Height / 2 - 150;
+            foreach (var i in transforms)
+            {
+                AffineTransforms.Transform(currentFigure, i);
+            }
             currentFigure = Projections.Apply(currentFigure, selectedProjetion);
             foreach (var r in currentFigure.edges)
             {
@@ -67,6 +73,26 @@ namespace AffineTransforms_3D
         {
             g.Clear(BackColor);
             currentFigure = new Figure();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var t = AffineTransforms.RotateTransform3D(currentFigure.FigureCenter(), 40, 0,1,0);
+            transforms.Add(t);
+        }
+
+        private void Form1_Paint(object sender, PaintEventArgs e)
+        {
+            if (currentFigure == null)
+                return;
+            g.Clear(BackColor);
+            var centerX = Size.Width / 2;
+            var centerY = Size.Height / 2 - 150;
+            foreach (var r in currentFigure.edges)
+            {
+                g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
+                   (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+            }
         }
     }
 
