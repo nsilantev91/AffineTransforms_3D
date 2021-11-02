@@ -32,6 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.proj_box = new System.Windows.Forms.ComboBox();
             this.figures_box = new System.Windows.Forms.ComboBox();
+            this.clear_btn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // showFigure_btn
@@ -79,11 +80,22 @@
             this.figures_box.Size = new System.Drawing.Size(155, 24);
             this.figures_box.TabIndex = 4;
             // 
+            // clear_btn
+            // 
+            this.clear_btn.Location = new System.Drawing.Point(9, 155);
+            this.clear_btn.Name = "clear_btn";
+            this.clear_btn.Size = new System.Drawing.Size(155, 29);
+            this.clear_btn.TabIndex = 5;
+            this.clear_btn.Text = "Очистить";
+            this.clear_btn.UseVisualStyleBackColor = true;
+            this.clear_btn.Click += new System.EventHandler(this.clear_btn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1444, 858);
+            this.Controls.Add(this.clear_btn);
             this.Controls.Add(this.figures_box);
             this.Controls.Add(this.proj_box);
             this.Controls.Add(this.label1);
@@ -100,6 +112,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox proj_box;
         private System.Windows.Forms.ComboBox figures_box;
+        private System.Windows.Forms.Button clear_btn;
     }
 }
 

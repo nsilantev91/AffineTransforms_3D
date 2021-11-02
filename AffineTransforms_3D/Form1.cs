@@ -62,6 +62,12 @@ namespace AffineTransforms_3D
         {
             selectedProjetion = (Projection)proj_box.SelectedIndex;
         }
+
+        private void clear_btn_Click(object sender, EventArgs e)
+        {
+            g.Clear(BackColor);
+            currentFigure = new Figure();
+        }
     }
 
 
