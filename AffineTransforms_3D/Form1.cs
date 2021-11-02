@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace AffineTransforms_3D
 {
-    enum Projection { Perspective, Isometric, Trimetric };
+    enum Projection { Perspective, Isometric, Trimetric, Dimetric };
     public partial class Form1 : Form
     {
         Graphics g;

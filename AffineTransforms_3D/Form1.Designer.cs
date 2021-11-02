@@ -59,7 +59,8 @@
             this.proj_box.Items.AddRange(new object[] {
             "Перспективная",
             "Изометрическая",
-            "Триметрическая"});
+            "Триметрическая",
+            "Диметрическая"});
             this.proj_box.Location = new System.Drawing.Point(9, 70);
             this.proj_box.Name = "proj_box";
             this.proj_box.Size = new System.Drawing.Size(155, 24);
