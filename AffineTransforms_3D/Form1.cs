@@ -42,6 +42,9 @@ namespace AffineTransforms_3D
             if (figure == "Икосаэдр")
                 currentFigure = new Icosahedron(100);
 
+            if (figure == "Додэкаэдр")
+                currentFigure = new Dodecahedron(100);
+
             ReDraw();
         }
 

@@ -116,4 +116,96 @@ namespace AffineTransforms_3D
             }
         }
     }
+
+    class Dodecahedron:Figure
+    {
+        private void CreateFigure(double sLen)
+        {
+            double s = sLen;
+            //double t1 = 2.0 * Math.PI / 5.0;
+            double t2 = Math.PI / 10.0;
+            double t3 = 3.0 * Math.PI / 10.0;
+            double t4 = Math.PI / 5.0;
+            double d1 = s / 2.0 / Math.Sin(t4);
+            double d2 = d1 * Math.Cos(t4);
+            double d3 = d1 * Math.Cos(t2);
+            double d4 = d1 * Math.Sin(t2);
+            double Fx =
+                (s * s - (2.0 * d3) * (2.0 * d3) -
+                    (d1 * d1 - d3 * d3 - d4 * d4)) /
+                        (2.0 * (d4 - d1));
+            double d5 = Math.Sqrt(0.5 *
+                (s * s + (2.0 * d3) * (2.0 * d3) -
+                    (d1 - Fx) * (d1 - Fx) -
+                        (d4 - Fx) * (d4 - Fx) - d3 * d3));
+            double Fy = (Fx * Fx - d1 * d1 - d5 * d5) / (2.0 * d5);
+            double Ay = d5 + Fy;
+
+            Point3D A = new Point3D(d1, Ay, 0);
+            Point3D B = new Point3D(d4, Ay, d3);
+            Point3D C = new Point3D(-d2, Ay, s / 2);
+            Point3D D = new Point3D(-d2, Ay, -s / 2);
+            Point3D E = new Point3D(d4, Ay, -d3);
+            Point3D F = new Point3D(Fx, Fy, 0);
+            Point3D G = new Point3D(Fx * Math.Sin(t2), Fy,
+                Fx * Math.Cos(t2));
+            Point3D H = new Point3D(-Fx * Math.Sin(t3), Fy,
+                Fx * Math.Cos(t3));
+            Point3D I = new Point3D(-Fx * Math.Sin(t3), Fy,
+                -Fx * Math.Cos(t3));
+            Point3D J = new Point3D(Fx * Math.Sin(t2), Fy,
+                -Fx * Math.Cos(t2));
+            Point3D K = new Point3D(Fx * Math.Sin(t3), -Fy,
+                Fx * Math.Cos(t3));
+            Point3D L = new Point3D(-Fx * Math.Sin(t2), -Fy,
+                Fx * Math.Cos(t2));
+            Point3D M = new Point3D(-Fx, -Fy, 0);
+            Point3D N = new Point3D(-Fx * Math.Sin(t2), -Fy,
+                -Fx * Math.Cos(t2));
+            Point3D O = new Point3D(Fx * Math.Sin(t3), -Fy,
+                -Fx * Math.Cos(t3));
+            Point3D P = new Point3D(d2, -Ay, s / 2);
+            Point3D Q = new Point3D(-d4, -Ay, d3);
+            Point3D R = new Point3D(-d1, -Ay, 0);
+            Point3D S = new Point3D(-d4, -Ay, -d3);
+            Point3D T = new Point3D(d2, -Ay, -s / 2);
+
+
+            Point3D[][] faces = new Point3D[12][];
+            faces[0] = new Point3D[5] {A, B, C, D, E };
+            faces[1] = new Point3D[5] { A, F, K, G, B };
+            faces[2] = new Point3D[5] { B, G, L, H, C };
+            faces[3] = new Point3D[5] { C, H, M, I, D };
+            faces[4] = new Point3D[5] { D, I, N, J, E };
+            faces[5] = new Point3D[5] { E, J, O, F, A };
+
+            faces[6] = new Point3D[5] { T, P, Q, R, S };
+            faces[7] = new Point3D[5] { T, O, F, K, P };
+            faces[8] = new Point3D[5] { P, K, G, L, Q};
+            faces[9] = new Point3D[5] { Q, L, H, M, R };
+            faces[10] = new Point3D[5] { R, M, I, N, S};
+            faces[11] = new Point3D[5] { S, N, J, O, T };
+            foreach(var f in faces)
+            {
+                AddFace(f);
+            }
+
+
+        }
+
+       
+        private void AddFace(Point3D[] points)
+        {
+            for(int i = 0; i < points.Length - 1; i++)
+            {
+                AddEdge(points[i], points[i+1]);
+            }
+            AddEdge(points.Last(), points.First());
+        }
+
+       public Dodecahedron(double sideLen)
+       {
+            CreateFigure(sideLen);
+       }
+    }
 }

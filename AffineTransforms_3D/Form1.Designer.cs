@@ -77,7 +77,8 @@
             "Тетраэдр",
             "Гексаэдр",
             "Октаэдр",
-            "Икосаэдр"});
+            "Икосаэдр",
+            "Додэкаэдр"});
             this.figures_box.Location = new System.Drawing.Point(10, 15);
             this.figures_box.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.figures_box.Name = "figures_box";
