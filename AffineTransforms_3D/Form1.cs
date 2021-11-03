@@ -47,8 +47,9 @@ namespace AffineTransforms_3D
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (currentFigure == null)
+                return;
             switch ((string)comboBox1.SelectedItem)
-                
             {
                 case "Rotate":
                     {
