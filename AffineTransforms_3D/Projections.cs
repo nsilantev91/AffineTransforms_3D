@@ -70,19 +70,15 @@ namespace AffineTransforms_3D
             }
             Figure resFigure = new Figure();
             var adjMatr = fig.adjacencyMatrix;
+            var transformator = new CustomMatrixTransformator(matrProj);
             foreach (var val in adjMatr)
             {
                 var key = val.Key;
                 var value = val.Value;
-                var matr = new double[,] { { key.X, key.Y, key.Z, 1 } };
-                var res = Helpers.MultiplyMatrix(matr, matrProj);
-                var beginPoint = new Point3D(res[0, 0] / res[0, 3], res[0, 1] / res[0, 3],0);
+                var beginPoint = transformator.Transform(key);
                 foreach (var ed in value)
                 {
-                    matr = new double[,] { { ed.X, ed.Y, ed.Z, 1 } };
-
-                    res = Helpers.MultiplyMatrix(matr, matrProj);
-                    var endPoint = new Point3D(res[0, 0] / res[0, 3], res[0, 1] / res[0, 3],0);
+                    var endPoint = transformator.Transform(ed);
                     resFigure.AddEdge(beginPoint, endPoint);
                 }
             }
