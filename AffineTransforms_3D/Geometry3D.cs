@@ -32,11 +32,13 @@ namespace AffineTransforms_3D
     //ребро
     public class Edge
     {
+
         public Point3D begin { get; set; }
         public Point3D end { get; set; }
 
         public Edge(Point3D beg, Point3D end)
         {
+
             begin = beg;
             this.end = end;
         }
