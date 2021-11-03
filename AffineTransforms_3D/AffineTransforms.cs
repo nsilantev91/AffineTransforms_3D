@@ -8,6 +8,7 @@ using System.Windows.Media.Media3D;
 
 namespace AffineTransforms_3D
 {
+
     static class AffineTransforms
     {
         static public RotateTransform3D RotateTransform3D(Point3D center, int angle, double x=0, double y=0, double z=0)

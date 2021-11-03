@@ -22,6 +22,14 @@ namespace AffineTransforms_3D
         public Form1()
         {
             InitializeComponent();
+            AutoSize = false;
+            AutoScaleMode = AutoScaleMode.Font;
+            Font = new Font("Trebuchet MS",
+                12.0f,
+                FontStyle.Regular,
+                GraphicsUnit.Point,
+                ((byte)(204))
+            );
             g = CreateGraphics();
             proj_box.SelectedIndex = 0;
             figures_box.SelectedIndex = 0;
@@ -51,15 +59,15 @@ namespace AffineTransforms_3D
                 return;
             switch ((string)comboBox1.SelectedItem)
             {
-                case "Rotate":
+                case "Поворот":
                     {
                         //currentFigure = AffineTransforms.Transform(currentFigure, AffineTransforms.RotateTransform3D(currentFigure.FigureCenter(), 30, 0, 0, 1));
-                        transforms.Add(((Transform)Enum.Parse(typeof(Transform), comboBox1.SelectedItem.ToString()),new List<double> {int.Parse(textBox1.Text)}));
+                        transforms.Add(((Transform)comboBox1.SelectedIndex,new List<double> {int.Parse(textBox1.Text)}));
                         break;
                     }
                 default:
                     {
-                        transforms.Add(((Transform)Enum.Parse(typeof(Transform), comboBox1.SelectedItem.ToString()), new List<double> { double.Parse(textBox2.Text), double.Parse(textBox3.Text), double.Parse(textBox4.Text) }));
+                        transforms.Add((((Transform)comboBox1.SelectedIndex), new List<double> { double.Parse(textBox2.Text), double.Parse(textBox3.Text), double.Parse(textBox4.Text) }));
                         break;
                     }
             }
@@ -77,21 +85,21 @@ namespace AffineTransforms_3D
             var centerY = Size.Height / 2 - 150;
             foreach (var i in transforms)
             {
-                switch (i.Item1.ToString())
+                switch (i.Item1)
                 {
-                    case "Rotate":
+                    case Transform.Rotate:
                         {
                             currentFigure = AffineTransforms.Transform(currentFigure, AffineTransforms.RotateTransform3D(currentFigure.FigureCenter(), (int)i.Item2[0], 0, 0, 1));
                             //transforms.Add(AffineTransforms.RotateTransform3D(currentFigure.FigureCenter(), 30, 0, 0, 1));
                             break;
                         }
-                    case "Transposition":
+                    case Transform.Transposition:
                         {
                             currentFigure= AffineTransforms.Transform(currentFigure, AffineTransforms.TranslateTransform3D(i.Item2[0], i.Item2[1], i.Item2[2]));
                             //transforms.Add(AffineTransforms.TranslateTransform3D(10, 10, 10));
                             break;
                         }
-                    case "Scale":
+                    case Transform.Scale:
                         {
                             currentFigure= AffineTransforms.Transform(currentFigure, AffineTransforms.ScaleTransform3D(currentFigure.FigureCenter(), i.Item2[0], i.Item2[1], i.Item2[2]));
                             //transforms.Add(AffineTransforms.ScaleTransform3D(currentFigure.FigureCenter(), 2));
@@ -139,7 +147,7 @@ namespace AffineTransforms_3D
         {
             switch ((string)comboBox1.SelectedItem)
             {
-                case "Rotate":
+                case "Поворот":
                     {
                         textBox1.Enabled = true;
                         textBox2.Enabled = false;
@@ -157,6 +165,7 @@ namespace AffineTransforms_3D
                     }
             }
         }
+
     }
 
 
