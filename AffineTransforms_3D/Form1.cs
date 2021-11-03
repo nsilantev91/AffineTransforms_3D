@@ -19,14 +19,16 @@ namespace AffineTransforms_3D
         List<(Transform,List<double>)> transforms = new List<(Transform, List<double>)>();
         Projection selectedProjetion;
         Figure currentFigure;
-        bool scaleFigCenter;
+        bool figureCenter;
         CoordinatePlane plane;
+        Point3D point1 = new Point3D(0,0,0);
+        Point3D point2 = new Point3D(1,1,1);
         public Form1()
         {
             InitializeComponent();
             planeComboBox.SelectedIndex = 0;
             transformComboBox.SelectedIndex = 0;
-            //AutoSize = false;
+            AutoSize = false;
             AutoScaleMode = AutoScaleMode.Font;
             Font = new Font("Trebuchet MS",
                 12.0f,
@@ -80,7 +82,7 @@ namespace AffineTransforms_3D
                 case Transform.Rotate:
                     {
                         //currentFigure = AffineTransforms.Transform(currentFigure, AffineTransforms.RotateTransform3D(currentFigure.FigureCenter(), 30, 0, 0, 1));
-                        transforms.Add((transform, new List<double> {int.Parse(textBox1.Text)}));
+                        transforms.Add((transform, new List<double> {int.Parse(textBox1.Text), (int) plane, figureCenter?1:0}));
                         break;
                     }
                 case Transform.Reflect:
@@ -93,7 +95,8 @@ namespace AffineTransforms_3D
                         transforms.Add((transform, new List<double> 
                             { double.Parse(textBox2.Text), 
                               double.Parse(textBox3.Text),
-                              double.Parse(textBox4.Text) }));
+                              double.Parse(textBox4.Text),
+                              figureCenter?1:0}));
                         break;
                     }
             }
@@ -115,9 +118,26 @@ namespace AffineTransforms_3D
                 {
                     case Transform.Rotate:
                         {
+                            (double, double, double) axis = (0, 0, 0);
+                            var plane =(CoordinatePlane)i.Item2[1];
+                            switch (plane)
+                            {
+                                case CoordinatePlane.XY:
+                                    axis = (0, 0, 1);
+                                    break;
+                                case CoordinatePlane.XZ:
+                                    axis = (0, 1, 0);
+                                    break;
+                                case CoordinatePlane.YZ:
+                                    axis = (1, 0, 0);
+                                    break;
+
+                            }
+                            var figureCenter = ((int)i.Item2[2]) == 1;
+                            var point = figureCenter ? currentFigure.FigureCenter() :new Point3D(0, 0, 0);
                             currentFigure = Transformator.Transform(currentFigure, 
-                                AffineTransforms.RotateTransform3D(currentFigure.FigureCenter(), 
-                                (int)i.Item2[0], 0, 0, 1));
+                                AffineTransforms.RotateTransform3D(point, 
+                                (int)i.Item2[0], axis.Item1, axis.Item2, axis.Item3));
                             //transforms.Add(AffineTransforms.RotateTransform3D(currentFigure.FigureCenter(), 30, 0, 0, 1));
                             break;
                         }
@@ -130,7 +150,8 @@ namespace AffineTransforms_3D
                         }
                     case Transform.Scale:
                         {
-                            var point = scaleFigCenter ? currentFigure.FigureCenter() :new Point3D(0, 0, 0);
+                            var figureCenter = (int)i.Item2[3] == 1;
+                            var point = figureCenter ? currentFigure.FigureCenter() :new Point3D(0, 0, 0);
                             currentFigure = Transformator.Transform(currentFigure,
                                 AffineTransforms.ScaleTransform3D(point,
                                 i.Item2[0], i.Item2[1], i.Item2[2]));
@@ -216,7 +237,7 @@ namespace AffineTransforms_3D
 
         private void centerFigureCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-           scaleFigCenter=centerFigureCheckBox.Checked;
+           figureCenter=centerFigureCheckBox.Checked;
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -231,6 +252,46 @@ namespace AffineTransforms_3D
                 g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
                    (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
             }
+        }
+
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox8_TextChanged(object sender, EventArgs e)
+        {
+            point1.X=double.Parse(((TextBox)sender).Text);
+        }
+
+        private void textBoxY1_TextChanged(object sender, EventArgs e)
+        {
+            point1.Y = double.Parse(((TextBox)sender).Text);
+        }
+
+        private void textBoxZ1_TextChanged(object sender, EventArgs e)
+        {
+            point1.Z = double.Parse(((TextBox)sender).Text);
+        }
+
+        private void textBoxX2_TextChanged(object sender, EventArgs e)
+        {
+            point2.X = double.Parse(((TextBox)sender).Text);
+        }
+
+        private void textBoxY2_TextChanged(object sender, EventArgs e)
+        {
+            point2.Y = double.Parse(((TextBox)sender).Text);
+        }
+
+        private void textBoxZ2_TextChanged(object sender, EventArgs e)
+        {
+            point2.Z = double.Parse(((TextBox)sender).Text);
         }
     }
 
