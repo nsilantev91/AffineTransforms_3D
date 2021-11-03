@@ -8,11 +8,44 @@ using System.Windows.Media.Media3D;
 
 namespace AffineTransforms_3D
 {
+    enum CoordinatePlane
+    {
+        XY, 
+        XZ,
+        YZ
+    }
 
-   
+    
 
     static class AffineTransforms
     {
+        static double[,] reflectXY = new double[4, 4]
+            {
+                {1, 0, 0, 0},
+                {0, 1, 0, 0},
+                {0, 0, -1, 0},
+                {0, 0, 0, 1 }
+            };
+
+        static double[,] reflectXZ = new double[4, 4]
+           {
+                {1, 0, 0, 0},
+                {0, -1, 0, 0},
+                {0, 0, 1, 0},
+                {0, 0, 0, 1 }
+           };
+
+        static double[,] reflectYZ = new double[4, 4]
+           {
+                {-1, 0, 0, 0},
+                {0, 1, 0, 0},
+                {0, 0, 1, 0},
+                {0, 0, 0, 1 }
+           };
+
+      
+
+
         static public Transformator RotateTransform3D(Point3D center, int angle, double x=0, double y=0, double z=0)
         {
             var rotator = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(x, y, z), angle),center);
@@ -31,9 +64,15 @@ namespace AffineTransforms_3D
             return new StandardMatrixTransformator(scaler);
         }
 
-        static public void Reflection()
+        static public Transformator ReflectionTransform(CoordinatePlane plane)
         {
-           
+            switch (plane)
+            {
+                case CoordinatePlane.XY: return new CustomMatrixTransformator(reflectXY);
+                case CoordinatePlane.XZ: return new CustomMatrixTransformator(reflectXZ);
+                case CoordinatePlane.YZ: return new CustomMatrixTransformator(reflectYZ);
+                default: throw new ArgumentException("Incorreect plane!");
+            }
         }
 
       

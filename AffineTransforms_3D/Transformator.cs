@@ -7,7 +7,6 @@ using System.Windows.Media.Media3D;
 
 namespace AffineTransforms_3D
 {
-
     abstract class Transformator
     {
         public abstract Point3D Transform(Point3D point);
