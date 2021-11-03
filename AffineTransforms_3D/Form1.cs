@@ -24,6 +24,8 @@ namespace AffineTransforms_3D
         public Form1()
         {
             InitializeComponent();
+            planeComboBox.SelectedIndex = 0;
+            transformComboBox.SelectedIndex = 0;
             //AutoSize = false;
             AutoScaleMode = AutoScaleMode.Font;
             Font = new Font("Trebuchet MS",
