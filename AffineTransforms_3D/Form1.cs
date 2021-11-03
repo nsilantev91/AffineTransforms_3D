@@ -87,19 +87,19 @@ namespace AffineTransforms_3D
                 {
                     case "Rotate":
                         {
-                            currentFigure = AffineTransforms.Transform(currentFigure, AffineTransforms.RotateTransform3D(currentFigure.FigureCenter(), (int)i.Item2[0], 0, 0, 1));
+                            currentFigure = Transformator.Transform(currentFigure, AffineTransforms.RotateTransform3D(currentFigure.FigureCenter(), (int)i.Item2[0], 0, 0, 1));
                             //transforms.Add(AffineTransforms.RotateTransform3D(currentFigure.FigureCenter(), 30, 0, 0, 1));
                             break;
                         }
                     case "Transposition":
                         {
-                            currentFigure= AffineTransforms.Transform(currentFigure, AffineTransforms.TranslateTransform3D(i.Item2[0], i.Item2[1], i.Item2[2]));
+                            currentFigure= Transformator.Transform(currentFigure, AffineTransforms.TranslateTransform3D(i.Item2[0], i.Item2[1], i.Item2[2]));
                             //transforms.Add(AffineTransforms.TranslateTransform3D(10, 10, 10));
                             break;
                         }
                     case "Scale":
                         {
-                            currentFigure= AffineTransforms.Transform(currentFigure, AffineTransforms.ScaleTransform3D(currentFigure.FigureCenter(), i.Item2[0], i.Item2[1], i.Item2[2]));
+                            currentFigure= Transformator.Transform(currentFigure, AffineTransforms.ScaleTransform3D(currentFigure.FigureCenter(), i.Item2[0], i.Item2[1], i.Item2[2]));
                             //transforms.Add(AffineTransforms.ScaleTransform3D(currentFigure.FigureCenter(), 2));
                             break;
                         }
@@ -162,6 +162,11 @@ namespace AffineTransforms_3D
                         break;
                     }
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 

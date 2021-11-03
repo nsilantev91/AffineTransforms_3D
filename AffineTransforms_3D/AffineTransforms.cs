@@ -8,42 +8,34 @@ using System.Windows.Media.Media3D;
 
 namespace AffineTransforms_3D
 {
+
+   
+
     static class AffineTransforms
     {
-        static public RotateTransform3D RotateTransform3D(Point3D center, int angle, double x=0, double y=0, double z=0)
+        static public Transformator RotateTransform3D(Point3D center, int angle, double x=0, double y=0, double z=0)
         {
             var rotator = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(x, y, z), angle),center);
-            return rotator;
+            return new StandardMatrixTransformer(rotator);
         }
 
-        static public TranslateTransform3D TranslateTransform3D(double x=0, double y=0, double z=0)
+        static public Transformator TranslateTransform3D(double x=0, double y=0, double z=0)
         {
             var translator = new TranslateTransform3D(x, y, z);
-            return translator;
+            return new StandardMatrixTransformer(translator);
         }
 
-        static public ScaleTransform3D ScaleTransform3D (Point3D center, double x=1, double y=1, double z =1)
+        static public Transformator ScaleTransform3D (Point3D center, double x=1, double y=1, double z =1)
         {
             var scaler = new ScaleTransform3D(x, y, z, center.X, center.Y, center.Z);
-            return scaler;
+            return new StandardMatrixTransformer(scaler);
         }
 
-        static public Figure Transform(Figure f, Transform3D transform)
+        static public void Reflection()
         {
-            var figure = new Figure();
-            var adjMatr = f.adjacencyMatrix;
-            foreach (var val in adjMatr)
-            {
-                var key = val.Key;
-                var value = val.Value;
-                var beginPoint = transform.Transform(key);
-                foreach (var ed in value)
-                {
-                    var endPoint = transform.Transform(ed);
-                    figure.AddEdge(beginPoint, endPoint);
-                }
-            }
-            return figure;
+           
         }
+
+      
     }
 }
