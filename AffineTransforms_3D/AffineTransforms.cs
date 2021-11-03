@@ -48,7 +48,6 @@ namespace AffineTransforms_3D
 
         static public Transformator RotateTransform3D(Point3D center, int angle, double x=0, double y=0, double z=0)
         {
-           
             var rotator = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(x, y, z), angle),center);
             return new StandardMatrixTransformator(rotator);
         }

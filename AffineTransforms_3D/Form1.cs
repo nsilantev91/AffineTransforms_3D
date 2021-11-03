@@ -20,6 +20,7 @@ namespace AffineTransforms_3D
         Projection selectedProjetion;
         Figure currentFigure;
         bool figureCenter;
+        bool usingLine = false;
         CoordinatePlane plane;
         Point3D point1 = new Point3D(0,0,0);
         Point3D point2 = new Point3D(1,1,1);
@@ -133,11 +134,24 @@ namespace AffineTransforms_3D
                                     break;
 
                             }
-                            var figureCenter = ((int)i.Item2[2]) == 1;
-                            var point = figureCenter ? currentFigure.FigureCenter() :new Point3D(0, 0, 0);
-                            currentFigure = Transformator.Transform(currentFigure, 
-                                AffineTransforms.RotateTransform3D(point, 
-                                (int)i.Item2[0], axis.Item1, axis.Item2, axis.Item3));
+                            if (usingLine)
+                            {
+                                var v1 = new Vector3D(point1.X, point1.Y, point1.Z);
+                                var v2 = new Vector3D(point2.X, point2.Y, point2.Z);
+                                var v = v2 - v1;
+                                currentFigure = Transformator.Transform(currentFigure,
+                                  AffineTransforms.RotateTransform3D(point1,
+                                  (int)i.Item2[0], v.X, v.Y, v.Z));
+                            }
+                            else
+                            {
+                                var figureCenter = ((int)i.Item2[2]) == 1;
+                                var point = figureCenter ? currentFigure.FigureCenter() : new Point3D(0, 0, 0);
+                                currentFigure = Transformator.Transform(currentFigure,
+                                    AffineTransforms.RotateTransform3D(point,
+                                    (int)i.Item2[0], axis.Item1, axis.Item2, axis.Item3));
+                            }
+                          
                             //transforms.Add(AffineTransforms.RotateTransform3D(currentFigure.FigureCenter(), 30, 0, 0, 1));
                             break;
                         }
@@ -292,6 +306,11 @@ namespace AffineTransforms_3D
         private void textBoxZ2_TextChanged(object sender, EventArgs e)
         {
             point2.Z = double.Parse(((TextBox)sender).Text);
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            usingLine = ((CheckBox)sender).Checked;
         }
     }
 

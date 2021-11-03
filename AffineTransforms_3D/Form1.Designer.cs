@@ -62,6 +62,7 @@
             this.textBoxY2 = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.textBoxX2 = new System.Windows.Forms.TextBox();
+            this.usingLineCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -292,11 +293,11 @@
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(47, 386);
+            this.textBox5.Location = new System.Drawing.Point(47, 372);
             this.textBox5.Multiline = true;
             this.textBox5.Name = "textBox5";
             this.textBox5.ReadOnly = true;
-            this.textBox5.Size = new System.Drawing.Size(118, 88);
+            this.textBox5.Size = new System.Drawing.Size(118, 85);
             this.textBox5.TabIndex = 22;
             this.textBox5.Text = "Transform relative to the center of the figure";
             this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
@@ -323,7 +324,6 @@
             // textBoxZ1
             // 
             this.textBoxZ1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxZ1.Enabled = false;
             this.textBoxZ1.Location = new System.Drawing.Point(1120, 126);
             this.textBoxZ1.Name = "textBoxZ1";
             this.textBoxZ1.Size = new System.Drawing.Size(41, 26);
@@ -345,7 +345,6 @@
             // textBoxY1
             // 
             this.textBoxY1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxY1.Enabled = false;
             this.textBoxY1.Location = new System.Drawing.Point(1073, 126);
             this.textBoxY1.Name = "textBoxY1";
             this.textBoxY1.Size = new System.Drawing.Size(41, 26);
@@ -366,7 +365,6 @@
             // textBoxX1
             // 
             this.textBoxX1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxX1.Enabled = false;
             this.textBoxX1.Location = new System.Drawing.Point(1026, 126);
             this.textBoxX1.Name = "textBoxX1";
             this.textBoxX1.Size = new System.Drawing.Size(41, 26);
@@ -387,7 +385,6 @@
             // textBoxZ2
             // 
             this.textBoxZ2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxZ2.Enabled = false;
             this.textBoxZ2.Location = new System.Drawing.Point(1120, 202);
             this.textBoxZ2.Name = "textBoxZ2";
             this.textBoxZ2.Size = new System.Drawing.Size(41, 26);
@@ -408,7 +405,6 @@
             // textBoxY2
             // 
             this.textBoxY2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxY2.Enabled = false;
             this.textBoxY2.Location = new System.Drawing.Point(1073, 202);
             this.textBoxY2.Name = "textBoxY2";
             this.textBoxY2.Size = new System.Drawing.Size(41, 26);
@@ -429,7 +425,6 @@
             // textBoxX2
             // 
             this.textBoxX2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxX2.Enabled = false;
             this.textBoxX2.Location = new System.Drawing.Point(1026, 202);
             this.textBoxX2.Name = "textBoxX2";
             this.textBoxX2.Size = new System.Drawing.Size(41, 26);
@@ -437,12 +432,24 @@
             this.textBoxX2.Text = "1";
             this.textBoxX2.TextChanged += new System.EventHandler(this.textBoxX2_TextChanged);
             // 
+            // usingLineCheckBox
+            // 
+            this.usingLineCheckBox.AutoSize = true;
+            this.usingLineCheckBox.Location = new System.Drawing.Point(979, 257);
+            this.usingLineCheckBox.Name = "usingLineCheckBox";
+            this.usingLineCheckBox.Size = new System.Drawing.Size(182, 24);
+            this.usingLineCheckBox.TabIndex = 36;
+            this.usingLineCheckBox.Text = "using line for rotation";
+            this.usingLineCheckBox.UseVisualStyleBackColor = true;
+            this.usingLineCheckBox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1186, 687);
+            this.Controls.Add(this.usingLineCheckBox);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.textBoxZ2);
             this.Controls.Add(this.label13);
@@ -523,6 +530,7 @@
         private System.Windows.Forms.TextBox textBoxY2;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox textBoxX2;
+        private System.Windows.Forms.CheckBox usingLineCheckBox;
     }
 }
 
