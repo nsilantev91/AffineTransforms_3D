@@ -19,11 +19,12 @@ namespace AffineTransforms_3D
         List<(Transform,List<double>)> transforms = new List<(Transform, List<double>)>();
         Projection selectedProjetion;
         Figure currentFigure;
+        bool scaleFigCenter;
         CoordinatePlane plane;
         public Form1()
         {
             InitializeComponent();
-            AutoSize = false;
+            //AutoSize = false;
             AutoScaleMode = AutoScaleMode.Font;
             Font = new Font("Trebuchet MS",
                 12.0f,
@@ -127,8 +128,9 @@ namespace AffineTransforms_3D
                         }
                     case Transform.Scale:
                         {
-                            currentFigure= Transformator.Transform(currentFigure,
-                                AffineTransforms.ScaleTransform3D(currentFigure.FigureCenter(),
+                            var point = scaleFigCenter ? currentFigure.FigureCenter() :new Point3D(0, 0, 0);
+                            currentFigure = Transformator.Transform(currentFigure,
+                                AffineTransforms.ScaleTransform3D(point,
                                 i.Item2[0], i.Item2[1], i.Item2[2]));
                             //transforms.Add(AffineTransforms.ScaleTransform3D(currentFigure.FigureCenter(), 2));
                             break;
@@ -217,6 +219,11 @@ namespace AffineTransforms_3D
         private void planeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             plane = parsePlane();
+        }
+
+        private void centerFigureCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+           scaleFigCenter=centerFigureCheckBox.Checked;
         }
     }
 
