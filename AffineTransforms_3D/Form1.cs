@@ -58,10 +58,10 @@ namespace AffineTransforms_3D
                 currentFigure = Figures.Octahedron;
 
             if (figure == "Икосаэдр")
-                currentFigure = new Icosahedron(100);
+                currentFigure = new Icosahedron(150);
 
             if (figure == "Додэкаэдр")
-                currentFigure = new Dodecahedron(100);
+                currentFigure = new Dodecahedron(150);
 
             ReDraw();
         }
@@ -111,7 +111,7 @@ namespace AffineTransforms_3D
             if (currentFigure == null)
                 return;
             g.Clear(BackColor); 
-            var centerX = Size.Width / 2;
+            var centerX = Size.Width / 2 - 400;
             var centerY = Size.Height / 2 - 150;
             foreach (var i in transforms)
             {
@@ -259,7 +259,7 @@ namespace AffineTransforms_3D
             if (currentFigure == null)
                 return;
             g.Clear(BackColor);
-            var centerX = Size.Width / 2;
+            var centerX = Size.Width / 2 - 200;
             var centerY = Size.Height / 2 - 150;
             foreach (var r in currentFigure.edges)
             {

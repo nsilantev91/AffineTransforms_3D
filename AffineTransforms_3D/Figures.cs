@@ -18,9 +18,9 @@ namespace AffineTransforms_3D
     class Tetrahedron : Figure
     {
         Point3D a = new Point3D(0, 0, 0);
-        Point3D b = new Point3D(200, 0, 200);
-        Point3D c = new Point3D(200, 200, 0);
-        Point3D d = new Point3D(0, 200, 200);
+        Point3D b = new Point3D(220, 0, 220);
+        Point3D c = new Point3D(220, 220, 0);
+        Point3D d = new Point3D(0, 220, 220);
         public Tetrahedron() : base()
         {
             AddEdges(a, new List<Point3D> { b, d, c });
@@ -33,13 +33,13 @@ namespace AffineTransforms_3D
     class Hexahedron : Figure
     {
         Point3D a = new Point3D(0, 0, 0);
-        Point3D b = new Point3D(200, 0, 0);
-        Point3D c = new Point3D(200, 0, 200);
-        Point3D d = new Point3D(0, 0, 200);
-        Point3D a1 = new Point3D(0, 200, 0);
-        Point3D b1 = new Point3D(200, 200, 0);
-        Point3D c1 = new Point3D(200, 200, 200);
-        Point3D d1 = new Point3D(0, 200, 200);
+        Point3D b = new Point3D(220, 0, 0);
+        Point3D c = new Point3D(220, 0, 220);
+        Point3D d = new Point3D(0, 0, 220);
+        Point3D a1 = new Point3D(0, 220, 0);
+        Point3D b1 = new Point3D(220, 220, 0);
+        Point3D c1 = new Point3D(220, 220, 220);
+        Point3D d1 = new Point3D(0, 220, 220);
         
         public Hexahedron() : base()
         {
@@ -58,11 +58,11 @@ namespace AffineTransforms_3D
     class Octahedron : Figure
     {
         Point3D a = new Point3D(0, 0, 0);
-        Point3D b = new Point3D(200, 200, 0);
-        Point3D c = new Point3D(-200, 200, 0);
-        Point3D d = new Point3D(0, 200, -200);
-        Point3D e = new Point3D(0, 200, 200);
-        Point3D f = new Point3D(0, 400, 0);
+        Point3D b = new Point3D(220, 220, 0);
+        Point3D c = new Point3D(-220, 220, 0);
+        Point3D d = new Point3D(0, 220, -220);
+        Point3D e = new Point3D(0, 220, 220);
+        Point3D f = new Point3D(0, 440, 0);
 
         public Octahedron() : base()
         {
