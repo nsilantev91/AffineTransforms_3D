@@ -49,6 +49,8 @@
             this.centerFigureCheckBox = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
             this.textBox5 = new System.Windows.Forms.TextBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // showFigure_btn
@@ -286,12 +288,22 @@
             this.textBox5.TabIndex = 22;
             this.textBox5.Text = "Scale relative to the center of the figure";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(199, 15);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(1233, 677);
+            this.pictureBox1.TabIndex = 23;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1444, 704);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.textBox5);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.centerFigureCheckBox);
@@ -318,6 +330,7 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -345,6 +358,7 @@
         private System.Windows.Forms.CheckBox centerFigureCheckBox;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

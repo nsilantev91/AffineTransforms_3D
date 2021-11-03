@@ -34,7 +34,7 @@ namespace AffineTransforms_3D
                 GraphicsUnit.Point,
                 ((byte)(204))
             );
-            g = CreateGraphics();
+            g = pictureBox1.CreateGraphics();
             proj_box.SelectedIndex = 0;
             figures_box.SelectedIndex = 0;
             selectedProjetion = Projection.Perspective;
@@ -169,16 +169,7 @@ namespace AffineTransforms_3D
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            if (currentFigure == null)
-                return;
-            g.Clear(BackColor);
-            var centerX = Size.Width / 2;
-            var centerY = Size.Height / 2 - 150;
-            foreach (var r in currentFigure.edges)
-            {
-                g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
-                   (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
-            }
+           
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -226,6 +217,20 @@ namespace AffineTransforms_3D
         private void centerFigureCheckBox_CheckedChanged(object sender, EventArgs e)
         {
            scaleFigCenter=centerFigureCheckBox.Checked;
+        }
+
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            if (currentFigure == null)
+                return;
+            g.Clear(BackColor);
+            var centerX = Size.Width / 2;
+            var centerY = Size.Height / 2 - 150;
+            foreach (var r in currentFigure.edges)
+            {
+                g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
+                   (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+            }
         }
     }
 
