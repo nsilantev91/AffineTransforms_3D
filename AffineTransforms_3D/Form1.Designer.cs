@@ -114,7 +114,7 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button2.Location = new System.Drawing.Point(9, 638);
+            this.button2.Location = new System.Drawing.Point(9, 521);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(155, 31);
             this.button2.TabIndex = 7;
@@ -132,7 +132,7 @@
             "Rotate",
             "Scale",
             "Reflect"});
-            this.transformComboBox.Location = new System.Drawing.Point(9, 597);
+            this.transformComboBox.Location = new System.Drawing.Point(9, 480);
             this.transformComboBox.Name = "transformComboBox";
             this.transformComboBox.Size = new System.Drawing.Size(155, 28);
             this.transformComboBox.TabIndex = 9;
@@ -142,7 +142,7 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 577);
+            this.label2.Location = new System.Drawing.Point(6, 460);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(119, 20);
             this.label2.TabIndex = 8;
@@ -152,7 +152,7 @@
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(9, 545);
+            this.textBox1.Location = new System.Drawing.Point(9, 428);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(155, 26);
             this.textBox1.TabIndex = 10;
@@ -162,7 +162,7 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 525);
+            this.label3.Location = new System.Drawing.Point(6, 408);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(50, 20);
             this.label3.TabIndex = 11;
@@ -172,7 +172,7 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 480);
+            this.label4.Location = new System.Drawing.Point(6, 363);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(20, 20);
             this.label4.TabIndex = 13;
@@ -182,7 +182,7 @@
             // 
             this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.textBox2.Enabled = false;
-            this.textBox2.Location = new System.Drawing.Point(9, 500);
+            this.textBox2.Location = new System.Drawing.Point(9, 383);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(41, 26);
             this.textBox2.TabIndex = 12;
@@ -192,7 +192,7 @@
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(53, 480);
+            this.label5.Location = new System.Drawing.Point(53, 363);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(20, 20);
             this.label5.TabIndex = 15;
@@ -202,7 +202,7 @@
             // 
             this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.textBox3.Enabled = false;
-            this.textBox3.Location = new System.Drawing.Point(56, 500);
+            this.textBox3.Location = new System.Drawing.Point(56, 383);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(41, 26);
             this.textBox3.TabIndex = 14;
@@ -212,7 +212,7 @@
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(100, 480);
+            this.label6.Location = new System.Drawing.Point(100, 363);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(19, 20);
             this.label6.TabIndex = 17;
@@ -222,7 +222,7 @@
             // 
             this.textBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.textBox4.Enabled = false;
-            this.textBox4.Location = new System.Drawing.Point(103, 500);
+            this.textBox4.Location = new System.Drawing.Point(103, 383);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(41, 26);
             this.textBox4.TabIndex = 16;
@@ -237,7 +237,7 @@
             "XY",
             "XZ",
             "YZ"});
-            this.planeComboBox.Location = new System.Drawing.Point(9, 449);
+            this.planeComboBox.Location = new System.Drawing.Point(9, 332);
             this.planeComboBox.Name = "planeComboBox";
             this.planeComboBox.Size = new System.Drawing.Size(155, 28);
             this.planeComboBox.TabIndex = 18;
@@ -247,7 +247,7 @@
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 414);
+            this.label7.Location = new System.Drawing.Point(12, 297);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(134, 20);
             this.label7.TabIndex = 19;
@@ -259,7 +259,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1444, 674);
+            this.ClientSize = new System.Drawing.Size(1444, 557);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.planeComboBox);
             this.Controls.Add(this.label6);

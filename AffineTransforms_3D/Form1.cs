@@ -23,6 +23,14 @@ namespace AffineTransforms_3D
         public Form1()
         {
             InitializeComponent();
+            AutoSize = false;
+            AutoScaleMode = AutoScaleMode.Font;
+            Font = new Font("Trebuchet MS",
+                12.0f,
+                FontStyle.Regular,
+                GraphicsUnit.Point,
+                ((byte)(204))
+            );
             g = CreateGraphics();
             proj_box.SelectedIndex = 0;
             figures_box.SelectedIndex = 0;
@@ -171,9 +179,9 @@ namespace AffineTransforms_3D
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch ((string)transformComboBox.SelectedItem)
+            switch (parseTransform())
             {
-                case "Rotate":
+                case Transform.Rotate:
                     {
                         textBox1.Enabled = true;
                         textBox2.Enabled = false;
