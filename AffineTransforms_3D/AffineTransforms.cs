@@ -16,6 +16,18 @@ namespace AffineTransforms_3D
             return rotator;
         }
 
+        static public TranslateTransform3D TranslateTransform3D(double x=0, double y=0, double z=0)
+        {
+            var translator = new TranslateTransform3D(x, y, z);
+            return translator;
+        }
+
+        static public ScaleTransform3D ScaleTransform3D (Point3D center, double x=1, double y=1, double z =1)
+        {
+            var scaler = new ScaleTransform3D(x, y, z, center.X, center.Y, center.Z);
+            return scaler;
+        }
+
         static public Figure Transform(Figure f, Transform3D transform)
         {
             var figure = new Figure();
