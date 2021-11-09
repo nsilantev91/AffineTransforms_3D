@@ -104,20 +104,20 @@ namespace AffineTransforms_3D
 
         public Octahedron() : base()
         {
-            AddFace(new[] { a, b, e });
+            /*AddFace(new[] { a, b, e });
             AddFace(new[] { b, c, e });
             AddFace(new[] { e, c, d });//ade
             AddFace(new[] { a, d, e });
             AddFace(new[] { a, b, f });
             AddFace(new[] { b, c, f });
             AddFace(new[] { c, d, f });
-            AddFace(new[] { d, a, f });
-            /*AddEdges(a, new List<Point3D> { b, d, c, e });
+            AddFace(new[] { d, a, f });*/
+            AddEdges(a, new List<Point3D> { b, d, c, e });
             AddEdges(b, new List<Point3D> { d });
             AddEdges(c, new List<Point3D> { e });
             AddEdges(d, new List<Point3D> { c });
             AddEdges(e, new List<Point3D> { b });
-            AddEdges(f, new List<Point3D> { b, d, c, e });*/
+            AddEdges(f, new List<Point3D> { b, d, c, e });
         }
 
     }
