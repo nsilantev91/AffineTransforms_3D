@@ -64,6 +64,8 @@ namespace AffineTransforms_3D
 
         public void addEdge(Edge edge)
         {
+            if (edge.begin == edge.end)
+                return;
             edges.Add(edge);
         }
     }
@@ -101,6 +103,8 @@ namespace AffineTransforms_3D
 
         public void AddEdge(Point3D p1, Point3D p2)
         {
+            if (p1 == p2)
+                return;
             if (!vertexes.Contains(p1))
                 vertexes.Add(p1);
             if (!vertexes.Contains(p2))

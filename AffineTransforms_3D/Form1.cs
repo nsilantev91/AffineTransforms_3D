@@ -24,7 +24,6 @@ namespace AffineTransforms_3D
         Figure currentFigure;
         bool figureCenter;
         bool usingLine = false;
-        bool customFigure = false;
         CoordinatePlane plane;
         Point3D point1 = new Point3D(0,0,0);
         Point3D point2 = new Point3D(1,1,1);
@@ -56,26 +55,25 @@ namespace AffineTransforms_3D
         private void showFigure_btn_Click(object sender, EventArgs e)
         {
             string figure = (string)figures_box.SelectedItem;
-            if (!customFigure)
-            {
-                if (figure == "Тетраэдр")
-                    currentFigure = Figures.Tetrahedron;
+            if (figure == "Тетраэдр")
+                currentFigure = Figures.Tetrahedron;
 
-                if (figure == "Гексаэдр")
+            if (figure == "Гексаэдр")
 
-                    currentFigure = Figures.Hexahedron;
+                currentFigure = Figures.Hexahedron;
 
-                if (figure == "Октаэдр")
-                    currentFigure = Figures.Octahedron;
+            if (figure == "Октаэдр")
+                currentFigure = Figures.Octahedron;
 
-                if (figure == "Икосаэдр")
-                    currentFigure = new Icosahedron(150);
+            if (figure == "Икосаэдр")
+                currentFigure = new Icosahedron(150);
 
-                if (figure == "Додэкаэдр")
-                    currentFigure = new Dodecahedron(150);
-            }
-
+            if (figure == "Додэкаэдр")
+                currentFigure = new Dodecahedron(150);
             lastfig = figure;
+            if (figure == "Пользовательская")
+                lastfig = "Сustom figure";
+
             ReDraw();
         }
 
@@ -219,7 +217,6 @@ namespace AffineTransforms_3D
             num_parts_box.Text = "0";
             create_fig_btn.Enabled = false;
             num_parts_box.Enabled = false;
-            customFigure = false;
 
         }
 
@@ -345,6 +342,7 @@ namespace AffineTransforms_3D
         }
         private void create_fig_btn_Click(object sender, EventArgs e)
         {
+            figures_box.SelectedIndex = 5;
             (int, int, int) xyz = (0, 0, 0);
             if (axis_box.SelectedIndex == 0)
                 xyz.Item1 = 1;
@@ -354,7 +352,6 @@ namespace AffineTransforms_3D
                 xyz.Item3 = 1;
             var res = Figures.createRotateFigure(forming.ToArray(), int.Parse(num_parts_box.Text),xyz);
             currentFigure = res;
-            customFigure = true;
             ReDraw();
         }
 

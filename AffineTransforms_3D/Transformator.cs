@@ -14,17 +14,16 @@ namespace AffineTransforms_3D
         static public Figure Transform(Figure f, Transformator transform)
         {
             var figure = new Figure();
-            var adjMatr = f.adjacencyMatrix;
-            foreach (var val in adjMatr)
+            foreach (var face in f.faces)
             {
-                var key = val.Key;
-                var value = val.Value;
-                var beginPoint = transform.Transform(key);
-                foreach (var ed in value)
+                var edges = face.edges;
+                List<Point3D> ed = new List<Point3D>();
+                foreach (var e in edges)
                 {
-                    var endPoint = transform.Transform(ed);
-                    figure.AddEdge(beginPoint, endPoint);
+                    ed.Add(transform.Transform(e.begin));
+                    ed.Add(transform.Transform(e.end));
                 }
+                figure.AddFace(ed.ToArray());
             }
             return figure;
         }

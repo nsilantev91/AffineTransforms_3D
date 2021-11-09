@@ -124,7 +124,8 @@
             "Гексаэдр",
             "Октаэдр",
             "Икосаэдр",
-            "Додэкаэдр"});
+            "Додэкаэдр",
+            "Пользовательская"});
             this.figures_box.Location = new System.Drawing.Point(9, 12);
             this.figures_box.Name = "figures_box";
             this.figures_box.Size = new System.Drawing.Size(155, 24);
@@ -593,6 +594,7 @@
             this.create_fig_btn.Text = "Create";
             this.create_fig_btn.UseVisualStyleBackColor = true;
             this.create_fig_btn.Click += new System.EventHandler(this.create_fig_btn_Click);
+            // 
             // saveFileDialog1
             // 
             this.saveFileDialog1.FileName = "Figure";

@@ -70,9 +70,19 @@ namespace AffineTransforms_3D
                 matrProj = dimetric;
             }
             Figure resFigure = new Figure();
-            var adjMatr = fig.adjacencyMatrix;
             var transformator = new CustomMatrixTransformator(matrProj);
-            foreach (var val in adjMatr)
+            foreach(var face in fig.faces)
+            {
+                var edges = face.edges;
+                List<Point3D> ed = new List<Point3D>();
+                foreach(var e in edges)
+                {
+                    ed.Add(transformator.Transform(e.begin));
+                    ed.Add(transformator.Transform(e.end));
+                }
+                resFigure.AddFace(ed.ToArray());
+            }
+           /* foreach (var val in adjMatr)
             {
                 var key = val.Key;
                 var value = val.Value;
@@ -82,7 +92,7 @@ namespace AffineTransforms_3D
                     var endPoint = transformator.Transform(ed);
                     resFigure.AddEdge(beginPoint, endPoint);
                 }
-            }
+            }*/
             return resFigure;
 
         }
