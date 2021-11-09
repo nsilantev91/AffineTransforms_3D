@@ -30,6 +30,7 @@ namespace AffineTransforms_3D
     }
     */
     //ребро
+    [Serializable]
     public class Edge
     {
 
@@ -46,6 +47,7 @@ namespace AffineTransforms_3D
     }
 
     //грань фигуры 
+    [Serializable]
     public class Side
     {
         public List<Edge> edges { get; }
@@ -67,6 +69,7 @@ namespace AffineTransforms_3D
     }
 
     //многогранник
+    [Serializable]
     public class Figure
     {
         //cписок ребер
@@ -105,7 +108,6 @@ namespace AffineTransforms_3D
                 adjacencyMatrix.Add(p1, new List<Point3D> { p2 });
             else
                 adjacencyMatrix[p1].Add(p2);
-    
         }
        
         public void AddEdges(Point3D startPoint, List<Point3D> pointsList)
