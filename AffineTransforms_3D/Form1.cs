@@ -55,9 +55,9 @@ namespace AffineTransforms_3D
 
         private void showFigure_btn_Click(object sender, EventArgs e)
         {
+            string figure = (string)figures_box.SelectedItem;
             if (!customFigure)
             {
-                string figure = (string)figures_box.SelectedItem;
                 if (figure == "Тетраэдр")
                     currentFigure = Figures.Tetrahedron;
 
@@ -382,10 +382,12 @@ namespace AffineTransforms_3D
         private void textBox9_TextChanged(object sender, EventArgs e)
         {
             int res = 0;
-            if(int.TryParse(num_parts_box.Text, out res) && forming.Count >=2)
+            if (int.TryParse(num_parts_box.Text, out res) && forming.Count >= 2)
             {
                 create_fig_btn.Enabled = true;
             }
+
+        }
 
         private void Saver_Click(object sender, EventArgs e)
         {
