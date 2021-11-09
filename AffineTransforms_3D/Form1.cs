@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media.Media3D;
+using System.IO;
+
 
 namespace AffineTransforms_3D
 {
@@ -15,6 +17,7 @@ namespace AffineTransforms_3D
     enum Transform {Transposition, Rotate, Scale, Reflect }
     public partial class Form1 : Form
     {
+        String lastfig = "";
         Graphics g;
         List<(Transform,List<double>)> transforms = new List<(Transform, List<double>)>();
         Projection selectedProjetion;
@@ -72,6 +75,7 @@ namespace AffineTransforms_3D
                     currentFigure = new Dodecahedron(150);
             }
 
+            lastfig = figure;
             ReDraw();
         }
 
@@ -275,6 +279,7 @@ namespace AffineTransforms_3D
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
+            
             if (currentFigure == null)
                 return;
             g.Clear(BackColor);
@@ -285,6 +290,8 @@ namespace AffineTransforms_3D
                 g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
                    (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
             }
+            
+            //ReDraw();
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)
@@ -379,6 +386,49 @@ namespace AffineTransforms_3D
             {
                 create_fig_btn.Enabled = true;
             }
+
+        private void Saver_Click(object sender, EventArgs e)
+        {
+            if (currentFigure!=null)
+            { 
+                SaveFileDialog saveFile = saveFileDialog1;
+                saveFile.InitialDirectory = "c:\\";
+                saveFile.Filter = "Figure (*.fig)|*.fig|All files (*.*)|*.*";
+            
+                if (saveFile.ShowDialog()==DialogResult.OK)
+                {
+                    var path = Path.GetFullPath(saveFile.FileName);
+                    var t = new FileWorker(currentFigure, transforms, selectedProjetion,(string)figures_box.SelectedItem);
+                    FileHelper.WriteToBinaryFile(path, t);
+                }
+            }
+
+        }
+
+        private void Opener_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFile = openFileDialog1;
+            openFile.InitialDirectory = "c:\\";
+            openFile.Filter = "Figure (*.fig)|*.fig|All files (*.*)|*.*";
+            if (openFile.ShowDialog()==DialogResult.OK)
+            {
+                clear_btn_Click(sender, e);
+
+                var path = Path.GetFullPath(openFile.FileName);
+                var t = FileHelper.ReadFromBinaryFile<FileWorker>(path);
+                currentFigure = t.fig;
+                selectedProjetion = t.proj;
+                transforms = t.transforms;
+
+                lastfig = t.fname;
+                proj_box.SelectedIndex = (int)t.proj;
+                figures_box.SelectedIndex = figures_box.Items.IndexOf(t.fname);
+
+
+                ReDraw();
+                showFigure_btn_Click(sender, e);
+            }
+
         }
     }
 

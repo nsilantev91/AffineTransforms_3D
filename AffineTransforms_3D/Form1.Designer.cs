@@ -74,6 +74,10 @@
             this.label18 = new System.Windows.Forms.Label();
             this.num_parts_box = new System.Windows.Forms.TextBox();
             this.create_fig_btn = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.Saver = new System.Windows.Forms.Button();
+            this.Opener = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -589,6 +593,37 @@
             this.create_fig_btn.Text = "Create";
             this.create_fig_btn.UseVisualStyleBackColor = true;
             this.create_fig_btn.Click += new System.EventHandler(this.create_fig_btn_Click);
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.FileName = "Figure";
+            // 
+            // Saver
+            // 
+            this.Saver.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Saver.Location = new System.Drawing.Point(895, 453);
+            this.Saver.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Saver.Name = "Saver";
+            this.Saver.Size = new System.Drawing.Size(138, 25);
+            this.Saver.TabIndex = 37;
+            this.Saver.Text = "Save";
+            this.Saver.UseVisualStyleBackColor = true;
+            this.Saver.Click += new System.EventHandler(this.Saver_Click);
+            // 
+            // Opener
+            // 
+            this.Opener.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Opener.Location = new System.Drawing.Point(895, 482);
+            this.Opener.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Opener.Name = "Opener";
+            this.Opener.Size = new System.Drawing.Size(138, 25);
+            this.Opener.TabIndex = 38;
+            this.Opener.Text = "Open";
+            this.Opener.UseVisualStyleBackColor = true;
+            this.Opener.Click += new System.EventHandler(this.Opener_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // Form1
             // 
@@ -607,6 +642,8 @@
             this.Controls.Add(this.forming_y_box);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.forming_x_box);
+            this.Controls.Add(this.Opener);
+            this.Controls.Add(this.Saver);
             this.Controls.Add(this.usingLineCheckBox);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.textBoxZ2);
@@ -700,6 +737,10 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox num_parts_box;
         private System.Windows.Forms.Button create_fig_btn;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Button Saver;
+        private System.Windows.Forms.Button Opener;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 

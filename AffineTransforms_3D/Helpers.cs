@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace AffineTransforms_3D
 {
-    class Helpers
+    static class Helpers
     {
         static public double[,] MultiplyMatrix(double[,] A, double[,] B)
         {
@@ -38,6 +39,7 @@ namespace AffineTransforms_3D
             }
             return null;
         }
+
     }
 
 

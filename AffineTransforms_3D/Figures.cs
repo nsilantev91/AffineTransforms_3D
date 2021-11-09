@@ -51,6 +51,7 @@ namespace AffineTransforms_3D
     }
 
     //Тетраэдр
+    [Serializable]
     class Tetrahedron : Figure
     {
         Point3D a = new Point3D(0, 0, 0);
@@ -66,6 +67,7 @@ namespace AffineTransforms_3D
     }
 
     //Гексаэдр
+    [Serializable]
     class Hexahedron : Figure
     {
         Point3D a = new Point3D(0, 0, 0);
@@ -91,6 +93,7 @@ namespace AffineTransforms_3D
     }
 
     //Октаэдр
+    [Serializable]
     class Octahedron : Figure
     {
         Point3D a = new Point3D(0, 0, 0);
@@ -112,6 +115,7 @@ namespace AffineTransforms_3D
 
     }
 
+    [Serializable]
     class Icosahedron : Figure
     {
         const double X = 0.525731112119133606;
@@ -153,6 +157,7 @@ namespace AffineTransforms_3D
         }
     }
 
+    [Serializable]
     class Dodecahedron:Figure
     {
         private void MakeVertices(double sLen)
