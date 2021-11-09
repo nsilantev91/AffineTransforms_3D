@@ -21,9 +21,12 @@ namespace AffineTransforms_3D
         Figure currentFigure;
         bool figureCenter;
         bool usingLine = false;
+        bool customFigure = false;
         CoordinatePlane plane;
         Point3D point1 = new Point3D(0,0,0);
         Point3D point2 = new Point3D(1,1,1);
+        List<Point3D> forming;
+        List<Point3D> showForming;
         public Form1()
         {
             InitializeComponent();
@@ -42,26 +45,32 @@ namespace AffineTransforms_3D
             figures_box.SelectedIndex = 0;
             selectedProjetion = Projection.Perspective;
             currentFigure = new Figure();
+            forming = new List<Point3D>();
+            axis_box.SelectedIndex = 0;
+            showForming = new List<Point3D>();
         }
 
         private void showFigure_btn_Click(object sender, EventArgs e)
         {
-            string figure = (string)figures_box.SelectedItem;
-            if (figure == "Тетраэдр")
-                currentFigure = Figures.Tetrahedron;
+            if (!customFigure)
+            {
+                string figure = (string)figures_box.SelectedItem;
+                if (figure == "Тетраэдр")
+                    currentFigure = Figures.Tetrahedron;
 
-            if (figure == "Гексаэдр")
+                if (figure == "Гексаэдр")
 
-                currentFigure = Figures.Hexahedron;
+                    currentFigure = Figures.Hexahedron;
 
-            if (figure == "Октаэдр")
-                currentFigure = Figures.Octahedron;
+                if (figure == "Октаэдр")
+                    currentFigure = Figures.Octahedron;
 
-            if (figure == "Икосаэдр")
-                currentFigure = new Icosahedron(150);
+                if (figure == "Икосаэдр")
+                    currentFigure = new Icosahedron(150);
 
-            if (figure == "Додэкаэдр")
-                currentFigure = new Dodecahedron(150);
+                if (figure == "Додэкаэдр")
+                    currentFigure = new Dodecahedron(150);
+            }
 
             ReDraw();
         }
@@ -111,7 +120,7 @@ namespace AffineTransforms_3D
             if (currentFigure == null)
                 return;
             g.Clear(BackColor); 
-            var centerX = Size.Width / 2 - 400;
+            var centerX = Size.Width / 2 - 200;
             var centerY = Size.Height / 2 - 150;
             foreach (var i in transforms)
             {
@@ -196,8 +205,18 @@ namespace AffineTransforms_3D
         private void clear_btn_Click(object sender, EventArgs e)
         {
             g.Clear(BackColor);
-            transforms.Clear();
             currentFigure = new Figure();
+            transforms.Clear();
+            forming.Clear();
+            showForming.Clear();
+            forming_x_box.Text = "0";
+            forming_y_box.Text = "0";
+            forming_z_box.Text = "0";
+            num_parts_box.Text = "0";
+            create_fig_btn.Enabled = false;
+            num_parts_box.Enabled = false;
+            customFigure = false;
+
         }
 
 
@@ -311,6 +330,55 @@ namespace AffineTransforms_3D
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             usingLine = ((CheckBox)sender).Checked;
+        }
+        private void PictureBox1_MouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            forming_x_box.Text = e.X.ToString();
+            forming_y_box.Text = e.Y.ToString();
+        }
+        private void create_fig_btn_Click(object sender, EventArgs e)
+        {
+            (int, int, int) xyz = (0, 0, 0);
+            if (axis_box.SelectedIndex == 0)
+                xyz.Item1 = 1;
+            if (axis_box.SelectedIndex == 1)
+                xyz.Item2 = 1;
+            if (axis_box.SelectedIndex == 2)
+                xyz.Item3 = 1;
+            var res = Figures.createRotateFigure(forming.ToArray(), int.Parse(num_parts_box.Text),xyz);
+            currentFigure = res;
+            customFigure = true;
+            ReDraw();
+        }
+
+        
+
+        private void add_point_btn_Click(object sender, EventArgs e)
+        {
+            var x = int.Parse(forming_x_box.Text);
+            var y = int.Parse(forming_y_box.Text);
+            var z = int.Parse(forming_z_box.Text);
+            showForming.Add(new Point3D(x, y, z));
+            forming.Add(new Point3D(x - 200, y - 200, z));
+            if(forming.Count >=2)
+            {
+                num_parts_box.Enabled = true;
+                Point[] points = new Point[forming.Count];
+                for(int i = 0; i< showForming.Count; i++)
+                {
+                    points[i] = Projections.ApplyForPoint3D(showForming[i], selectedProjetion);
+                }
+                g.DrawLines(Pens.Black, points);
+            }
+        }
+
+        private void textBox9_TextChanged(object sender, EventArgs e)
+        {
+            int res = 0;
+            if(int.TryParse(num_parts_box.Text, out res) && forming.Count >=2)
+            {
+                create_fig_btn.Enabled = true;
+            }
         }
     }
 

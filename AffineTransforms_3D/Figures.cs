@@ -12,6 +12,42 @@ namespace AffineTransforms_3D
         static public Figure Tetrahedron = new Tetrahedron();
         static public Figure Hexahedron  = new Hexahedron();
         static public Figure Octahedron = new Octahedron();
+        static public Figure createRotateFigure(Point3D[] forming, int partsNumber, (int, int, int) xyz)
+        {
+            var resFigure = new Figure();
+            List<Point3D> transformedPoints = new List<Point3D>();
+            transformedPoints.AddRange(forming);
+            float angle = 360.0f / partsNumber;
+            var centerPoint = new Point3D(0, 0, 0);
+            for (int i = 0; i < forming.Length * partsNumber; i++)
+            {
+                var transformator = AffineTransforms.RotateTransform3D(centerPoint, angle, xyz.Item1, xyz.Item2, xyz.Item3);
+                var point = transformator.Transform(transformedPoints[i]);
+                transformedPoints.Add(point);
+            }
+            var formingPNumber = forming.Length;
+            var countPoints = transformedPoints.Count;
+            for (int l = 0; l < partsNumber; l++)
+            {
+                for (int p = 0; p < formingPNumber; p++)
+                {
+                    int currentPoint = l * formingPNumber + p;
+                    int rightPoint = (currentPoint + formingPNumber) % countPoints;
+                    if ((currentPoint + 1) % formingPNumber == 0)
+                        resFigure.AddEdge(transformedPoints[currentPoint], transformedPoints[rightPoint]);
+                    else
+                    {
+                        resFigure.AddFace(new[]{ transformedPoints[currentPoint],  transformedPoints[currentPoint+1],
+                            transformedPoints[(currentPoint + 1 + formingPNumber) % countPoints],
+                             transformedPoints[(currentPoint + formingPNumber) % countPoints]  });
+                    }
+
+                }
+            }
+            var center = resFigure.FigureCenter();
+            return Transformator.Transform(resFigure,
+                AffineTransforms.ScaleTransform3D(center, 0.7, 0.7, 0.7));
+        }
     }
 
     //Тетраэдр
@@ -208,4 +244,6 @@ namespace AffineTransforms_3D
             MakeVertices(sideLen);
        }
     }
+
+    
 }

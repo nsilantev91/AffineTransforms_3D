@@ -79,11 +79,14 @@ namespace AffineTransforms_3D
         //матрица смежности
         public Dictionary<Point3D, List<Point3D>> adjacencyMatrix { get; }
 
+        public List<Side> faces { get; }
+
         public Figure()
         {
             edges = new List<Edge>();
             vertexes = new List<Point3D>();
             adjacencyMatrix = new Dictionary<Point3D, List<Point3D>>();
+            faces = new List<Side>();
         }
 
         public Figure(List<Point3D> points) : this()
@@ -121,7 +124,20 @@ namespace AffineTransforms_3D
             var z = vertexes.Average(point => point.Z);
             return new Point3D(x, y, z);
         }
-        
+
+        public void AddFace(Point3D[] points)
+        {
+            var side = new Side();
+            for (int i = 0; i < points.Length - 1; i++)
+            {
+                AddEdge(points[i], points[i + 1]);
+                side.addEdge(new Edge(points[i], points[i + 1]));
+            }
+            AddEdge(points.Last(), points.First());
+            side.addEdge(new Edge(points.Last(), points.First()));
+            faces.Add(side);
+        }
+
     }
 
 

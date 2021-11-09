@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
+using System.Drawing;
 
 namespace AffineTransforms_3D
 {
@@ -84,6 +85,30 @@ namespace AffineTransforms_3D
             }
             return resFigure;
 
+        }
+
+        public static Point ApplyForPoint3D(Point3D point, Projection selectedProjection)
+        {
+            var pointMatrix = new double[,] { { point.X, point.Y, point.Z, 1 } };
+            double[,] matrProj = { { 0 } };
+            if (selectedProjection == Projection.Perspective)
+            {
+                matrProj = perspective;
+            }
+            if (selectedProjection == Projection.Isometric)
+            {
+                matrProj = isometric;
+            }
+            if (selectedProjection == Projection.Trimetric)
+            {
+                matrProj = trimetric;
+            }
+            if (selectedProjection == Projection.Dimetric)
+            {
+                matrProj = dimetric;
+            }
+            var res = Helpers.MultiplyMatrix(pointMatrix, matrProj);
+            return new Point((int)(res[0, 0] / res[0, 3]), (int)(res[0, 1] / res[0, 3]));
         }
     }
 }
