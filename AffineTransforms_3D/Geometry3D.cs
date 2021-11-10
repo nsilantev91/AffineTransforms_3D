@@ -74,7 +74,9 @@ namespace AffineTransforms_3D
             double x = 0;
             double y = 0;
             double z = 0;
-            foreach (var e in edges)
+
+        
+            foreach(var e in edges)
             {
                 x += e.begin.X;
                 y += e.begin.Y;
