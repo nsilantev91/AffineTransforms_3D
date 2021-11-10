@@ -763,7 +763,7 @@
             this.stepCountTextBox.Name = "stepCountTextBox";
             this.stepCountTextBox.Size = new System.Drawing.Size(41, 26);
             this.stepCountTextBox.TabIndex = 58;
-            this.stepCountTextBox.Text = "50";
+            this.stepCountTextBox.Text = "20";
             this.stepCountTextBox.TextChanged += new System.EventHandler(this.stepCountTextBox_TextChanged);
             // 
             // label24

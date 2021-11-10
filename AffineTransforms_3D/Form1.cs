@@ -520,7 +520,7 @@ namespace AffineTransforms_3D
                 case Function.SquareOfSum:
                     return (x, y) => Math.Pow((x + y), 2);
                 case Function.SumOfSquare:
-                    return (x, y) => Math.Pow((x + y), 2);
+                    return (x, y) => Math.Pow(x, 2) + Math.Pow(y, 2);
                 default:
                     throw new ArgumentException("Задана некорректная функция");
 

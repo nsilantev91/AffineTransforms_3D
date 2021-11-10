@@ -291,10 +291,14 @@ namespace AffineTransforms_3D
             {
                 for (var y = Y0; y <= Y1-dy; y += dy)
                 {
-                    var a = new Point3D(x, y, Fun(x,y));
-                    var b = new Point3D(x+dx, y, Fun(x+dx, y));
-                    var c = new Point3D(x+dx, y+dy, Fun(x+dx, y+dy));
-                    var d = new Point3D(x, y+dy, Fun(x, y+dy));
+                    //var a = new Point3D(x, y, Fun(x,y));
+                    //var b = new Point3D(x+dx, y, Fun(x+dx, y));
+                    //var c = new Point3D(x+dx, y+dy, Fun(x+dx, y+dy));
+                    //var d = new Point3D(x, y+dy, Fun(x, y+dy));
+                    var a = new Point3D(x, Fun(x, y), y);
+                    var b = new Point3D(x + dx,  Fun(x + dx, y), y);
+                    var c = new Point3D(x + dx,  Fun(x + dx, y + dy), y + dy);
+                    var d = new Point3D(x,  Fun(x, y + dy), y + dy);
                     AddFace(new Point3D[] { a,b,c,d});
                 }
             }
