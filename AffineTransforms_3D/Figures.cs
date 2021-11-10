@@ -36,15 +36,14 @@ namespace AffineTransforms_3D
                 for (int p = 0; p < formingPNumber; p++)
                 {
                     int currentPoint = l * formingPNumber + p;
-                    int rightPoint = (currentPoint + formingPNumber) % countPoints;
-                    //if ((currentPoint + 1) % formingPNumber == 0)
-                    //    resFigure.AddEdge(transformedPoints[currentPoint], transformedPoints[rightPoint]);
-                    //else
-                    //{
+                    if ((currentPoint + 1) % formingPNumber == 0)
+                        continue;
+                    else
+                    {
                         resFigure.AddFace(new[]{ transformedPoints[currentPoint],  transformedPoints[currentPoint+1],
                             transformedPoints[(currentPoint + 1 + formingPNumber) % countPoints],
                              transformedPoints[(currentPoint + formingPNumber) % countPoints]  });
-                   // }
+                    }
 
                 }
             }
