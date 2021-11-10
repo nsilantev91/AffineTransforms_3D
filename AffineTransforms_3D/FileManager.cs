@@ -14,12 +14,11 @@ namespace AffineTransforms_3D
         public string fname;
         public Projection proj;
         public Figure fig;
-        public List<(Transform, List<double>)> transforms;
-        public FileWorker(Figure f, List<(Transform, List<double>)> l, Projection pr,string fn)
+     
+        public FileWorker(Figure f, Projection pr,string fn)
         {
             fname = fn;
             fig = f;
-            transforms = l;
             proj = pr;
         }
 

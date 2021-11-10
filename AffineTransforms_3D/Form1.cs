@@ -43,6 +43,8 @@ namespace AffineTransforms_3D
         Point3D point2 = new Point3D(1,1,1);
         List<Point3D> forming;
         List<Point3D> showForming;
+        bool openedFigure = false;
+    
        
         GraphData graphData = new GraphData();
         public Form1()
@@ -220,8 +222,15 @@ namespace AffineTransforms_3D
                         // }
                 }
             }
-
-            currentFigure = Projections.Apply(currentFigure, selectedProjetion);
+            if (!openedFigure)
+            {
+                currentFigure = Projections.Apply(currentFigure, selectedProjetion);
+            }
+            else
+            {
+                openedFigure = false;
+            }
+            
             foreach (var r in currentFigure.edges)
             {
                 g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
@@ -427,7 +436,7 @@ namespace AffineTransforms_3D
                 if (saveFile.ShowDialog()==DialogResult.OK)
                 {
                     var path = Path.GetFullPath(saveFile.FileName);
-                    var t = new FileWorker(currentFigure, transforms, selectedProjetion,(string)figures_box.SelectedItem);
+                    var t = new FileWorker(currentFigure, selectedProjetion,(string)figures_box.SelectedItem);
                     FileHelper.WriteToBinaryFile(path, t);
                 }
             }
@@ -447,15 +456,12 @@ namespace AffineTransforms_3D
                 var t = FileHelper.ReadFromBinaryFile<FileWorker>(path);
                 currentFigure = t.fig;
                 selectedProjetion = t.proj;
-                transforms = t.transforms;
-
                 lastfig = t.fname;
                 proj_box.SelectedIndex = (int)t.proj;
                 figures_box.SelectedIndex = figures_box.Items.IndexOf(t.fname);
-
-
+                openedFigure = true;
                 ReDraw();
-                showFigure_btn_Click(sender, e);
+                //showFigure_btn_Click(sender, e);
             }
 
         }
