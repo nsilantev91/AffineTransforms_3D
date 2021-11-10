@@ -80,8 +80,6 @@ namespace AffineTransforms_3D
         private void showFigure_btn_Click(object sender, EventArgs e)
         {
             string figure = (string)figures_box.SelectedItem;
-            if (lastfig != figure)
-            {
                 if (figure == "Тетраэдр")
                     currentFigure = Figures.Tetrahedron;
 
@@ -102,7 +100,7 @@ namespace AffineTransforms_3D
                 lastfig = figure;
                 if (figure == "Пользовательская")
                     lastfig = "Сustom figure";
-            }
+      
             ReDraw();
         }
 
@@ -141,8 +139,6 @@ namespace AffineTransforms_3D
                         break;
                     }
             }
-            var centerX = Size.Width / 2 - 200;
-            var centerY = Size.Height / 2 - 150;
             //foreach (var i in transforms)
             //{
             if (transforms.Count != 0)
@@ -222,24 +218,27 @@ namespace AffineTransforms_3D
             if (currentFigure == null)
                 return;
             g.Clear(BackColor);
-            var centerX = Size.Width / 2 - 200;
-            var centerY = Size.Height / 2 - 150;
-           
-            if (!openedFigure)
-            {
-                currentFigure = Projections.Apply(currentFigure, selectedProjetion);
-            }
-            else
-            {
-                openedFigure = false;
-            }
+            var centerX = pictureBox1.Size.Width / 2;
+            var centerY = pictureBox1.Size.Height / 2 ;
+
+            var projection = Projections.Apply(currentFigure, selectedProjetion);
+            //if (!openedFigure)
+            //{
+            //    currentFigure = Projections.Apply(currentFigure, selectedProjetion);
+            //}
+            //else
+            //{
+            //    openedFigure = false;
+            //}
             
-            foreach (var r in currentFigure.edges)
+            foreach (var r in projection.edges)
             {
                 g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
                    (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
             }
         }
+
+
 
         private void proj_box_SelectedIndexChanged(object sender, EventArgs e)
         {
