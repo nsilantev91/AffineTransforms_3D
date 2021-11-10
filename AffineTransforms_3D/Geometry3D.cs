@@ -50,6 +50,19 @@ namespace AffineTransforms_3D
     [Serializable]
     public class Side
     {
+        public Point3D SideCenter()
+        {
+            double x = 0;
+            double y = 0;
+            double z = 0;
+            foreach (var e in edges)
+            {
+                x += e.begin.X;
+                y += e.begin.Y;
+                z += e.begin.Z;
+            }
+            return new Point3D(x / edges.Count, y / edges.Count, z / edges.Count);
+        }
         public List<Edge> edges { get; }
 
         public Side()
