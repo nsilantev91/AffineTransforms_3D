@@ -13,6 +13,9 @@ namespace AffineTransforms_3D
         static public Figure Tetrahedron = new Tetrahedron();
         static public Figure Hexahedron  = new Hexahedron();
         static public Figure Octahedron = new Octahedron();
+
+        
+
         static public Figure createRotateFigure(Point3D[] forming, int partsNumber, (int, int, int) xyz)
         {
             var resFigure = new Figure();

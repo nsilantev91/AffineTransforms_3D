@@ -7,11 +7,11 @@ using System.Windows.Media.Media3D;
 
 namespace AffineTransforms_3D
 {
-    abstract class Transformator
+    public  abstract class Transformator
     {
         public abstract Point3D Transform(Point3D point);
 
-        static public Figure Transform(Figure f, Transformator transform)
+        static public Figure Transform(Figure f, Transformator transformator)
         {
             var figure = new Figure();
             foreach (var face in f.faces)
@@ -20,13 +20,15 @@ namespace AffineTransforms_3D
                 List<Point3D> ed = new List<Point3D>();
                 foreach (var e in edges)
                 {
-                    ed.Add(transform.Transform(e.begin));
-                    ed.Add(transform.Transform(e.end));
+                    ed.Add(transformator.Transform(e.begin));
+                    ed.Add(transformator.Transform(e.end));
                 }
                 figure.AddFace(ed.ToArray());
             }
             return figure;
         }
+
+       
     }
 
     class StandardMatrixTransformator : Transformator

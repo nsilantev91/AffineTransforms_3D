@@ -94,6 +94,21 @@ namespace AffineTransforms_3D
             faces = new List<Side>();
         }
 
+       public void Transform(Transformator transformator)
+        {
+            foreach (var face in faces)
+            {
+                var edges = face.edges;
+                foreach (var edge in face.edges)
+                {
+                    edge.begin = transformator.Transform(edge.begin);
+                    edge.end = transformator.Transform(edge.end);
+                }
+                    
+            }
+
+        }
+
         public Figure(List<Point3D> points) : this()
         {
             vertexes = points;

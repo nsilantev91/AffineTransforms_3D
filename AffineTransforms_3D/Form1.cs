@@ -16,7 +16,7 @@ namespace AffineTransforms_3D
     enum Projection { Perspective, Isometric, Trimetric, Dimetric };
     enum Transform {Transposition, Rotate, Scale, Reflect }
 
-    public  enum Function { Plus, Minus, SquareOfSum, SumOfSquare }
+    public  enum Function { Plus, Minus, Prod, SinCos, Sin }
 
     public struct GraphData
     {
@@ -149,14 +149,17 @@ namespace AffineTransforms_3D
             g.Clear(BackColor); 
             var centerX = Size.Width / 2 - 200;
             var centerY = Size.Height / 2 - 150;
-            foreach (var i in transforms)
+            //foreach (var i in transforms)
+            //{
+            if (transforms.Count != 0)
             {
+                var i = transforms.Last();
                 switch (i.Item1)
                 {
                     case Transform.Rotate:
                         {
                             (double, double, double) axis = (0, 0, 0);
-                            var plane =(CoordinatePlane)i.Item2[1];
+                            var plane = (CoordinatePlane)i.Item2[1];
                             switch (plane)
                             {
                                 case CoordinatePlane.XY:
@@ -175,7 +178,7 @@ namespace AffineTransforms_3D
                                 var v1 = new Vector3D(point1.X, point1.Y, point1.Z);
                                 var v2 = new Vector3D(point2.X, point2.Y, point2.Z);
                                 var v = v2 - v1;
-                                currentFigure = Transformator.Transform(currentFigure,
+                                currentFigure.Transform(
                                   AffineTransforms.RotateTransform3D(point1,
                                   (int)i.Item2[0], v.X, v.Y, v.Z));
                             }
@@ -183,17 +186,17 @@ namespace AffineTransforms_3D
                             {
                                 var figureCenter = ((int)i.Item2[2]) == 1;
                                 var point = figureCenter ? currentFigure.FigureCenter() : new Point3D(0, 0, 0);
-                                currentFigure = Transformator.Transform(currentFigure,
+                                currentFigure.Transform(
                                     AffineTransforms.RotateTransform3D(point,
                                     (int)i.Item2[0], axis.Item1, axis.Item2, axis.Item3));
                             }
-                          
+
                             //transforms.Add(AffineTransforms.RotateTransform3D(currentFigure.FigureCenter(), 30, 0, 0, 1));
                             break;
                         }
                     case Transform.Transposition:
                         {
-                            currentFigure= Transformator.Transform(currentFigure, 
+                            currentFigure.Transform(
                                 AffineTransforms.TranslateTransform3D(i.Item2[0], i.Item2[1], i.Item2[2]));
                             //transforms.Add(AffineTransforms.TranslateTransform3D(10, 10, 10));
                             break;
@@ -201,8 +204,8 @@ namespace AffineTransforms_3D
                     case Transform.Scale:
                         {
                             var figureCenter = (int)i.Item2[3] == 1;
-                            var point = figureCenter ? currentFigure.FigureCenter() :new Point3D(0, 0, 0);
-                            currentFigure = Transformator.Transform(currentFigure,
+                            var point = figureCenter ? currentFigure.FigureCenter() : new Point3D(0, 0, 0);
+                            currentFigure.Transform(
                                 AffineTransforms.ScaleTransform3D(point,
                                 i.Item2[0], i.Item2[1], i.Item2[2]));
                             //transforms.Add(AffineTransforms.ScaleTransform3D(currentFigure.FigureCenter(), 2));
@@ -210,12 +213,14 @@ namespace AffineTransforms_3D
                         }
                     case Transform.Reflect:
                         {
-                            currentFigure = Transformator.Transform(currentFigure, 
+                            currentFigure.Transform(
                                 AffineTransforms.ReflectionTransform((CoordinatePlane)(int)(i.Item2[0])));
                             break;
                         }
+                        // }
                 }
             }
+
             currentFigure = Projections.Apply(currentFigure, selectedProjetion);
             foreach (var r in currentFigure.edges)
             {
@@ -517,17 +522,18 @@ namespace AffineTransforms_3D
                     return (x, y) => x + y;
                 case Function.Minus:
                     return (x, y) => x - y;
-                case Function.SquareOfSum:
-                    return (x, y) => Math.Pow((x + y), 2);
-                case Function.SumOfSquare:
-                    return (x, y) => Math.Pow(x, 2) + Math.Pow(y, 2);
+                case Function.Prod:
+                    return (x, y) => 10*(x/100.0)*(y/100.0);
+                case Function.SinCos:
+                    return (x, y) =>100* Math.Sin(x/100.0)*Math.Cos(y/100.0);
+                case Function.Sin:
+                    return (x, y) => 100 * Math.Sin(x / 100.0);
                 default:
                     throw new ArgumentException("Задана некорректная функция");
-
             }
         }
 
-     public   static Function ParseFun(this string s)
+     public static Function ParseFun(this string s)
         {
             switch (s)
             {
@@ -535,10 +541,12 @@ namespace AffineTransforms_3D
                     return Function.Plus;
                 case "x - y":
                     return Function.Minus;
-                case "x^2 + y^2":
-                    return Function.SumOfSquare;
-                case "(x + y)^2":
-                    return Function.SumOfSquare;
+                case "10*(x/100)*(y/100)":
+                    return Function.Prod;
+                case "100*Sin(x/100)*Cos(y/100)":
+                    return Function.SinCos;
+                case "100*Sin(x/100)":
+                    return Function.Sin;
                 default:
                     throw new ArgumentException("Задана некорректная функция");
             }

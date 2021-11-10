@@ -342,10 +342,10 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(198, 15);
+            this.pictureBox1.Location = new System.Drawing.Point(209, 15);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(755, 650);
+            this.pictureBox1.Size = new System.Drawing.Size(744, 650);
             this.pictureBox1.TabIndex = 23;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
@@ -659,11 +659,12 @@
             this.funComboBox.Items.AddRange(new object[] {
             "x + y",
             "x - y",
-            "(x + y)^2",
-            "x^2 + y^2"});
-            this.funComboBox.Location = new System.Drawing.Point(11, 71);
+            "10*(x/100)*(y/100)",
+            "100*Sin(x/100)*Cos(y/100)",
+            "100*Sin(x/100)"});
+            this.funComboBox.Location = new System.Drawing.Point(6, 71);
             this.funComboBox.Name = "funComboBox";
-            this.funComboBox.Size = new System.Drawing.Size(173, 28);
+            this.funComboBox.Size = new System.Drawing.Size(197, 28);
             this.funComboBox.TabIndex = 49;
             this.funComboBox.SelectedIndexChanged += new System.EventHandler(this.funComboBox_SelectedIndexChanged);
             // 
