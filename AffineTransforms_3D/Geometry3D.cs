@@ -68,6 +68,20 @@ namespace AffineTransforms_3D
                 return;
             edges.Add(edge);
         }
+
+        public Point3D SideCenter()
+        {
+            double x = 0;
+            double y = 0;
+            double z = 0;
+            foreach(var e in edges)
+            {
+                x += e.begin.X;
+                y += e.begin.Y;
+                z += e.begin.Z;
+            }
+            return new Point3D(x / edges.Count, y / edges.Count, z / edges.Count);
+        }
     }
 
     //многогранник

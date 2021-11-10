@@ -108,20 +108,21 @@ namespace AffineTransforms_3D
 
         public Octahedron() : base()
         {
-            /*AddFace(new[] { a, b, e });
-            AddFace(new[] { b, c, e });
-            AddFace(new[] { e, c, d });//ade
-            AddFace(new[] { a, d, e });
-            AddFace(new[] { a, b, f });
+            var hex = new Hexahedron();
+            var a = hex.faces[0].SideCenter();
+            var b = hex.faces[1].SideCenter();
+            var c = hex.faces[2].SideCenter();
+            var d = hex.faces[3].SideCenter();
+            var e = hex.faces[4].SideCenter();
+            var f = hex.faces[5].SideCenter();
+            AddFace(new[] { a, f, b });
             AddFace(new[] { b, c, f });
             AddFace(new[] { c, d, f });
-            AddFace(new[] { d, a, f });*/
-            AddEdges(a, new List<Point3D> { b, d, c, e });
-            AddEdges(b, new List<Point3D> { d });
-            AddEdges(c, new List<Point3D> { e });
-            AddEdges(d, new List<Point3D> { c });
-            AddEdges(e, new List<Point3D> { b });
-            AddEdges(f, new List<Point3D> { b, d, c, e });
+            AddFace(new[] { d, a, f });
+            AddFace(new[] { a, e, b });
+            AddFace(new[] { b, e, c });
+            AddFace(new[] { c, e, d });
+            AddFace(new[] { d, e, a });
         }
 
     }
