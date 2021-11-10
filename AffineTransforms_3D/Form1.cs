@@ -43,7 +43,7 @@ namespace AffineTransforms_3D
         Point3D point2 = new Point3D(1,1,1);
         List<Point3D> forming;
         List<Point3D> showForming;
-        bool openedFigure = false;
+       
     
        
         GraphData graphData = new GraphData();
@@ -111,38 +111,16 @@ namespace AffineTransforms_3D
            return (Transform)Enum.Parse(typeof(Transform), transformComboBox.SelectedItem.ToString());
         } 
 
+       /// <summary>
+       /// применение афинного преобразования к currentFigure 
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
         private void transformButton_Click(object sender, EventArgs e)
         {
             if (currentFigure == null)
                 return;
             var transform = parseTransform();
-            //switch (transform)
-            //{
-            //    case Transform.Rotate:
-            //        {
-            //            //currentFigure = AffineTransforms.Transform(currentFigure, AffineTransforms.RotateTransform3D(currentFigure.FigureCenter(), 30, 0, 0, 1));
-            //            transforms.Add((transform, new List<double> {int.Parse(textBox1.Text), (int) plane, figureCenter?1:0}));
-            //            break;
-            //        }
-            //    case Transform.Reflect:
-            //        {
-            //            transforms.Add((transform, new List<double> {(int)plane}));
-            //            break;
-            //        }
-            //    default:
-            //        {
-            //            transforms.Add((transform, new List<double> 
-            //                { double.Parse(textBox2.Text), 
-            //                  double.Parse(textBox3.Text),
-            //                  double.Parse(textBox4.Text),
-            //                  figureCenter?1:0}));
-            //            break;
-            //        }
-            //}
-            //foreach (var i in transforms)
-            //{
-            //if (transforms.Count != 0)
-            //{
                 switch (transform)
                 {
                     case Transform.Rotate:
@@ -187,7 +165,6 @@ namespace AffineTransforms_3D
                             var z = double.Parse(textBox4.Text);
                             currentFigure.Transform(
                                 AffineTransforms.TranslateTransform3D(x, y, z));
-                            //transforms.Add(AffineTransforms.TranslateTransform3D(10, 10, 10));
                             break;
                         }
                     case Transform.Scale:
@@ -199,7 +176,6 @@ namespace AffineTransforms_3D
                             currentFigure.Transform(
                                 AffineTransforms.ScaleTransform3D(point,
                                 x, y, z));
-                            //transforms.Add(AffineTransforms.ScaleTransform3D(currentFigure.FigureCenter(), 2));
                             break;
                         }
                     case Transform.Reflect:
@@ -207,13 +183,15 @@ namespace AffineTransforms_3D
                             currentFigure.Transform(
                                 AffineTransforms.ReflectionTransform(plane));
                             break;
-                        }
-                        // }
-              //  }
+                        }             
             }
             ReDraw();
         }
 
+
+        /// <summary>
+        /// Получение проекции currentFigure и её отрисовка
+        /// </summary>
         void ReDraw()
         {
             if (currentFigure == null)
@@ -223,15 +201,6 @@ namespace AffineTransforms_3D
             var centerY = pictureBox1.Size.Height / 2 ;
 
             var projection = Projections.Apply(currentFigure, selectedProjetion);
-            //if (!openedFigure)
-            //{
-            //    currentFigure = Projections.Apply(currentFigure, selectedProjetion);
-            //}
-            //else
-            //{
-            //    openedFigure = false;
-            //}
-            
             foreach (var r in projection.edges)
             {
                 g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
@@ -308,7 +277,6 @@ namespace AffineTransforms_3D
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            
             if (currentFigure == null)
                 return;
             g.Clear(BackColor);
@@ -319,8 +287,6 @@ namespace AffineTransforms_3D
                 g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
                    (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
             }
-            
-            //ReDraw();
         }
 
         private void textBox8_TextChanged(object sender, EventArgs e)
@@ -442,7 +408,6 @@ namespace AffineTransforms_3D
                 lastfig = t.fname;
                 proj_box.SelectedIndex = (int)t.proj;
                 figures_box.SelectedIndex = figures_box.Items.IndexOf(t.fname);
-                openedFigure = true;
                 ReDraw();
                 //showFigure_btn_Click(sender, e);
             }
