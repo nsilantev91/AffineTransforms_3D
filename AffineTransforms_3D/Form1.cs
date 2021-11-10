@@ -80,27 +80,29 @@ namespace AffineTransforms_3D
         private void showFigure_btn_Click(object sender, EventArgs e)
         {
             string figure = (string)figures_box.SelectedItem;
-            if (figure == "Тетраэдр")
-                currentFigure = Figures.Tetrahedron;
+            if (lastfig != figure)
+            {
+                if (figure == "Тетраэдр")
+                    currentFigure = Figures.Tetrahedron;
 
-            if (figure == "Гексаэдр")
+                if (figure == "Гексаэдр")
 
-                currentFigure = Figures.Hexahedron;
+                    currentFigure = Figures.Hexahedron;
 
-            if (figure == "Октаэдр")
-                currentFigure = Figures.Octahedron;
+                if (figure == "Октаэдр")
+                    currentFigure = Figures.Octahedron;
 
-            if (figure == "Икосаэдр")
-                currentFigure = new Icosahedron(150);
+                if (figure == "Икосаэдр")
+                    currentFigure = new Icosahedron(150);
 
-            if (figure == "Додэкаэдр")
-                currentFigure = new Dodecahedron(150);
-            if (figure == "График")
-                currentFigure = new Graph(graphData);
-            lastfig = figure;
-            if (figure == "Пользовательская")
-                lastfig = "Сustom figure";
-
+                if (figure == "Додэкаэдр")
+                    currentFigure = new Dodecahedron(150);
+                if (figure == "График")
+                    currentFigure = new Graph(graphData);
+                lastfig = figure;
+                if (figure == "Пользовательская")
+                    lastfig = "Сustom figure";
+            }
             ReDraw();
         }
 
@@ -139,16 +141,6 @@ namespace AffineTransforms_3D
                         break;
                     }
             }
-                
-            this.showFigure_btn_Click(sender, e);
-
-        }
-
-        void ReDraw()
-        {
-            if (currentFigure == null)
-                return;
-            g.Clear(BackColor); 
             var centerX = Size.Width / 2 - 200;
             var centerY = Size.Height / 2 - 150;
             //foreach (var i in transforms)
@@ -222,6 +214,17 @@ namespace AffineTransforms_3D
                         // }
                 }
             }
+            ReDraw();
+        }
+
+        void ReDraw()
+        {
+            if (currentFigure == null)
+                return;
+            g.Clear(BackColor);
+            var centerX = Size.Width / 2 - 200;
+            var centerY = Size.Height / 2 - 150;
+           
             if (!openedFigure)
             {
                 currentFigure = Projections.Apply(currentFigure, selectedProjetion);
