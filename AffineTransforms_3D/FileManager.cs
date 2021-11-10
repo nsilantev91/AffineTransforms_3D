@@ -29,15 +29,6 @@ namespace AffineTransforms_3D
     static class FileHelper
     {
 
-        public static FileWorker Load(string FileName)
-        {
-            using (var stream = System.IO.File.OpenRead(FileName))
-            {
-                var serializer = new XmlSerializer(typeof(FileWorker));
-                return serializer.Deserialize(stream) as FileWorker;
-            }
-        }
-
         public static void WriteToBinaryFile<T>(string filePath, T objectToWrite, bool append = false)
         {
             using (Stream stream = File.Open(filePath, append ? FileMode.Append : FileMode.Create))
