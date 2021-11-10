@@ -82,7 +82,7 @@ namespace AffineTransforms_3D
 
        
         //матрица смежности
-        public Dictionary<Point3D, List<Point3D>> adjacencyMatrix { get; }
+       // public Dictionary<Point3D, List<Point3D>> adjacencyMatrix { get; }
 
         public List<Side> faces { get; }
 
@@ -90,15 +90,15 @@ namespace AffineTransforms_3D
         {
             edges = new List<Edge>();
             vertexes = new List<Point3D>();
-            adjacencyMatrix = new Dictionary<Point3D, List<Point3D>>();
+          //  adjacencyMatrix = new Dictionary<Point3D, List<Point3D>>();
             faces = new List<Side>();
         }
 
         public Figure(List<Point3D> points) : this()
         {
             vertexes = points;
-            foreach (var p in points)
-                adjacencyMatrix.Add(p, new List<Point3D>());
+            //foreach (var p in points)
+            //    adjacencyMatrix.Add(p, new List<Point3D>());
         }
 
         public void AddEdge(Point3D p1, Point3D p2)
@@ -111,10 +111,10 @@ namespace AffineTransforms_3D
                 vertexes.Add(p2);
             if (!edges.Contains(new Edge(p1, p2)))
                 edges.Add(new Edge(p1, p2));
-            if (!adjacencyMatrix.ContainsKey(p1))
-                adjacencyMatrix.Add(p1, new List<Point3D> { p2 });
-            else
-                adjacencyMatrix[p1].Add(p2);
+            //if (!adjacencyMatrix.ContainsKey(p1))
+            //    adjacencyMatrix.Add(p1, new List<Point3D> { p2 });
+            //else
+            //    adjacencyMatrix[p1].Add(p2);
         }
        
         public void AddEdges(Point3D startPoint, List<Point3D> pointsList)

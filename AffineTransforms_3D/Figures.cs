@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
+using System.Diagnostics ;
 
 namespace AffineTransforms_3D
 {
@@ -61,7 +62,7 @@ namespace AffineTransforms_3D
         public Tetrahedron() : base()
         {
             AddFace(new[] { a, d, c });
-            AddFace(new[] { a,d,b});
+            AddFace(new[] { a, d, b});
             AddFace(new[] { c, d, b });
             AddFace(new[] { a, c, b });
         }
@@ -169,7 +170,7 @@ namespace AffineTransforms_3D
     }
 
     [Serializable]
-    class Dodecahedron:Figure
+    public class Dodecahedron:Figure
     {
         private void MakeVertices(double sLen)
         {
@@ -251,5 +252,55 @@ namespace AffineTransforms_3D
        }
     }
 
-    
+    [Serializable]
+    public class Graph:Figure
+    {
+        int X0 { get; }
+        int X1 { get; }
+        int Y0 { get; }
+        int Y1 { get; }
+        int Step { get; }
+
+        Func<int,int,double> Fun { get; }
+
+        public Graph(Func<int, int, double> fun, int x0, int x1, int y0, int y1, int step)
+        {
+            X0 = x0;
+            Y0 = y0;
+            X1 = x1;
+            Y1 = y1;
+            Step = step;
+            Debug.Assert(X1 > X0);
+            Debug.Assert(Y1 > Y0);
+            Debug.Assert((X1-X0)/Step>1);
+            Debug.Assert((Y1 - Y0) / Step > 1);
+            Fun = fun;
+            AddFaces();
+        }
+
+        public Graph(GraphData graphData) : this(graphData.Fun.Fun(), graphData.X0, graphData.X1,
+            graphData.Y0, graphData.Y1, graphData.StepCount)
+        { }
+        
+
+        void AddFaces()
+        {
+            var dx = (X1 - X0) / Step;
+            var dy = (Y1 - Y0) / Step;
+            for (var x = X0; x <= X1-dx; x += dx)
+            {
+                for (var y = Y0; y <= Y1-dy; y += dy)
+                {
+                    var a = new Point3D(x, y, Fun(x,y));
+                    var b = new Point3D(x+dx, y, Fun(x+dx, y));
+                    var c = new Point3D(x+dx, y+dy, Fun(x+dx, y+dy));
+                    var d = new Point3D(x, y+dy, Fun(x, y+dy));
+                    AddFace(new Point3D[] { a,b,c,d});
+                }
+            }
+        }
+
+    }
+
+
 }

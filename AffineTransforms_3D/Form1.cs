@@ -15,6 +15,20 @@ namespace AffineTransforms_3D
 {
     enum Projection { Perspective, Isometric, Trimetric, Dimetric };
     enum Transform {Transposition, Rotate, Scale, Reflect }
+
+    public  enum Function { Plus, Minus, SquareOfSum, SumOfSquare }
+
+    public struct GraphData
+    {
+        public int X0;
+        public int X1;
+        public int Y0;
+        public int Y1;
+        public int StepCount;
+        public Function Fun;
+    }
+
+   
     public partial class Form1 : Form
     {
         String lastfig = "";
@@ -29,6 +43,8 @@ namespace AffineTransforms_3D
         Point3D point2 = new Point3D(1,1,1);
         List<Point3D> forming;
         List<Point3D> showForming;
+       
+        GraphData graphData = new GraphData();
         public Form1()
         {
             InitializeComponent();
@@ -45,11 +61,18 @@ namespace AffineTransforms_3D
             g = pictureBox1.CreateGraphics();
             proj_box.SelectedIndex = 0;
             figures_box.SelectedIndex = 0;
+            funComboBox.SelectedIndex = 0;
             selectedProjetion = Projection.Perspective;
             currentFigure = new Figure();
             forming = new List<Point3D>();
             axis_box.SelectedIndex = 0;
             showForming = new List<Point3D>();
+            graphData.X0 = int.Parse(x0FunTextBox.Text);
+            graphData.Y0 = int.Parse(y0FunTextBox.Text);
+            graphData.X1 = int.Parse(x1FunTextBox.Text);
+            graphData.Y1 = int.Parse(y1FunTextBox.Text);
+            graphData.StepCount= int.Parse(stepCountTextBox.Text);
+
         }
 
         private void showFigure_btn_Click(object sender, EventArgs e)
@@ -70,6 +93,8 @@ namespace AffineTransforms_3D
 
             if (figure == "Додэкаэдр")
                 currentFigure = new Dodecahedron(150);
+            if (figure == "График")
+                currentFigure = new Graph(graphData);
             lastfig = figure;
             if (figure == "Пользовательская")
                 lastfig = "Сustom figure";
@@ -429,8 +454,94 @@ namespace AffineTransforms_3D
             }
 
         }
+
+        private void funComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            graphData.Fun = (sender as ComboBox).SelectedItem.ToString().ParseFun();
+        }
+
+        private void textBox6_TextChanged(object sender, EventArgs e)
+        {
+            graphData.Y1 = int.Parse(y1FunTextBox.Text);
+        }
+
+        private void textBox7_TextChanged(object sender, EventArgs e)
+        {
+            graphData.X1 = int.Parse(x1FunTextBox.Text);
+        }
+
+        private void label21_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox9_TextChanged_1(object sender, EventArgs e)
+        {
+            graphData.X0 = int.Parse(x0FunTextBox.Text);
+        }
+
+        private void label22_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox8_TextChanged_1(object sender, EventArgs e)
+        {
+            graphData.Y0 = int.Parse(y0FunTextBox.Text);
+        }
+
+        private void label23_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label20_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void stepCountTextBox_TextChanged(object sender, EventArgs e)
+        {
+            graphData.StepCount = int.Parse(stepCountTextBox.Text);
+        }
     }
 
 
-    
+    public static class EnumExtension
+    {
+      public  static Func<int, int, double> Fun(this Function function)
+        {
+            switch (function)
+            {
+                case Function.Plus:
+                    return (x, y) => x + y;
+                case Function.Minus:
+                    return (x, y) => x - y;
+                case Function.SquareOfSum:
+                    return (x, y) => Math.Pow((x + y), 2);
+                case Function.SumOfSquare:
+                    return (x, y) => Math.Pow((x + y), 2);
+                default:
+                    throw new ArgumentException("Задана некорректная функция");
+
+            }
+        }
+
+     public   static Function ParseFun(this string s)
+        {
+            switch (s)
+            {
+                case "x + y":
+                    return Function.Plus;
+                case "x - y":
+                    return Function.Minus;
+                case "x^2 + y^2":
+                    return Function.SumOfSquare;
+                case "(x + y)^2":
+                    return Function.SumOfSquare;
+                default:
+                    throw new ArgumentException("Задана некорректная функция");
+            }
+        }
+     }    
 }
