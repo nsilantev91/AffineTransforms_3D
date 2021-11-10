@@ -68,28 +68,66 @@ namespace AffineTransforms_3D
                 return;
             edges.Add(edge);
         }
+
+        public Point3D SideCenter()
+        {
+            double x = 0;
+            double y = 0;
+            double z = 0;
+            foreach (var e in edges)
+            {
+                x += e.begin.X;
+                y += e.begin.Y;
+                z += e.begin.Z;
+            }
+            return new Point3D(x / edges.Count, y / edges.Count, z / edges.Count);
+        }
     }
 
     //многогранник
     [Serializable]
     public class Figure
     {
-        //cписок ребер
-        public List<Edge> edges { get; }
-
-        //список вершин
-        public List<Point3D> vertexes { get; set; }
-
        
+        public IEnumerable<Edge> edges
+        {
+            get
+            {
+                foreach(var f in faces)
+                {
+                    foreach(var e in f.edges)
+                    {
+                        yield return e;
+                    }
+                }
+            }
+        }
+
+        public IEnumerable<Point3D> vertexes
+        {
+            get
+            {
+                foreach (var f in faces)
+                {
+                    foreach (var e in f.edges)
+                    {
+                        yield return e.begin;
+                    }
+                }
+            }
+        }
+
+        ////список вершин
+        //public List<Point3D> vertexes { get; set; }
+
+
         //матрица смежности
-       // public Dictionary<Point3D, List<Point3D>> adjacencyMatrix { get; }
+        // public Dictionary<Point3D, List<Point3D>> adjacencyMatrix { get; }
 
         public List<Side> faces { get; }
 
         public Figure()
         {
-            edges = new List<Edge>();
-            vertexes = new List<Point3D>();
           //  adjacencyMatrix = new Dictionary<Point3D, List<Point3D>>();
             faces = new List<Side>();
         }
@@ -109,35 +147,6 @@ namespace AffineTransforms_3D
 
         }
 
-        public Figure(List<Point3D> points) : this()
-        {
-            vertexes = points;
-            //foreach (var p in points)
-            //    adjacencyMatrix.Add(p, new List<Point3D>());
-        }
-
-        public void AddEdge(Point3D p1, Point3D p2)
-        {
-            if (p1 == p2)
-                return;
-            if (!vertexes.Contains(p1))
-                vertexes.Add(p1);
-            if (!vertexes.Contains(p2))
-                vertexes.Add(p2);
-            if (!edges.Contains(new Edge(p1, p2)))
-                edges.Add(new Edge(p1, p2));
-            //if (!adjacencyMatrix.ContainsKey(p1))
-            //    adjacencyMatrix.Add(p1, new List<Point3D> { p2 });
-            //else
-            //    adjacencyMatrix[p1].Add(p2);
-        }
-       
-        public void AddEdges(Point3D startPoint, List<Point3D> pointsList)
-        {
-            foreach (var point in pointsList)
-                AddEdge(startPoint, point);
-        }
-
         public Point3D FigureCenter()
         {
             var x = vertexes.Average(point => point.X);
@@ -151,10 +160,9 @@ namespace AffineTransforms_3D
             var side = new Side();
             for (int i = 0; i < points.Length - 1; i++)
             {
-                AddEdge(points[i], points[i + 1]);
+                
                 side.addEdge(new Edge(points[i], points[i + 1]));
             }
-            AddEdge(points.Last(), points.First());
             side.addEdge(new Edge(points.Last(), points.First()));
             faces.Add(side);
         }
