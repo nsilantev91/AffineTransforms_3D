@@ -289,16 +289,6 @@ namespace AffineTransforms_3D
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
-
         CoordinatePlane parsePlane()
         {
             return (CoordinatePlane)Enum.Parse(typeof(CoordinatePlane), planeComboBox.SelectedItem.ToString());
@@ -328,16 +318,6 @@ namespace AffineTransforms_3D
             }
             
             //ReDraw();
-        }
-
-        private void textBox5_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label10_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void textBox8_TextChanged(object sender, EventArgs e)
@@ -481,34 +461,14 @@ namespace AffineTransforms_3D
             graphData.X1 = int.Parse(x1FunTextBox.Text);
         }
 
-        private void label21_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void textBox9_TextChanged_1(object sender, EventArgs e)
         {
             graphData.X0 = int.Parse(x0FunTextBox.Text);
         }
 
-        private void label22_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void textBox8_TextChanged_1(object sender, EventArgs e)
         {
             graphData.Y0 = int.Parse(y0FunTextBox.Text);
-        }
-
-        private void label23_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label20_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void stepCountTextBox_TextChanged(object sender, EventArgs e)

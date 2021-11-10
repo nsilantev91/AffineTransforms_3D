@@ -95,9 +95,9 @@
             // 
             // showFigure_btn
             // 
-            this.showFigure_btn.Location = new System.Drawing.Point(5, 201);
+            this.showFigure_btn.Location = new System.Drawing.Point(8, 201);
             this.showFigure_btn.Name = "showFigure_btn";
-            this.showFigure_btn.Size = new System.Drawing.Size(166, 29);
+            this.showFigure_btn.Size = new System.Drawing.Size(163, 29);
             this.showFigure_btn.TabIndex = 1;
             this.showFigure_btn.Text = "Отобразить";
             this.showFigure_btn.UseVisualStyleBackColor = true;
@@ -121,9 +121,9 @@
             "Изометрическая",
             "Триметрическая",
             "Диметрическая"});
-            this.proj_box.Location = new System.Drawing.Point(5, 172);
+            this.proj_box.Location = new System.Drawing.Point(8, 172);
             this.proj_box.Name = "proj_box";
-            this.proj_box.Size = new System.Drawing.Size(166, 24);
+            this.proj_box.Size = new System.Drawing.Size(163, 24);
             this.proj_box.TabIndex = 3;
             this.proj_box.SelectedIndexChanged += new System.EventHandler(this.proj_box_SelectedIndexChanged);
             // 
@@ -139,16 +139,16 @@
             "Додэкаэдр",
             "Пользовательская",
             "График"});
-            this.figures_box.Location = new System.Drawing.Point(9, 12);
+            this.figures_box.Location = new System.Drawing.Point(8, 12);
             this.figures_box.Name = "figures_box";
-            this.figures_box.Size = new System.Drawing.Size(162, 24);
+            this.figures_box.Size = new System.Drawing.Size(163, 24);
             this.figures_box.TabIndex = 4;
             // 
             // clear_btn
             // 
-            this.clear_btn.Location = new System.Drawing.Point(5, 236);
+            this.clear_btn.Location = new System.Drawing.Point(8, 236);
             this.clear_btn.Name = "clear_btn";
-            this.clear_btn.Size = new System.Drawing.Size(166, 29);
+            this.clear_btn.Size = new System.Drawing.Size(163, 29);
             this.clear_btn.TabIndex = 5;
             this.clear_btn.Text = "Очистить";
             this.clear_btn.UseVisualStyleBackColor = true;
@@ -156,10 +156,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(9, 517);
+            this.button2.Location = new System.Drawing.Point(8, 517);
             this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(162, 25);
+            this.button2.Size = new System.Drawing.Size(163, 25);
             this.button2.TabIndex = 7;
             this.button2.Text = "Transform";
             this.button2.UseVisualStyleBackColor = true;
@@ -174,10 +174,10 @@
             "Rotate",
             "Scale",
             "Reflect"});
-            this.transformComboBox.Location = new System.Drawing.Point(11, 489);
+            this.transformComboBox.Location = new System.Drawing.Point(8, 489);
             this.transformComboBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.transformComboBox.Name = "transformComboBox";
-            this.transformComboBox.Size = new System.Drawing.Size(162, 24);
+            this.transformComboBox.Size = new System.Drawing.Size(165, 24);
             this.transformComboBox.TabIndex = 9;
             this.transformComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -193,10 +193,10 @@
             // textBox1
             // 
             this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(11, 447);
+            this.textBox1.Location = new System.Drawing.Point(10, 447);
             this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(160, 22);
+            this.textBox1.Size = new System.Drawing.Size(161, 22);
             this.textBox1.TabIndex = 10;
             this.textBox1.Text = "0";
             // 
@@ -221,7 +221,7 @@
             // textBox2
             // 
             this.textBox2.Enabled = false;
-            this.textBox2.Location = new System.Drawing.Point(5, 335);
+            this.textBox2.Location = new System.Drawing.Point(8, 335);
             this.textBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(37, 22);
@@ -289,12 +289,11 @@
             this.label7.Size = new System.Drawing.Size(120, 17);
             this.label7.TabIndex = 19;
             this.label7.Text = "Coordinate plane:";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // centerFigureCheckBox
             // 
             this.centerFigureCheckBox.AutoSize = true;
-            this.centerFigureCheckBox.Location = new System.Drawing.Point(42, 387);
+            this.centerFigureCheckBox.Location = new System.Drawing.Point(26, 391);
             this.centerFigureCheckBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.centerFigureCheckBox.Name = "centerFigureCheckBox";
             this.centerFigureCheckBox.Size = new System.Drawing.Size(18, 17);
@@ -313,7 +312,7 @@
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(66, 361);
+            this.textBox5.Location = new System.Drawing.Point(50, 361);
             this.textBox5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox5.Multiline = true;
             this.textBox5.Name = "textBox5";
@@ -321,7 +320,6 @@
             this.textBox5.Size = new System.Drawing.Size(105, 69);
             this.textBox5.TabIndex = 22;
             this.textBox5.Text = "Transform relative to the center of the figure";
-            this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
             // 
             // pictureBox1
             // 
@@ -364,7 +362,6 @@
             this.label10.Size = new System.Drawing.Size(25, 17);
             this.label10.TabIndex = 27;
             this.label10.Text = "Y1";
-            this.label10.Click += new System.EventHandler(this.label10_Click);
             // 
             // textBoxY1
             // 
@@ -646,10 +643,10 @@
             "10*(x/100)*(y/100)",
             "100*Sin(x/100)*Cos(y/100)",
             "100*Sin(x/100)"});
-            this.funComboBox.Location = new System.Drawing.Point(5, 57);
+            this.funComboBox.Location = new System.Drawing.Point(8, 57);
             this.funComboBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.funComboBox.Name = "funComboBox";
-            this.funComboBox.Size = new System.Drawing.Size(166, 24);
+            this.funComboBox.Size = new System.Drawing.Size(163, 24);
             this.funComboBox.TabIndex = 49;
             this.funComboBox.SelectedIndexChanged += new System.EventHandler(this.funComboBox_SelectedIndexChanged);
             // 
@@ -661,7 +658,6 @@
             this.label20.Size = new System.Drawing.Size(25, 17);
             this.label20.TabIndex = 57;
             this.label20.Text = "Y1";
-            this.label20.Click += new System.EventHandler(this.label20_Click);
             // 
             // y1FunTextBox
             // 
@@ -681,7 +677,6 @@
             this.label21.Size = new System.Drawing.Size(25, 17);
             this.label21.TabIndex = 55;
             this.label21.Text = "X1";
-            this.label21.Click += new System.EventHandler(this.label21_Click);
             // 
             // x1FunTextBox
             // 
@@ -701,7 +696,6 @@
             this.label22.Size = new System.Drawing.Size(25, 17);
             this.label22.TabIndex = 53;
             this.label22.Text = "Y0";
-            this.label22.Click += new System.EventHandler(this.label22_Click);
             // 
             // y0FunTextBox
             // 
@@ -721,7 +715,6 @@
             this.label23.Size = new System.Drawing.Size(25, 17);
             this.label23.TabIndex = 51;
             this.label23.Text = "X0";
-            this.label23.Click += new System.EventHandler(this.label23_Click);
             // 
             // x0FunTextBox
             // 
@@ -820,7 +813,6 @@
             this.Controls.Add(this.showFigure_btn);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
