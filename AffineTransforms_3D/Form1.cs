@@ -111,45 +111,44 @@ namespace AffineTransforms_3D
            return (Transform)Enum.Parse(typeof(Transform), transformComboBox.SelectedItem.ToString());
         } 
 
-        private void button2_Click(object sender, EventArgs e)
+        private void transformButton_Click(object sender, EventArgs e)
         {
             if (currentFigure == null)
                 return;
             var transform = parseTransform();
-            switch (transform)
-            {
-                case Transform.Rotate:
-                    {
-                        //currentFigure = AffineTransforms.Transform(currentFigure, AffineTransforms.RotateTransform3D(currentFigure.FigureCenter(), 30, 0, 0, 1));
-                        transforms.Add((transform, new List<double> {int.Parse(textBox1.Text), (int) plane, figureCenter?1:0}));
-                        break;
-                    }
-                case Transform.Reflect:
-                    {
-                        transforms.Add((transform, new List<double> {(int)plane}));
-                        break;
-                    }
-                default:
-                    {
-                        transforms.Add((transform, new List<double> 
-                            { double.Parse(textBox2.Text), 
-                              double.Parse(textBox3.Text),
-                              double.Parse(textBox4.Text),
-                              figureCenter?1:0}));
-                        break;
-                    }
-            }
+            //switch (transform)
+            //{
+            //    case Transform.Rotate:
+            //        {
+            //            //currentFigure = AffineTransforms.Transform(currentFigure, AffineTransforms.RotateTransform3D(currentFigure.FigureCenter(), 30, 0, 0, 1));
+            //            transforms.Add((transform, new List<double> {int.Parse(textBox1.Text), (int) plane, figureCenter?1:0}));
+            //            break;
+            //        }
+            //    case Transform.Reflect:
+            //        {
+            //            transforms.Add((transform, new List<double> {(int)plane}));
+            //            break;
+            //        }
+            //    default:
+            //        {
+            //            transforms.Add((transform, new List<double> 
+            //                { double.Parse(textBox2.Text), 
+            //                  double.Parse(textBox3.Text),
+            //                  double.Parse(textBox4.Text),
+            //                  figureCenter?1:0}));
+            //            break;
+            //        }
+            //}
             //foreach (var i in transforms)
             //{
-            if (transforms.Count != 0)
-            {
-                var i = transforms.Last();
-                switch (i.Item1)
+            //if (transforms.Count != 0)
+            //{
+                switch (transform)
                 {
                     case Transform.Rotate:
                         {
+                            var degree = int.Parse(textBox1.Text);
                             (double, double, double) axis = (0, 0, 0);
-                            var plane = (CoordinatePlane)i.Item2[1];
                             switch (plane)
                             {
                                 case CoordinatePlane.XY:
@@ -170,45 +169,47 @@ namespace AffineTransforms_3D
                                 var v = v2 - v1;
                                 currentFigure.Transform(
                                   AffineTransforms.RotateTransform3D(point1,
-                                  (int)i.Item2[0], v.X, v.Y, v.Z));
+                                  degree, v.X, v.Y, v.Z));
                             }
                             else
                             {
-                                var figureCenter = ((int)i.Item2[2]) == 1;
                                 var point = figureCenter ? currentFigure.FigureCenter() : new Point3D(0, 0, 0);
                                 currentFigure.Transform(
                                     AffineTransforms.RotateTransform3D(point,
-                                    (int)i.Item2[0], axis.Item1, axis.Item2, axis.Item3));
-                            }
-
-                            //transforms.Add(AffineTransforms.RotateTransform3D(currentFigure.FigureCenter(), 30, 0, 0, 1));
+                                    degree, axis.Item1, axis.Item2, axis.Item3));
+                            }                      
                             break;
                         }
                     case Transform.Transposition:
                         {
+                            var x =double.Parse(textBox2.Text);
+                            var y =double.Parse(textBox3.Text);
+                            var z = double.Parse(textBox4.Text);
                             currentFigure.Transform(
-                                AffineTransforms.TranslateTransform3D(i.Item2[0], i.Item2[1], i.Item2[2]));
+                                AffineTransforms.TranslateTransform3D(x, y, z));
                             //transforms.Add(AffineTransforms.TranslateTransform3D(10, 10, 10));
                             break;
                         }
                     case Transform.Scale:
                         {
-                            var figureCenter = (int)i.Item2[3] == 1;
+                            var x = double.Parse(textBox2.Text);
+                            var y = double.Parse(textBox3.Text);
+                            var z = double.Parse(textBox4.Text);
                             var point = figureCenter ? currentFigure.FigureCenter() : new Point3D(0, 0, 0);
                             currentFigure.Transform(
                                 AffineTransforms.ScaleTransform3D(point,
-                                i.Item2[0], i.Item2[1], i.Item2[2]));
+                                x, y, z));
                             //transforms.Add(AffineTransforms.ScaleTransform3D(currentFigure.FigureCenter(), 2));
                             break;
                         }
                     case Transform.Reflect:
                         {
                             currentFigure.Transform(
-                                AffineTransforms.ReflectionTransform((CoordinatePlane)(int)(i.Item2[0])));
+                                AffineTransforms.ReflectionTransform(plane));
                             break;
                         }
                         // }
-                }
+              //  }
             }
             ReDraw();
         }
