@@ -97,7 +97,7 @@ namespace AffineTransforms_3D
 
         }
 
-        public static Point ApplyForPoint3D(Point3D point, Projection selectedProjection)
+        public static Point3D ApplyForPoint3D(Point3D point, Projection selectedProjection)
         {
             var pointMatrix = new double[,] { { point.X, point.Y, point.Z, 1 } };
             double[,] matrProj = { { 0 } };
@@ -118,7 +118,7 @@ namespace AffineTransforms_3D
                 matrProj = dimetric;
             }
             var res = Helpers.MultiplyMatrix(pointMatrix, matrProj);
-            return new Point((int)(res[0, 0] / res[0, 3]), (int)(res[0, 1] / res[0, 3]));
+            return new Point3D(res[0, 0] / res[0, 3], res[0, 1] / res[0, 3], point.Z);
         }
     }
 }

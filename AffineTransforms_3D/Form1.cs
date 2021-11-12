@@ -38,6 +38,7 @@ namespace AffineTransforms_3D
         Figure currentFigure;
         bool figureCenter;
         bool usingLine = false;
+        bool usingZBuffer = false;
         CoordinatePlane plane;
         Point3D point1 = new Point3D(0,0,0);
         Point3D point2 = new Point3D(1,1,1);
@@ -194,18 +195,39 @@ namespace AffineTransforms_3D
         /// </summary>
         void ReDraw()
         {
-            if (currentFigure == null)
+            if (currentFigure.faces.Count == 0)
                 return;
             g.Clear(BackColor);
             var centerX = pictureBox1.Size.Width / 2;
             var centerY = pictureBox1.Size.Height / 2 ;
 
             var projection = Projections.Apply(currentFigure, selectedProjetion);
-            foreach (var r in projection.edges)
+            if (usingZBuffer)
             {
-                g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
-                   (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+                pictureBox1.Invalidate();
+                pictureBox1.Image = ZBuffer.zBuffer(pictureBox1.Width, pictureBox1.Height, projection);
             }
+            else
+            {
+                foreach (var r in projection.edges)
+                {
+                    g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
+                       (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+                }
+            }
+
+
+            /*foreach(var face in projection.faces)
+            {
+                var pen = new Pen(Color.FromArgb(rand.Next(0, 255), rand.Next(0, 255), rand.Next(0, 255)), 2);
+                foreach(var r in face.edges)
+                {
+                    g.DrawLine(pen, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
+                    (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+                }
+            }*/
+            //ZBuffer.Triangulate(projection);
+
         }
 
 
@@ -228,6 +250,7 @@ namespace AffineTransforms_3D
             num_parts_box.Text = "0";
             create_fig_btn.Enabled = false;
             num_parts_box.Enabled = false;
+
 
         }
 
@@ -277,16 +300,23 @@ namespace AffineTransforms_3D
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            if (currentFigure == null)
+            if (currentFigure.faces.Count == 0)
                 return;
             g.Clear(BackColor);
             var centerX = Size.Width / 2 - 200;
             var centerY = Size.Height / 2 - 150;
-            foreach (var r in currentFigure.edges)
+           /* if (usingZBuffer)
             {
-                g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
-                   (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+                pictureBox1.Image = ZBuffer.zBuffer(pictureBox1.Width, pictureBox1.Height, currentFigure);
             }
+            else*/
+            //{
+                foreach (var r in currentFigure.edges)
+                {
+                    g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
+                       (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+                }
+            //}
         }
 
         private void textBox8_TextChanged(object sender, EventArgs e)
@@ -351,14 +381,15 @@ namespace AffineTransforms_3D
             var y = int.Parse(forming_y_box.Text);
             var z = int.Parse(forming_z_box.Text);
             showForming.Add(new Point3D(x, y, z));
-            forming.Add(new Point3D(x - 200, y - 200, z));
+            forming.Add(new Point3D(x - 200, y - 200, z - 200));
             if(forming.Count >=2)
             {
                 num_parts_box.Enabled = true;
                 Point[] points = new Point[forming.Count];
                 for(int i = 0; i< showForming.Count; i++)
                 {
-                    points[i] = Projections.ApplyForPoint3D(showForming[i], selectedProjetion);
+                    var pp = Projections.ApplyForPoint3D(showForming[i], selectedProjetion);
+                    points[i] = new Point((int)pp.X, (int)pp.Y);
                 }
                 g.DrawLines(Pens.Black, points);
             }
@@ -442,6 +473,11 @@ namespace AffineTransforms_3D
         private void stepCountTextBox_TextChanged(object sender, EventArgs e)
         {
             graphData.StepCount = int.Parse(stepCountTextBox.Text);
+        }
+
+        private void zBuf_check_btn_CheckedChanged(object sender, EventArgs e)
+        {
+            usingZBuffer = !usingZBuffer;
         }
     }
 

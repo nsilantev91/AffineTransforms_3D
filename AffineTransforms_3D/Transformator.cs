@@ -56,7 +56,7 @@ namespace AffineTransforms_3D
         {
             var pointMatrix = new double[,] { { point.X, point.Y, point.Z, 1 } };
             var res = Helpers.MultiplyMatrix(pointMatrix, matrix);
-            return new Point3D(res[0,0]/res[0,3], res[0,1]/res[0,3], res[0,2]/res[0,3]);
+            return new Point3D(res[0,0]/res[0,3], res[0,1]/res[0,3], point.Z);
         }
     }
 
