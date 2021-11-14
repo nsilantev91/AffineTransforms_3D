@@ -17,6 +17,8 @@ namespace AffineTransforms_3D
             { 0, 0, 0, 0.001},
             { 0, 0, 0, 1 }
         };
+
+
         //https://studfile.net/preview/903563/page:5/
         static double[,] isometric =
         {
@@ -71,14 +73,14 @@ namespace AffineTransforms_3D
             }
             Figure resFigure = new Figure();
             var transformator = new CustomMatrixTransformator(matrProj);
-            foreach(var face in fig.faces)
+            foreach(var face in fig.Faces)
             {
                 var edges = face.edges;
                 List<Point3D> ed = new List<Point3D>();
                 foreach(var e in edges)
                 {
                     ed.Add(transformator.Transform(e.begin));
-                    ed.Add(transformator.Transform(e.end));
+                    //ed.Add(transformator.Transform(e.end));
                 }
                 resFigure.AddFace(ed.ToArray());
             }

@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 using System.Windows.Media.Media3D;
-using System.IO;
 
 
 namespace AffineTransforms_3D
@@ -28,6 +23,12 @@ namespace AffineTransforms_3D
         public Function Fun;
     }
 
+    public struct Camera
+    {
+        public Vector3D Direction;
+        public Point3D Position;
+    }
+
    
     public partial class Form1 : Form
     {
@@ -43,13 +44,25 @@ namespace AffineTransforms_3D
         Point3D point2 = new Point3D(1,1,1);
         List<Point3D> forming;
         List<Point3D> showForming;
-       
+        Camera camera = new Camera();
+        Axes axes = new Axes();
+      
+       private void syncCamera()
+        {
+            camera.Position.X = double.Parse(cameraXTextBox.Text);
+            camera.Position.Y = double.Parse(cameraYTextBox.Text);
+            camera.Position.Z= double.Parse(cameraZTextBox.Text);
+            camera.Direction.X = double.Parse(vectorXtextBox.Text);
+            camera.Direction.Y = double.Parse(vectorYtextBox.Text);
+            camera.Direction.Z = double.Parse(vectorZtextBox.Text);
+        }
     
        
         GraphData graphData = new GraphData();
         public Form1()
         {
             InitializeComponent();
+            syncCamera();
             planeComboBox.SelectedIndex = 0;
             transformComboBox.SelectedIndex = 0;
             AutoSize = false;
@@ -148,14 +161,16 @@ namespace AffineTransforms_3D
                                 currentFigure.Transform(
                                   AffineTransforms.RotateTransform3D(point1,
                                   degree, v.X, v.Y, v.Z));
-                            }
+                             } 
                             else
                             {
                                 var point = figureCenter ? currentFigure.FigureCenter() : new Point3D(0, 0, 0);
                                 currentFigure.Transform(
                                     AffineTransforms.RotateTransform3D(point,
                                     degree, axis.Item1, axis.Item2, axis.Item3));
-                            }                      
+                               
+                                    
+                        }                      
                             break;
                         }
                     case Transform.Transposition:
@@ -165,7 +180,8 @@ namespace AffineTransforms_3D
                             var z = double.Parse(textBox4.Text);
                             currentFigure.Transform(
                                 AffineTransforms.TranslateTransform3D(x, y, z));
-                            break;
+                          
+                        break;
                         }
                     case Transform.Scale:
                         {
@@ -173,7 +189,7 @@ namespace AffineTransforms_3D
                             var y = double.Parse(textBox3.Text);
                             var z = double.Parse(textBox4.Text);
                             var point = figureCenter ? currentFigure.FigureCenter() : new Point3D(0, 0, 0);
-                            currentFigure.Transform(
+                            if (!figureCenter)  currentFigure.Transform(
                                 AffineTransforms.ScaleTransform3D(point,
                                 x, y, z));
                             break;
@@ -182,9 +198,15 @@ namespace AffineTransforms_3D
                         {
                             currentFigure.Transform(
                                 AffineTransforms.ReflectionTransform(plane));
-                            break;
+                        break;
                         }             
             }
+            ReDraw();
+        }
+
+        private void applyCameraButton_Click(object sender, EventArgs e)
+        {
+            syncCamera();
             ReDraw();
         }
 
@@ -200,12 +222,26 @@ namespace AffineTransforms_3D
             var centerX = pictureBox1.Size.Width / 2;
             var centerY = pictureBox1.Size.Height / 2 ;
 
-            var projection = Projections.Apply(currentFigure, selectedProjetion);
-            foreach (var r in projection.edges)
+            var cameraFig = Transformator.Transform(currentFigure,
+                AffineTransforms.CameraTransform3D(camera.Position, camera.Direction));
+            var projection = Projections.Apply(cameraFig, selectedProjetion);
+            // var projection = Projections.Apply(currentFigure, selectedProjetion);
+            foreach (var r in projection.Edges)
             {
                 g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
                    (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
             }
+
+            cameraFig = Transformator.Transform(axes,
+               AffineTransforms.CameraTransform3D(camera.Position, camera.Direction));
+            projection = Projections.Apply(cameraFig, selectedProjetion);
+            // var projection = Projections.Apply(currentFigure, selectedProjetion);
+            foreach (var r in projection.Edges)
+            {
+                g.DrawLine(Pens.Red, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
+                   (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+            }
+
         }
 
 
@@ -282,7 +318,7 @@ namespace AffineTransforms_3D
             g.Clear(BackColor);
             var centerX = Size.Width / 2 - 200;
             var centerY = Size.Height / 2 - 150;
-            foreach (var r in currentFigure.edges)
+            foreach (var r in currentFigure.Edges)
             {
                 g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
                    (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
@@ -443,6 +479,48 @@ namespace AffineTransforms_3D
         {
             graphData.StepCount = int.Parse(stepCountTextBox.Text);
         }
+
+        private void label27_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox6_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label25_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label26_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox7_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox8_TextChanged_2(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 
 
