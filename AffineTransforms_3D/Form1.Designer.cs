@@ -113,6 +113,7 @@
             this.fovYtextBox = new System.Windows.Forms.TextBox();
             this.label35 = new System.Windows.Forms.Label();
             this.fovXtextBox = new System.Windows.Forms.TextBox();
+            this.rotateCameraButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -377,7 +378,6 @@
             this.textBoxZ1.Size = new System.Drawing.Size(41, 26);
             this.textBoxZ1.TabIndex = 28;
             this.textBoxZ1.Text = "0";
-         
             // 
             // label10
             // 
@@ -398,7 +398,6 @@
             this.textBoxY1.Size = new System.Drawing.Size(41, 26);
             this.textBoxY1.TabIndex = 26;
             this.textBoxY1.Text = "0";
-           
             // 
             // label11
             // 
@@ -419,7 +418,6 @@
             this.textBoxX1.Size = new System.Drawing.Size(41, 26);
             this.textBoxX1.TabIndex = 24;
             this.textBoxX1.Text = "0";
-          
             // 
             // label12
             // 
@@ -440,7 +438,6 @@
             this.textBoxZ2.Size = new System.Drawing.Size(41, 26);
             this.textBoxZ2.TabIndex = 34;
             this.textBoxZ2.Text = "1";
-           
             // 
             // label13
             // 
@@ -461,7 +458,6 @@
             this.textBoxY2.Size = new System.Drawing.Size(41, 26);
             this.textBoxY2.TabIndex = 32;
             this.textBoxY2.Text = "1";
-           
             // 
             // label14
             // 
@@ -482,7 +478,6 @@
             this.textBoxX2.Size = new System.Drawing.Size(41, 26);
             this.textBoxX2.TabIndex = 30;
             this.textBoxX2.Text = "1";
-          
             // 
             // usingLineCheckBox
             // 
@@ -711,7 +706,6 @@
             this.x1FunTextBox.Size = new System.Drawing.Size(41, 26);
             this.x1FunTextBox.TabIndex = 54;
             this.x1FunTextBox.Text = "300";
-   
             // 
             // label22
             // 
@@ -730,7 +724,6 @@
             this.y0FunTextBox.Size = new System.Drawing.Size(41, 26);
             this.y0FunTextBox.TabIndex = 52;
             this.y0FunTextBox.Text = "-200";
-      
             // 
             // label23
             // 
@@ -749,7 +742,6 @@
             this.x0FunTextBox.Size = new System.Drawing.Size(41, 26);
             this.x0FunTextBox.TabIndex = 50;
             this.x0FunTextBox.Text = "-200";
-        
             // 
             // stepCountTextBox
             // 
@@ -999,12 +991,23 @@
             this.fovXtextBox.TabIndex = 79;
             this.fovXtextBox.Text = "90";
             // 
+            // rotateCameraButton
+            // 
+            this.rotateCameraButton.Location = new System.Drawing.Point(1022, 390);
+            this.rotateCameraButton.Name = "rotateCameraButton";
+            this.rotateCameraButton.Size = new System.Drawing.Size(98, 34);
+            this.rotateCameraButton.TabIndex = 83;
+            this.rotateCameraButton.Text = "Вращать";
+            this.rotateCameraButton.UseVisualStyleBackColor = true;
+            this.rotateCameraButton.Click += new System.EventHandler(this.rotateCameraButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1387, 688);
+            this.Controls.Add(this.rotateCameraButton);
             this.Controls.Add(this.label34);
             this.Controls.Add(this.fovYtextBox);
             this.Controls.Add(this.label35);
@@ -1185,6 +1188,7 @@
         private System.Windows.Forms.TextBox fovYtextBox;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.TextBox fovXtextBox;
+        private System.Windows.Forms.Button rotateCameraButton;
     }
 }
 

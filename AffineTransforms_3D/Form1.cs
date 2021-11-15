@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Windows.Media.Media3D;
+using System.Threading;
 
 
 namespace AffineTransforms_3D
@@ -45,6 +46,7 @@ namespace AffineTransforms_3D
         Figure currentFigure;
         bool figureCenter;
         bool usingLine = false;
+        bool rotatingCamera = false;
         CoordinatePlane plane;
         Point3D point1 = new Point3D(0,0,0);
         Point3D point2 = new Point3D(1,1,1);
@@ -55,6 +57,7 @@ namespace AffineTransforms_3D
       
        private void syncCamera()
         {
+            if (rotatingCamera) return;
             camera.Position.X = double.Parse(cameraXTextBox.Text);
             camera.Position.Y = double.Parse(cameraYTextBox.Text);
             camera.Position.Z= double.Parse(cameraZTextBox.Text);
@@ -74,7 +77,8 @@ namespace AffineTransforms_3D
              graphData.Y1 = int.Parse(y1FunTextBox.Text); 
              graphData.X1 = int.Parse(x1FunTextBox.Text);
              graphData.X0 = int.Parse(x0FunTextBox.Text);
-             graphData.Y0 = int.Parse(y0FunTextBox.Text);      
+             graphData.Y0 = int.Parse(y0FunTextBox.Text);
+             graphData.StepCount = int.Parse(stepCountTextBox.Text);
         }
 
         private void syncLine()
@@ -113,11 +117,8 @@ namespace AffineTransforms_3D
             forming = new List<Point3D>();
             axis_box.SelectedIndex = 0;
             showForming = new List<Point3D>();
-            graphData.X0 = int.Parse(x0FunTextBox.Text);
-            graphData.Y0 = int.Parse(y0FunTextBox.Text);
-            graphData.X1 = int.Parse(x1FunTextBox.Text);
-            graphData.Y1 = int.Parse(y1FunTextBox.Text);
-            graphData.StepCount= int.Parse(stepCountTextBox.Text);
+            syncCamera();
+            syncGraph();
 
         }
 
@@ -465,6 +466,41 @@ namespace AffineTransforms_3D
         private void stepCountTextBox_TextChanged(object sender, EventArgs e)
         {
             graphData.StepCount = int.Parse(stepCountTextBox.Text);
+        }
+
+        private void rotateCameraButton_Click(object sender, EventArgs e)
+        {
+            rotatingCamera = true;
+            var degree = 1;
+            (double, double, double) axis = (0, 0, 0);
+            switch (plane)
+            {
+                case CoordinatePlane.XY:
+                    axis = (0, 0, 1);
+                    break;
+                case CoordinatePlane.XZ:
+                    axis = (0, 1, 0);
+                    break;
+                case CoordinatePlane.YZ:
+                    axis = (1, 0, 0);
+                    break;
+
+            }
+            var p = new Point3D((axis.Item1+1%2), (axis.Item2+1)%2, (axis.Item3+1)%2);
+            var transformator = AffineTransforms.RotateTransform3D(new Point3D(0,0,0),
+                                    degree, axis.Item1, axis.Item2, axis.Item3);
+
+            camera.Direction = new Vector3D(p.X, p.Y, p.Z);
+            ReDraw();
+            for (int i = 0; i < 360; i++)
+            {
+                Thread.Sleep(20);
+                p = transformator.Transform(p);
+                camera.Direction = new Vector3D(p.X, p.Y, p.Z);
+                ReDraw();
+            }
+
+            rotatingCamera = false;     
         }
     }
 
