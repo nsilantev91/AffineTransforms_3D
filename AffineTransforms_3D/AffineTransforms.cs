@@ -95,7 +95,7 @@ namespace AffineTransforms_3D
             }
         }
 
-        static double[,] scale(double xScale, double yScale, double zScale)
+        static double[,] Scale(double xScale, double yScale, double zScale)
         {
             return new double[4, 4]
             {
@@ -129,19 +129,22 @@ namespace AffineTransforms_3D
         }
 
 
-        static public Transformator CameraTransform3D(Point3D center, Vector3D cameraVector)
+        static public Transformator CameraTransform3D(Camera camera)
         {
+            var center = camera.Position;
+            var cameraVector = camera.Direction;
             var resMatrix = translateMatrix(-center.X, -center.Y, -center.Z);
             var r = Math.Sqrt(cameraVector.X * cameraVector.X + cameraVector.Z * cameraVector.Z);
             if (r != 0)
                 resMatrix = Helpers.MultiplyMatrix(resMatrix,
-                rotateMatrix(cameraVector.X / r, cameraVector.Z/ r, Axis.Y));
+                rotateMatrix(-cameraVector.X / r, cameraVector.Z/ r, Axis.Y));
             r = Math.Sqrt(cameraVector.Y * cameraVector.Y + cameraVector.Z * cameraVector.Z);
             if (r != 0)
                 resMatrix = Helpers.MultiplyMatrix(resMatrix,
-                rotateMatrix( - cameraVector.Y / r, cameraVector.Z / r, Axis.X));
-            resMatrix = Helpers.MultiplyMatrix(resMatrix, Camera(420,200, Math.PI/2, Math.PI/2));
-            resMatrix = Helpers.MultiplyMatrix(resMatrix, scale(100,100,100));
+                rotateMatrix( cameraVector.Y / r, cameraVector.Z / r, Axis.X));
+            resMatrix = Helpers.MultiplyMatrix(resMatrix, Camera(camera.zFar,camera.zNear, camera.fovX, camera.fovY));
+           // var scale = Math.Min(camera.width, camera.height);
+           // resMatrix = Helpers.MultiplyMatrix(resMatrix, Scale(100,100,100));
             return new CustomMatrixTransformator(resMatrix);
 
         }

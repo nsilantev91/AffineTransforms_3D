@@ -27,6 +27,12 @@ namespace AffineTransforms_3D
     {
         public Vector3D Direction;
         public Point3D Position;
+        public double zNear;
+        public double zFar;
+        public double fovX;
+        public double fovY;
+        public double width;
+        public double height;
     }
 
    
@@ -55,6 +61,12 @@ namespace AffineTransforms_3D
             camera.Direction.X = double.Parse(vectorXtextBox.Text);
             camera.Direction.Y = double.Parse(vectorYtextBox.Text);
             camera.Direction.Z = double.Parse(vectorZtextBox.Text);
+            camera.zFar = double.Parse(zFarTextBox.Text);
+            camera.zNear = double.Parse(zNearTextBox.Text);
+            camera.fovX = double.Parse(fovXtextBox.Text) * Math.PI / 180;
+            camera.fovY = double.Parse(fovYtextBox.Text) * Math.PI / 180;
+            camera.width = pictureBox1.Width;
+            camera.height = pictureBox1.Height;
         }
     
        
@@ -113,7 +125,8 @@ namespace AffineTransforms_3D
                 lastfig = figure;
                 if (figure == "Пользовательская")
                     lastfig = "Сustom figure";
-      
+            var center = currentFigure.FigureCenter();
+            currentFigure.Transform(AffineTransforms.TranslateTransform3D(-center.X, -center.Y, -center.Z));
             ReDraw();
         }
 
@@ -175,8 +188,8 @@ namespace AffineTransforms_3D
                         }
                     case Transform.Transposition:
                         {
-                            var x =double.Parse(textBox2.Text);
-                            var y =double.Parse(textBox3.Text);
+                            var x = double.Parse(textBox2.Text);
+                            var y = double.Parse(textBox3.Text);
                             var z = double.Parse(textBox4.Text);
                             currentFigure.Transform(
                                 AffineTransforms.TranslateTransform3D(x, y, z));
@@ -220,11 +233,12 @@ namespace AffineTransforms_3D
             syncCamera();
             g.Clear(BackColor);
             var centerX = pictureBox1.Size.Width / 2;
-            var centerY = pictureBox1.Size.Height / 2 ;
+            var centerY = pictureBox1.Size.Height / 2;
 
             var cameraFig = Transformator.Transform(currentFigure,
-                AffineTransforms.CameraTransform3D(camera.Position, camera.Direction));
-            проеvar projection = Projections.Apply(cameraFig, selectedProjetion);
+                AffineTransforms.CameraTransform3D(camera));
+            var projection = Transformator.Transform(cameraFig, 
+                new CustomMatrixTransformator(Projections.GetProjectionForCamera(camera.width/2, camera.height/2)));
             // var projection = Projections.Apply(currentFigure, selectedProjetion);
             foreach (var r in projection.Edges)
             {
@@ -233,8 +247,9 @@ namespace AffineTransforms_3D
             }
 
             //cameraFig = Transformator.Transform(axes,
-            //   AffineTransforms.CameraTransform3D(camera.Position, camera.Direction));
-            //projection = Projections.Apply(cameraFig, selectedProjetion);
+            //   AffineTransforms.CameraTransform3D(camera));
+            //projection = Transformator.Transform(cameraFig,
+            //   new CustomMatrixTransformator(Projections.GetProjectionForCamera(camera.width / 2, camera.height / 2)));
             //foreach (var r in projection.Edges)
             //{
             //    g.DrawLine(Pens.Red, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
@@ -525,6 +540,8 @@ namespace AffineTransforms_3D
 
     public static class EnumExtension
     {
+
+
       public  static Func<int, int, double> Fun(this Function function)
         {
             switch (function)

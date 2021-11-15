@@ -105,7 +105,14 @@
             this.cameraYTextBox = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
             this.cameraXTextBox = new System.Windows.Forms.TextBox();
-            this.applyCameraButton = new System.Windows.Forms.Button();
+            this.zFarTextBox = new System.Windows.Forms.TextBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.zNearTextBox = new System.Windows.Forms.TextBox();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.fovYtextBox = new System.Windows.Forms.TextBox();
+            this.label35 = new System.Windows.Forms.Label();
+            this.fovXtextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -881,7 +888,7 @@
             this.cameraZTextBox.Name = "cameraZTextBox";
             this.cameraZTextBox.Size = new System.Drawing.Size(41, 26);
             this.cameraZTextBox.TabIndex = 72;
-            this.cameraZTextBox.Text = "0";
+            this.cameraZTextBox.Text = "-300";
             // 
             // label30
             // 
@@ -923,15 +930,85 @@
             this.cameraXTextBox.TabIndex = 68;
             this.cameraXTextBox.Text = "0";
             // 
-            // applyCameraButton
+            // zFarTextBox
             // 
-            this.applyCameraButton.Location = new System.Drawing.Point(1004, 256);
-            this.applyCameraButton.Name = "applyCameraButton";
-            this.applyCameraButton.Size = new System.Drawing.Size(166, 31);
-            this.applyCameraButton.TabIndex = 75;
-            this.applyCameraButton.Text = "Применить";
-            this.applyCameraButton.UseVisualStyleBackColor = true;
-            this.applyCameraButton.Click += new System.EventHandler(this.applyCameraButton_Click);
+            this.zFarTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.zFarTextBox.Location = new System.Drawing.Point(1018, 277);
+            this.zFarTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.zFarTextBox.Name = "zFarTextBox";
+            this.zFarTextBox.Size = new System.Drawing.Size(41, 26);
+            this.zFarTextBox.TabIndex = 75;
+            this.zFarTextBox.Text = "600";
+            // 
+            // label33
+            // 
+            this.label33.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(1018, 257);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(42, 20);
+            this.label33.TabIndex = 76;
+            this.label33.Text = "Z far";
+            // 
+            // zNearTextBox
+            // 
+            this.zNearTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.zNearTextBox.Location = new System.Drawing.Point(1067, 277);
+            this.zNearTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.zNearTextBox.Name = "zNearTextBox";
+            this.zNearTextBox.Size = new System.Drawing.Size(41, 26);
+            this.zNearTextBox.TabIndex = 77;
+            this.zNearTextBox.Text = "300";
+            // 
+            // label32
+            // 
+            this.label32.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(1065, 257);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(55, 20);
+            this.label32.TabIndex = 78;
+            this.label32.Text = "Z near";
+            // 
+            // label34
+            // 
+            this.label34.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(1069, 321);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(45, 20);
+            this.label34.TabIndex = 82;
+            this.label34.Text = "fov Y";
+            // 
+            // fovYtextBox
+            // 
+            this.fovYtextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.fovYtextBox.Location = new System.Drawing.Point(1071, 341);
+            this.fovYtextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.fovYtextBox.Name = "fovYtextBox";
+            this.fovYtextBox.Size = new System.Drawing.Size(41, 26);
+            this.fovYtextBox.TabIndex = 81;
+            this.fovYtextBox.Text = "90";
+            // 
+            // label35
+            // 
+            this.label35.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(1022, 321);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(45, 20);
+            this.label35.TabIndex = 80;
+            this.label35.Text = "fov X";
+            // 
+            // fovXtextBox
+            // 
+            this.fovXtextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.fovXtextBox.Location = new System.Drawing.Point(1022, 341);
+            this.fovXtextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.fovXtextBox.Name = "fovXtextBox";
+            this.fovXtextBox.Size = new System.Drawing.Size(41, 26);
+            this.fovXtextBox.TabIndex = 79;
+            this.fovXtextBox.Text = "90";
             // 
             // Form1
             // 
@@ -939,7 +1016,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1387, 688);
-            this.Controls.Add(this.applyCameraButton);
+            this.Controls.Add(this.label34);
+            this.Controls.Add(this.fovYtextBox);
+            this.Controls.Add(this.label35);
+            this.Controls.Add(this.fovXtextBox);
+            this.Controls.Add(this.label32);
+            this.Controls.Add(this.zNearTextBox);
+            this.Controls.Add(this.label33);
+            this.Controls.Add(this.zFarTextBox);
             this.Controls.Add(this.textBox7);
             this.Controls.Add(this.label29);
             this.Controls.Add(this.cameraZTextBox);
@@ -1104,7 +1188,14 @@
         private System.Windows.Forms.TextBox cameraYTextBox;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.TextBox cameraXTextBox;
-        private System.Windows.Forms.Button applyCameraButton;
+        private System.Windows.Forms.TextBox zFarTextBox;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.TextBox zNearTextBox;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.TextBox fovYtextBox;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.TextBox fovXtextBox;
     }
 }
 

@@ -102,26 +102,42 @@ namespace AffineTransforms_3D
 
         }
 
+        public static double [,] GetMatrix( Projection selectedProjection)
+        {
+            if (selectedProjection == Projection.Perspective)
+            {
+                return perspective;
+            }
+            else if (selectedProjection == Projection.Isometric)
+            {
+                return isometric;
+            }
+            else if (selectedProjection == Projection.Trimetric)
+            {
+                return trimetric;
+            }
+            else if (selectedProjection == Projection.Dimetric)
+            {
+                return dimetric;
+            }
+            throw new ArgumentException("Invalid selectedProjection");
+        }
+
+        public static double [,] GetProjectionForCamera(double width, double height)
+        {
+            return new double[,] {
+                { width, 0, 0, 0 },
+                { 0, height, 0, 0 },
+                { 0, 0, 0, 0.001},
+                { 0, 0, 0, 1 }
+            };
+        }
+
+        
         public static Point ApplyForPoint3D(Point3D point, Projection selectedProjection)
         {
             var pointMatrix = new double[,] { { point.X, point.Y, point.Z, 1 } };
-            double[,] matrProj = { { 0 } };
-            if (selectedProjection == Projection.Perspective)
-            {
-                matrProj = perspective;
-            }
-            if (selectedProjection == Projection.Isometric)
-            {
-                matrProj = isometric;
-            }
-            if (selectedProjection == Projection.Trimetric)
-            {
-                matrProj = trimetric;
-            }
-            if (selectedProjection == Projection.Dimetric)
-            {
-                matrProj = dimetric;
-            }
+            double[,] matrProj = GetMatrix(selectedProjection);
             var res = Helpers.MultiplyMatrix(pointMatrix, matrProj);
             return new Point((int)(res[0, 0] / res[0, 3]), (int)(res[0, 1] / res[0, 3]));
         }
