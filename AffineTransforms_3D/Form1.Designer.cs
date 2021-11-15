@@ -142,9 +142,7 @@
             this.proj_box.FormattingEnabled = true;
             this.proj_box.Items.AddRange(new object[] {
             "Перспективная",
-            "Изометрическая",
-            "Триметрическая",
-            "Диметрическая"});
+            "Ортогональная"});
             this.proj_box.Location = new System.Drawing.Point(9, 215);
             this.proj_box.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.proj_box.Name = "proj_box";
@@ -254,7 +252,6 @@
             this.textBox2.Size = new System.Drawing.Size(41, 26);
             this.textBox2.TabIndex = 12;
             this.textBox2.Text = "1";
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label5
             // 
@@ -293,7 +290,6 @@
             this.textBox4.Size = new System.Drawing.Size(41, 26);
             this.textBox4.TabIndex = 16;
             this.textBox4.Text = "1";
-            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // planeComboBox
             // 
@@ -381,7 +377,7 @@
             this.textBoxZ1.Size = new System.Drawing.Size(41, 26);
             this.textBoxZ1.TabIndex = 28;
             this.textBoxZ1.Text = "0";
-            this.textBoxZ1.TextChanged += new System.EventHandler(this.textBoxZ1_TextChanged);
+         
             // 
             // label10
             // 
@@ -402,7 +398,7 @@
             this.textBoxY1.Size = new System.Drawing.Size(41, 26);
             this.textBoxY1.TabIndex = 26;
             this.textBoxY1.Text = "0";
-            this.textBoxY1.TextChanged += new System.EventHandler(this.textBoxY1_TextChanged);
+           
             // 
             // label11
             // 
@@ -423,7 +419,7 @@
             this.textBoxX1.Size = new System.Drawing.Size(41, 26);
             this.textBoxX1.TabIndex = 24;
             this.textBoxX1.Text = "0";
-            this.textBoxX1.TextChanged += new System.EventHandler(this.textBox8_TextChanged);
+          
             // 
             // label12
             // 
@@ -444,7 +440,7 @@
             this.textBoxZ2.Size = new System.Drawing.Size(41, 26);
             this.textBoxZ2.TabIndex = 34;
             this.textBoxZ2.Text = "1";
-            this.textBoxZ2.TextChanged += new System.EventHandler(this.textBoxZ2_TextChanged);
+           
             // 
             // label13
             // 
@@ -465,7 +461,7 @@
             this.textBoxY2.Size = new System.Drawing.Size(41, 26);
             this.textBoxY2.TabIndex = 32;
             this.textBoxY2.Text = "1";
-            this.textBoxY2.TextChanged += new System.EventHandler(this.textBoxY2_TextChanged);
+           
             // 
             // label14
             // 
@@ -486,7 +482,7 @@
             this.textBoxX2.Size = new System.Drawing.Size(41, 26);
             this.textBoxX2.TabIndex = 30;
             this.textBoxX2.Text = "1";
-            this.textBoxX2.TextChanged += new System.EventHandler(this.textBoxX2_TextChanged);
+          
             // 
             // usingLineCheckBox
             // 
@@ -697,7 +693,6 @@
             this.y1FunTextBox.Size = new System.Drawing.Size(41, 26);
             this.y1FunTextBox.TabIndex = 56;
             this.y1FunTextBox.Text = "300";
-            this.y1FunTextBox.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
             // 
             // label21
             // 
@@ -716,7 +711,7 @@
             this.x1FunTextBox.Size = new System.Drawing.Size(41, 26);
             this.x1FunTextBox.TabIndex = 54;
             this.x1FunTextBox.Text = "300";
-            this.x1FunTextBox.TextChanged += new System.EventHandler(this.textBox7_TextChanged);
+   
             // 
             // label22
             // 
@@ -735,7 +730,7 @@
             this.y0FunTextBox.Size = new System.Drawing.Size(41, 26);
             this.y0FunTextBox.TabIndex = 52;
             this.y0FunTextBox.Text = "-200";
-            this.y0FunTextBox.TextChanged += new System.EventHandler(this.textBox8_TextChanged_1);
+      
             // 
             // label23
             // 
@@ -754,7 +749,7 @@
             this.x0FunTextBox.Size = new System.Drawing.Size(41, 26);
             this.x0FunTextBox.TabIndex = 50;
             this.x0FunTextBox.Text = "-200";
-            this.x0FunTextBox.TextChanged += new System.EventHandler(this.textBox9_TextChanged_1);
+        
             // 
             // stepCountTextBox
             // 
@@ -784,7 +779,6 @@
             this.label25.Size = new System.Drawing.Size(19, 20);
             this.label25.TabIndex = 65;
             this.label25.Text = "Z";
-            this.label25.Click += new System.EventHandler(this.label25_Click);
             // 
             // vectorZtextBox
             // 
@@ -795,7 +789,6 @@
             this.vectorZtextBox.Size = new System.Drawing.Size(41, 26);
             this.vectorZtextBox.TabIndex = 64;
             this.vectorZtextBox.Text = "1";
-            this.vectorZtextBox.TextChanged += new System.EventHandler(this.textBox6_TextChanged_1);
             // 
             // label26
             // 
@@ -806,7 +799,6 @@
             this.label26.Size = new System.Drawing.Size(20, 20);
             this.label26.TabIndex = 63;
             this.label26.Text = "Y";
-            this.label26.Click += new System.EventHandler(this.label26_Click);
             // 
             // vectorYtextBox
             // 
@@ -816,8 +808,7 @@
             this.vectorYtextBox.Name = "vectorYtextBox";
             this.vectorYtextBox.Size = new System.Drawing.Size(41, 26);
             this.vectorYtextBox.TabIndex = 62;
-            this.vectorYtextBox.Text = "0";
-            this.vectorYtextBox.TextChanged += new System.EventHandler(this.textBox7_TextChanged_1);
+            this.vectorYtextBox.Text = "1";
             // 
             // label27
             // 
@@ -828,7 +819,6 @@
             this.label27.Size = new System.Drawing.Size(20, 20);
             this.label27.TabIndex = 61;
             this.label27.Text = "X";
-            this.label27.Click += new System.EventHandler(this.label27_Click);
             // 
             // vectorXtextBox
             // 
@@ -838,8 +828,7 @@
             this.vectorXtextBox.Name = "vectorXtextBox";
             this.vectorXtextBox.Size = new System.Drawing.Size(41, 26);
             this.vectorXtextBox.TabIndex = 60;
-            this.vectorXtextBox.Text = "0";
-            this.vectorXtextBox.TextChanged += new System.EventHandler(this.textBox8_TextChanged_2);
+            this.vectorXtextBox.Text = "1";
             // 
             // label28
             // 
@@ -908,7 +897,7 @@
             this.cameraYTextBox.Name = "cameraYTextBox";
             this.cameraYTextBox.Size = new System.Drawing.Size(41, 26);
             this.cameraYTextBox.TabIndex = 70;
-            this.cameraYTextBox.Text = "0";
+            this.cameraYTextBox.Text = "-300";
             // 
             // label31
             // 
@@ -928,7 +917,7 @@
             this.cameraXTextBox.Name = "cameraXTextBox";
             this.cameraXTextBox.Size = new System.Drawing.Size(41, 26);
             this.cameraXTextBox.TabIndex = 68;
-            this.cameraXTextBox.Text = "0";
+            this.cameraXTextBox.Text = "-300";
             // 
             // zFarTextBox
             // 

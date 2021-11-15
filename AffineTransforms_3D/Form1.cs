@@ -8,7 +8,7 @@ using System.Windows.Media.Media3D;
 
 namespace AffineTransforms_3D
 {
-    enum Projection { Perspective, Isometric, Trimetric, Dimetric, Camera};
+    enum Projection { Perspective, Orthogonal};
     enum Transform {Transposition, Rotate, Scale, Reflect }
 
     public  enum Function { Plus, Minus, Prod, SinCos, Sin }
@@ -68,8 +68,27 @@ namespace AffineTransforms_3D
             camera.width = pictureBox1.Width;
             camera.height = pictureBox1.Height;
         }
-    
-       
+
+        private void syncGraph()
+        {  
+             graphData.Y1 = int.Parse(y1FunTextBox.Text); 
+             graphData.X1 = int.Parse(x1FunTextBox.Text);
+             graphData.X0 = int.Parse(x0FunTextBox.Text);
+             graphData.Y0 = int.Parse(y0FunTextBox.Text);      
+        }
+
+        private void syncLine()
+        {
+            point1.X = double.Parse(textBoxX1.Text);
+            point1.Y = double.Parse(textBoxY1.Text);
+            point1.Z = double.Parse(textBoxZ1.Text);
+
+            point2.X = double.Parse(textBoxX1.Text);
+            point2.Y = double.Parse(textBoxY1.Text);
+            point2.Z = double.Parse(textBoxZ1.Text);
+        }
+
+
         GraphData graphData = new GraphData();
         public Form1()
         {
@@ -121,7 +140,11 @@ namespace AffineTransforms_3D
                 if (figure == "Додэкаэдр")
                     currentFigure = new Dodecahedron(150);
                 if (figure == "График")
+                {
+                    syncGraph();
                     currentFigure = new Graph(graphData);
+                }
+                   
                 lastfig = figure;
                 if (figure == "Пользовательская")
                     lastfig = "Сustom figure";
@@ -168,6 +191,7 @@ namespace AffineTransforms_3D
                             }
                             if (usingLine)
                             {
+                                syncLine();
                                 var v1 = new Vector3D(point1.X, point1.Y, point1.Z);
                                 var v2 = new Vector3D(point2.X, point2.Y, point2.Z);
                                 var v = v2 - v1;
@@ -234,13 +258,9 @@ namespace AffineTransforms_3D
             g.Clear(BackColor);
             var centerX = pictureBox1.Size.Width / 2;
             var centerY = pictureBox1.Size.Height / 2;
-
             var cameraFig = Transformator.Transform(currentFigure,
-                AffineTransforms.CameraTransform3D(camera));
-            var projection = Transformator.Transform(cameraFig, 
-                new CustomMatrixTransformator(Projections.GetProjectionForCamera(camera.width/2, camera.height/2)));
-            // var projection = Projections.Apply(currentFigure, selectedProjetion);
-            foreach (var r in projection.Edges)
+                AffineTransforms.CameraTransform3D(camera, selectedProjetion==Projection.Perspective));
+            foreach (var r in cameraFig.Edges)
             {
                 g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
                    (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
@@ -248,9 +268,7 @@ namespace AffineTransforms_3D
 
             //cameraFig = Transformator.Transform(axes,
             //   AffineTransforms.CameraTransform3D(camera));
-            //projection = Transformator.Transform(cameraFig,
-            //   new CustomMatrixTransformator(Projections.GetProjectionForCamera(camera.width / 2, camera.height / 2)));
-            //foreach (var r in projection.Edges)
+            //foreach (var r in cameraFig.Edges)
             //{
             //    g.DrawLine(Pens.Red, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
             //       (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
@@ -339,35 +357,7 @@ namespace AffineTransforms_3D
             }
         }
 
-        private void textBox8_TextChanged(object sender, EventArgs e)
-        {
-            point1.X=double.Parse(((TextBox)sender).Text);
-        }
-
-        private void textBoxY1_TextChanged(object sender, EventArgs e)
-        {
-            point1.Y = double.Parse(((TextBox)sender).Text);
-        }
-
-        private void textBoxZ1_TextChanged(object sender, EventArgs e)
-        {
-            point1.Z = double.Parse(((TextBox)sender).Text);
-        }
-
-        private void textBoxX2_TextChanged(object sender, EventArgs e)
-        {
-            point2.X = double.Parse(((TextBox)sender).Text);
-        }
-
-        private void textBoxY2_TextChanged(object sender, EventArgs e)
-        {
-            point2.Y = double.Parse(((TextBox)sender).Text);
-        }
-
-        private void textBoxZ2_TextChanged(object sender, EventArgs e)
-        {
-            point2.Z = double.Parse(((TextBox)sender).Text);
-        }
+        
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
@@ -402,13 +392,16 @@ namespace AffineTransforms_3D
             var z = int.Parse(forming_z_box.Text);
             showForming.Add(new Point3D(x, y, z));
             forming.Add(new Point3D(x - 200, y - 200, z));
-            if(forming.Count >=2)
+            var transformator = AffineTransforms.CameraTransform3D(camera, selectedProjetion == Projection.Perspective);
+            if (forming.Count >=2)
             {
                 num_parts_box.Enabled = true;
                 Point[] points = new Point[forming.Count];
                 for(int i = 0; i< showForming.Count; i++)
                 {
-                    points[i] = Projections.ApplyForPoint3D(showForming[i], selectedProjetion);
+                    var p = showForming[i];
+                    transformator.Transform(p);
+                    points[i] = new Point((int)p.X,(int) p.Y);
                 }
                 g.DrawLines(Pens.Black, points);
             }
@@ -469,72 +462,10 @@ namespace AffineTransforms_3D
             graphData.Fun = (sender as ComboBox).SelectedItem.ToString().ParseFun();
         }
 
-        private void textBox6_TextChanged(object sender, EventArgs e)
-        {
-            graphData.Y1 = int.Parse(y1FunTextBox.Text);
-        }
-
-        private void textBox7_TextChanged(object sender, EventArgs e)
-        {
-            graphData.X1 = int.Parse(x1FunTextBox.Text);
-        }
-
-        private void textBox9_TextChanged_1(object sender, EventArgs e)
-        {
-            graphData.X0 = int.Parse(x0FunTextBox.Text);
-        }
-
-        private void textBox8_TextChanged_1(object sender, EventArgs e)
-        {
-            graphData.Y0 = int.Parse(y0FunTextBox.Text);
-        }
-
         private void stepCountTextBox_TextChanged(object sender, EventArgs e)
         {
             graphData.StepCount = int.Parse(stepCountTextBox.Text);
         }
-
-        private void label27_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox6_TextChanged_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label25_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label26_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox7_TextChanged_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox8_TextChanged_2(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        
     }
 
 
@@ -547,7 +478,7 @@ namespace AffineTransforms_3D
             switch (function)
             {
                 case Function.Plus:
-                    return (x, y) => x + y;
+                    return (x, y) => (x + y);
                 case Function.Minus:
                     return (x, y) => x - y;
                 case Function.Prod:

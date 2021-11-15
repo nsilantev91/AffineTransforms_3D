@@ -117,7 +117,7 @@ namespace AffineTransforms_3D
             };
         }
 
-        static double[,] Camera(double zFar, double zNear, double fovX, double fovY)
+        static double[,] PerspectiveCamera(double zFar, double zNear, double fovX, double fovY)
         {
             return new double[4, 4]
             {
@@ -126,10 +126,24 @@ namespace AffineTransforms_3D
                 {0, 0, (zFar+zNear)/(zFar-zNear), 1},
                 {0, 0, -(2*zFar*zNear)/(zFar-zNear), 0}
             };
+
+        }
+
+        static double[,] OrthographicCamera(double zFar, double zNear, double width, double height)
+        {
+            return new double[4, 4]
+            {
+                {1/width, 0, 0, 0},
+                {0,1/height, 0, 0},
+                {0, 0, 2/(zFar - zNear), 0},
+                {0, 0, (zFar + zNear)/(zFar - zNear), 1}
+            };
+
         }
 
 
-        static public Transformator CameraTransform3D(Camera camera)
+
+        static public Transformator CameraTransform3D(Camera camera, bool perspective = true)
         {
             var center = camera.Position;
             var cameraVector = camera.Direction;
@@ -142,11 +156,19 @@ namespace AffineTransforms_3D
             if (r != 0)
                 resMatrix = Helpers.MultiplyMatrix(resMatrix,
                 rotateMatrix( cameraVector.Y / r, cameraVector.Z / r, Axis.X));
-            resMatrix = Helpers.MultiplyMatrix(resMatrix, Camera(camera.zFar,camera.zNear, camera.fovX, camera.fovY));
-           // var scale = Math.Min(camera.width, camera.height);
-           // resMatrix = Helpers.MultiplyMatrix(resMatrix, Scale(100,100,100));
+            if (perspective)
+            {
+                resMatrix = Helpers.MultiplyMatrix(resMatrix,
+                    PerspectiveCamera(camera.zFar, camera.zNear, camera.fovX, camera.fovY));
+            }
+            else
+            {
+                resMatrix = Helpers.MultiplyMatrix(resMatrix,
+                   OrthographicCamera(camera.zFar, camera.zNear, camera.width/2, camera.height/2));
+            }
+            resMatrix = Helpers.MultiplyMatrix(resMatrix,
+                    Scale(camera.width/2, camera.height/2, 1));
             return new CustomMatrixTransformator(resMatrix);
-
         }
 
 
