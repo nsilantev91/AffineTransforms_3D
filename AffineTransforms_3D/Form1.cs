@@ -8,7 +8,7 @@ using System.Windows.Media.Media3D;
 
 namespace AffineTransforms_3D
 {
-    enum Projection { Perspective, Isometric, Trimetric, Dimetric };
+    enum Projection { Perspective, Isometric, Trimetric, Dimetric, Camera};
     enum Transform {Transposition, Rotate, Scale, Reflect }
 
     public  enum Function { Plus, Minus, Prod, SinCos, Sin }
@@ -206,7 +206,6 @@ namespace AffineTransforms_3D
 
         private void applyCameraButton_Click(object sender, EventArgs e)
         {
-            syncCamera();
             ReDraw();
         }
 
@@ -215,16 +214,17 @@ namespace AffineTransforms_3D
         /// Получение проекции currentFigure и её отрисовка
         /// </summary>
         void ReDraw()
-        {
+        {  
             if (currentFigure == null)
                 return;
+            syncCamera();
             g.Clear(BackColor);
             var centerX = pictureBox1.Size.Width / 2;
             var centerY = pictureBox1.Size.Height / 2 ;
 
             var cameraFig = Transformator.Transform(currentFigure,
                 AffineTransforms.CameraTransform3D(camera.Position, camera.Direction));
-            var projection = Projections.Apply(cameraFig, selectedProjetion);
+            проеvar projection = Projections.Apply(cameraFig, selectedProjetion);
             // var projection = Projections.Apply(currentFigure, selectedProjetion);
             foreach (var r in projection.Edges)
             {
@@ -232,15 +232,14 @@ namespace AffineTransforms_3D
                    (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
             }
 
-            cameraFig = Transformator.Transform(axes,
-               AffineTransforms.CameraTransform3D(camera.Position, camera.Direction));
-            projection = Projections.Apply(cameraFig, selectedProjetion);
-            // var projection = Projections.Apply(currentFigure, selectedProjetion);
-            foreach (var r in projection.Edges)
-            {
-                g.DrawLine(Pens.Red, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
-                   (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
-            }
+            //cameraFig = Transformator.Transform(axes,
+            //   AffineTransforms.CameraTransform3D(camera.Position, camera.Direction));
+            //projection = Projections.Apply(cameraFig, selectedProjetion);
+            //foreach (var r in projection.Edges)
+            //{
+            //    g.DrawLine(Pens.Red, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
+            //       (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+            //}
 
         }
 

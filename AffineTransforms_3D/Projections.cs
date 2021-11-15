@@ -52,6 +52,8 @@ namespace AffineTransforms_3D
             { 0, 0, 0, 1 }
         };
 
+
+
         public static Figure Apply(Figure fig, Projection selectedProjection)
         {
             double[,] matrProj = { { 0 } };
@@ -73,7 +75,8 @@ namespace AffineTransforms_3D
             }
             Figure resFigure = new Figure();
             var transformator = new CustomMatrixTransformator(matrProj);
-            foreach(var face in fig.Faces)
+            //var transformator = new CustomMatrixTransformator(Camera(-300,300, 1, Math.PI/2));
+            foreach (var face in fig.Faces)
             {
                 var edges = face.edges;
                 List<Point3D> ed = new List<Point3D>();

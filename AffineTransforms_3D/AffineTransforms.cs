@@ -117,6 +117,18 @@ namespace AffineTransforms_3D
             };
         }
 
+        static double[,] Camera(double zFar, double zNear, double fovX, double fovY)
+        {
+            return new double[4, 4]
+            {
+                {1/Math.Tan(fovX/2), 0, 0, 0},
+                {0,1/Math.Tan(fovY/2), 0, 0},
+                {0, 0, (zFar+zNear)/(zFar-zNear), 1},
+                {0, 0, -(2*zFar*zNear)/(zFar-zNear), 0}
+            };
+        }
+
+
         static public Transformator CameraTransform3D(Point3D center, Vector3D cameraVector)
         {
             var resMatrix = translateMatrix(-center.X, -center.Y, -center.Z);
@@ -128,10 +140,12 @@ namespace AffineTransforms_3D
             if (r != 0)
                 resMatrix = Helpers.MultiplyMatrix(resMatrix,
                 rotateMatrix( - cameraVector.Y / r, cameraVector.Z / r, Axis.X));
-           // resMatrix = Helpers.MultiplyMatrix(resMatrix, translateMatrix(-center.X, -center.Y, -center.Z));
+            resMatrix = Helpers.MultiplyMatrix(resMatrix, Camera(420,200, Math.PI/2, Math.PI/2));
+            resMatrix = Helpers.MultiplyMatrix(resMatrix, scale(100,100,100));
             return new CustomMatrixTransformator(resMatrix);
 
         }
+
 
 
         static public Transformator RotateTransform3D(Point3D center, double angle, double x=0, double y=0, double z=0)

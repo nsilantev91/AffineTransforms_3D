@@ -5,14 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using AffineTransforms_3D;
 
+
 namespace ConsoleApp
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Graph graph = new Graph(Function.Plus.Fun(), 0, 9, 0, 9, 3);
-            ;
+            Camera camera = new Camera();
+            camera.Position.X = 2;
+           ;
         }
     }
 }
