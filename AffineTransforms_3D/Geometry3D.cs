@@ -162,9 +162,9 @@ namespace AffineTransforms_3D
         }
 
 
-        public List<Side> VisibleFaces(Vector3D visVector)
+        public List<Face> VisibleFaces(Vector3D visVector)
         {
-            var res = new List<Side>();
+            var res = new List<Face>();
             foreach (var i in faces)
             {
                 var t = i.NormalVec();
