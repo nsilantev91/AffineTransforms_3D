@@ -486,17 +486,21 @@ namespace AffineTransforms_3D
                     break;
 
             }
-            var p = new Point3D((axis.Item1+1%2), (axis.Item2+1)%2, (axis.Item3+1)%2);
+            var p = camera.Position;
             var transformator = AffineTransforms.RotateTransform3D(new Point3D(0,0,0),
                                     degree, axis.Item1, axis.Item2, axis.Item3);
+           
 
-            camera.Direction = new Vector3D(p.X, p.Y, p.Z);
-            ReDraw();
-            for (int i = 0; i < 360; i++)
+            for (int i = 0; i < 360/degree; i++)
             {
-                Thread.Sleep(20);
-                p = transformator.Transform(p);
-                camera.Direction = new Vector3D(p.X, p.Y, p.Z);
+                Thread.Sleep(10);
+                camera.Position = transformator.Transform(camera.Position);
+                var v = new Point3D(camera.Direction.X, camera.Direction.Y, camera.Direction.Z);
+                //var dirTransformator = AffineTransforms.RotateTransform3D(camera.Position,
+                //                   degree, axis.Item1, axis.Item2, axis.Item3);
+                // v = transformator.Transform(v);
+                // camera.Direction =new Vector3D(v.X, v.Y, v.Z);
+                camera.Direction = new Vector3D(-camera.Position.X, -camera.Position.Y, -camera.Position.Z);
                 ReDraw();
             }
 
