@@ -8,7 +8,7 @@ using System.Windows.Media.Media3D;
 
 namespace AffineTransforms_3D
 {
-    enum CoordinatePlane
+    public enum CoordinatePlane
     {
         XY, 
         XZ,
@@ -17,7 +17,7 @@ namespace AffineTransforms_3D
 
     
 
-    static class AffineTransforms
+    static public class AffineTransforms
     {
         static double[,] reflectXY = new double[4, 4]
             {
@@ -149,13 +149,34 @@ namespace AffineTransforms_3D
             var cameraVector = camera.Direction;
             var resMatrix = translateMatrix(-center.X, -center.Y, -center.Z);
             var r = Math.Sqrt(cameraVector.X * cameraVector.X + cameraVector.Z * cameraVector.Z);
+            var cosY = 0.0;
+            var sinY = 1.0;
             if (r != 0)
+            {
+                sinY = -cameraVector.X / r;
+                cosY = cameraVector.Z / r;
                 resMatrix = Helpers.MultiplyMatrix(resMatrix,
-                rotateMatrix(-cameraVector.X / r, cameraVector.Z/ r, Axis.Y));
+               rotateMatrix(sinY, cosY, Axis.Y));
+            }
+            var cosX = 0.0;
+            var sinX = 1.0;
             r = Math.Sqrt(cameraVector.Y * cameraVector.Y + cameraVector.Z * cameraVector.Z);
             if (r != 0)
+            {
+                sinX = cameraVector.Y / r;
+                cosX = cameraVector.Z / r;
                 resMatrix = Helpers.MultiplyMatrix(resMatrix,
-                rotateMatrix( cameraVector.Y / r, cameraVector.Z / r, Axis.X));
+               rotateMatrix(sinX, cosX, Axis.X));
+            }
+
+            //var transformator = new CustomMatrixTransformator(resMatrix);
+            //var p = new Point3D(center.X, center.Y, 1 + center.Z);
+            //var p1 = transformator.Transform(p);
+            //r = Math.Sqrt(cameraVector.X * cameraVector.X + cameraVector.Y * cameraVector.Y);
+            //var sinZ = sinX * cosY + sinY * cosX;
+            //var cosZ = cosX * cosY - sinX * sinY;
+            //resMatrix = Helpers.MultiplyMatrix(resMatrix,
+            //rotateMatrix(-cosZ, sinZ, Axis.Z));
             if (perspective)
             {
                 resMatrix = Helpers.MultiplyMatrix(resMatrix,
@@ -164,10 +185,11 @@ namespace AffineTransforms_3D
             else
             {
                 resMatrix = Helpers.MultiplyMatrix(resMatrix,
-                   OrthographicCamera(camera.zFar, camera.zNear, camera.width/2, camera.height/2));
+                   OrthographicCamera(camera.zFar, camera.zNear, camera.width / 2, camera.height / 2));
             }
             resMatrix = Helpers.MultiplyMatrix(resMatrix,
                     Scale(camera.width/2, camera.height/2, 1));
+           
             return new CustomMatrixTransformator(resMatrix);
         }
 
