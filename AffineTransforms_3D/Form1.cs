@@ -96,6 +96,14 @@ namespace AffineTransforms_3D
         GraphData graphData = new GraphData();
         public Form1()
         {
+            /*
+            var test = new Side();
+            test.addEdge(new Edge(new Point3D(1, -2, 0), new Point3D(2, 0, -1)));
+            test.addEdge(new Edge(new Point3D(2, 0, -1), new Point3D(0, -1, 2)));
+            test.addEdge(new Edge(new Point3D(0, -1, 2), new Point3D(1,-2,0)));
+            test.SideEquation();
+            */
+
             InitializeComponent();
             syncCamera();
             planeComboBox.SelectedIndex = 0;

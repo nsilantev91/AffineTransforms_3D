@@ -13,17 +13,13 @@ namespace AffineTransforms_3D
     [Serializable]
     public class Edge
     {
-
         public Point3D begin { get; set; }
         public Point3D end { get; set; }
-
         public Edge(Point3D beg, Point3D end)
         {
-
             begin = beg;
             this.end = end;
         }
-
     }
 
     //грань фигуры 
@@ -54,12 +50,36 @@ namespace AffineTransforms_3D
         {
             this.edges.AddRange(edges);
         }
-
         public void addEdge(Edge edge)
         {
             if (edge.begin == edge.end)
                 return;
             edges.Add(edge);
+        }
+        /*
+        public List<double> SideEquation()
+        {
+            var p1 = edges[0].begin;
+            var p2 = edges[0].end;
+            var p3 = edges[1].end;
+
+            var p3p1 = p2 - p1;
+            var p3p2 = p3 - p1;
+
+            var x = p3p1.Y * p3p2.Z - p3p1.Z * p3p2.Y;
+            var y = -(p3p1.X * p3p2.Z - p3p1.Z * p3p2.X);
+            var z = p3p1.X * p3p2.Y - p3p1.Y * p3p2.X;
+            var d = -x * p1.X + -y * p1.Y + -z * p1.Z;
+            return new List<double>{ x, y, z, d };
+        }
+        */
+        public Vector3D NormalVec()
+        {
+            var p1 = edges[0].begin;
+            var p2 = edges[0].end;
+            var p3 = edges[1].end;
+
+            return Vector3D.CrossProduct(p2 - p1, p3 - p2);
         }
     }
 
@@ -117,10 +137,8 @@ namespace AffineTransforms_3D
                 {
                     edge.begin = transformator.Transform(edge.begin);
                     edge.end = transformator.Transform(edge.end);
-                }
-                    
+                }          
             }
-
         }
 
         public Point3D FigureCenter()
@@ -143,6 +161,21 @@ namespace AffineTransforms_3D
             faces.Add(side);
         }
 
+
+        public List<Side> VisibleFaces(Vector3D visVector)
+        {
+            var res = new List<Side>();
+            foreach (var i in faces)
+            {
+                var t = i.NormalVec();
+                var angle = Math.Acos(
+                    (t.X * visVector.X + t.Y * visVector.Y + t.Z * visVector.Z) /
+                    (Math.Sqrt(t.X * t.X + t.Y * t.Y + t.Z * t.Z) + Math.Sqrt(visVector.X * visVector.X + visVector.Y * visVector.Y + visVector.Z * visVector.Z)));
+                if (angle % 180 < 90)
+                    res.Add(i);
+            }
+            return res;
+        }
     }
 
 
