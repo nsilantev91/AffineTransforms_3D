@@ -21,8 +21,6 @@ namespace AffineTransforms_3D
             fig = f;
             proj = pr;
         }
-
-
     }
 
 

@@ -49,6 +49,14 @@ namespace AffineTransforms_3D
         GraphData graphData = new GraphData();
         public Form1()
         {
+            /*
+            var test = new Side();
+            test.addEdge(new Edge(new Point3D(1, -2, 0), new Point3D(2, 0, -1)));
+            test.addEdge(new Edge(new Point3D(2, 0, -1), new Point3D(0, -1, 2)));
+            test.addEdge(new Edge(new Point3D(0, -1, 2), new Point3D(1,-2,0)));
+            test.SideEquation();
+            */
+
             InitializeComponent();
             planeComboBox.SelectedIndex = 0;
             transformComboBox.SelectedIndex = 0;
@@ -80,27 +88,46 @@ namespace AffineTransforms_3D
         private void showFigure_btn_Click(object sender, EventArgs e)
         {
             string figure = (string)figures_box.SelectedItem;
-                if (figure == "Тетраэдр")
-                    currentFigure = Figures.Tetrahedron;
-
-                if (figure == "Гексаэдр")
-
-                    currentFigure = Figures.Hexahedron;
-
-                if (figure == "Октаэдр")
-                    currentFigure = Figures.Octahedron;
-
-                if (figure == "Икосаэдр")
-                    currentFigure = new Icosahedron(150);
-
-                if (figure == "Додэкаэдр")
-                    currentFigure = new Dodecahedron(150);
-                if (figure == "График")
-                    currentFigure = new Graph(graphData);
-                lastfig = figure;
-                if (figure == "Пользовательская")
+            switch (figure)
+            {
+                case "Тетраэдр":
+                    {
+                        currentFigure = Figures.Tetrahedron;
+                        break;
+                    }
+                case "Гексаэдр":
+                    {
+                        currentFigure = Figures.Hexahedron;
+                        break;
+                    }
+                case "Октаэдр":
+                    {
+                        currentFigure = Figures.Octahedron;
+                        break;
+                    }
+                case "Икосаэдр":
+                    {
+                        currentFigure = new Icosahedron(150);
+                        break;
+                    }
+                case "Додэкаэдр":
+                    {
+                        currentFigure = new Dodecahedron(150);
+                        break;
+                    }
+                case "График":
+                    {
+                        currentFigure = new Graph(graphData);
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
+            lastfig = figure;
+            if (figure == "Пользовательская")
                     lastfig = "Сustom figure";
-      
             ReDraw();
         }
 
