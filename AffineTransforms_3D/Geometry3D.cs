@@ -24,7 +24,7 @@ namespace AffineTransforms_3D
 
     //грань фигуры 
     [Serializable]
-    public class Side
+    public class Face
     {
         public Point3D SideCenter()
         {
@@ -40,11 +40,13 @@ namespace AffineTransforms_3D
             return new Point3D(x / edges.Count, y / edges.Count, z / edges.Count);
         }
         public List<Edge> edges { get; }
-        public Side()
+
+        public Face()
         {
             edges = new List<Edge>();
         }
-        public Side(IEnumerable<Edge> edges) : this()
+
+        public Face(IEnumerable<Edge> edges) : this()
         {
             this.edges.AddRange(edges);
         }
@@ -84,12 +86,13 @@ namespace AffineTransforms_3D
     //многогранник
     [Serializable]
     public class Figure
-    {    
-        public IEnumerable<Edge> edges
+    {
+       //можно и нужно переопределять, если использовать другой способ хранения фигуры
+        public virtual IEnumerable<Edge> Edges
         {
             get
             {
-                foreach(var f in faces)
+                foreach(var f in Faces)
                 {
                     foreach(var e in f.edges)
                     {
@@ -99,11 +102,12 @@ namespace AffineTransforms_3D
             }
         }
 
-        public IEnumerable<Point3D> vertexes
+        //можно и нужно переопределять, если использовать другой способ хранения фигуры
+        public virtual IEnumerable<Point3D> Vertexes
         {
             get
             {
-                foreach (var f in faces)
+                foreach (var f in Faces)
                 {
                     foreach (var e in f.edges)
                     {
@@ -113,24 +117,20 @@ namespace AffineTransforms_3D
             }
         }
 
-        ////список вершин
-        //public List<Point3D> vertexes { get; set; }
+        //в базовой реализации хранятся грани, точки и рёбра вычисляются по граням
+        List<Face> faces;
 
-
-        //матрица смежности
-        // public Dictionary<Point3D, List<Point3D>> adjacencyMatrix { get; }
-
-        public List<Side> faces { get; }
+        //можно и нужно переопределять, если использовать другой способ хранения фигуры
+        public virtual IEnumerable<Face> Faces => faces;
 
         public Figure()
         {
-          //  adjacencyMatrix = new Dictionary<Point3D, List<Point3D>>();
-            faces = new List<Side>();
+            faces = new List<Face>();
         }
 
        public void Transform(Transformator transformator)
         {
-            foreach (var face in faces)
+            foreach (var face in Faces)
             {
                 var edges = face.edges;
                 foreach (var edge in face.edges)
@@ -143,15 +143,15 @@ namespace AffineTransforms_3D
 
         public Point3D FigureCenter()
         {
-            var x = vertexes.Average(point => point.X);
-            var y = vertexes.Average(point => point.Y);
-            var z = vertexes.Average(point => point.Z);
+            var x = Vertexes.Average(point => point.X);
+            var y = Vertexes.Average(point => point.Y);
+            var z = Vertexes.Average(point => point.Z);
             return new Point3D(x, y, z);
         }
 
         public void AddFace(Point3D[] points)
         {
-            var side = new Side();
+            var side = new Face();
             for (int i = 0; i < points.Length - 1; i++)
             {
                 

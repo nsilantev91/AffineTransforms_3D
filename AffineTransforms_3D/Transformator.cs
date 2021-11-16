@@ -14,7 +14,7 @@ namespace AffineTransforms_3D
         static public Figure Transform(Figure f, Transformator transformator)
         {
             var figure = new Figure();
-            foreach (var face in f.faces)
+            foreach (var face in f.Faces)
             {
                 var edges = face.edges;
                 List<Point3D> ed = new List<Point3D>();
@@ -56,6 +56,7 @@ namespace AffineTransforms_3D
         {
             var pointMatrix = new double[,] { { point.X, point.Y, point.Z, 1 } };
             var res = Helpers.MultiplyMatrix(pointMatrix, matrix);
+            if (res[0, 3] == 0) return point;
             return new Point3D(res[0,0]/res[0,3], res[0,1]/res[0,3], res[0,2]/res[0,3]);
         }
     }
