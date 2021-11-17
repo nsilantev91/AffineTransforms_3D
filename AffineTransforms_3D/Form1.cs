@@ -54,6 +54,7 @@ namespace AffineTransforms_3D
         List<Point3D> showForming;
         Camera camera = new Camera();
         Axes axes = new Axes();
+        int curDeg = 0;
       
        private void syncCamera()
         {
@@ -265,6 +266,7 @@ namespace AffineTransforms_3D
                 return;
             syncCamera();
             g.Clear(BackColor);
+            g.DrawPie(new Pen(Color.Red), new RectangleF(10,10,50,50), 0, curDeg);
             var centerX = pictureBox1.Size.Width / 2;
             var centerY = pictureBox1.Size.Height / 2;
             var cameraFig = Transformator.Transform(currentFigure,
@@ -275,13 +277,13 @@ namespace AffineTransforms_3D
                    (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
             }
 
-            //cameraFig = Transformator.Transform(axes,
-            //   AffineTransforms.CameraTransform3D(camera));
-            //foreach (var r in cameraFig.Edges)
-            //{
-            //    g.DrawLine(Pens.Red, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
-            //       (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
-            //}
+            cameraFig = Transformator.Transform(axes,
+               AffineTransforms.CameraTransform3D(camera));
+            foreach (var r in cameraFig.Edges)
+            {
+                g.DrawLine(Pens.Red, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
+                   (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+            }
 
         }
 
@@ -354,16 +356,16 @@ namespace AffineTransforms_3D
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            if (currentFigure == null)
-                return;
-            g.Clear(BackColor);
-            var centerX = Size.Width / 2 - 200;
-            var centerY = Size.Height / 2 - 150;
-            foreach (var r in currentFigure.Edges)
-            {
-                g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
-                   (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
-            }
+            //if (currentFigure == null)
+            //    return;
+            //g.Clear(BackColor);
+            //var centerX = Size.Width / 2 - 200;
+            //var centerY = Size.Height / 2 - 150;
+            //foreach (var r in currentFigure.Edges)
+            //{
+            //    g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
+            //       (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+            //}
         }
 
         
@@ -499,9 +501,10 @@ namespace AffineTransforms_3D
                                     degree, axis.Item1, axis.Item2, axis.Item3);
            
 
-            for (int i = 0; i < 360/degree; i++)
+            for (int i = 0; i < 360/degree; i+=degree)
             {
-                Thread.Sleep(10);
+                curDeg += degree;
+                Thread.Sleep(30);
                 camera.Position = transformator.Transform(camera.Position);
                 var v = new Point3D(camera.Direction.X, camera.Direction.Y, camera.Direction.Z);
                 //var dirTransformator = AffineTransforms.RotateTransform3D(camera.Position,
@@ -512,6 +515,7 @@ namespace AffineTransforms_3D
                 ReDraw();
             }
 
+            curDeg = 0;
             rotatingCamera = false;     
         }
     }

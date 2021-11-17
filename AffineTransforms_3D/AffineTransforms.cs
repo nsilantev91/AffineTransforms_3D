@@ -141,8 +141,35 @@ namespace AffineTransforms_3D
 
         }
 
+        static (double, double) SinCosWithQuater(double sin, double cos)
+        {
+            if (cos == 0)
+            {
+                return sin > 0 ? (sin, cos) : (-sin, cos);
+            }
+            if (sin == 0)
+            {
+                return cos > 0 ? (sin, cos) :(sin, -cos);
+            }
+            //if (sin > 0 && cos > 0)
+            //{
+            //    return (sin, cos);
+            //} else if (sin > 0 && cos < 0)
+            //{
+            //    return (sin, cos);
+            //}
+            //else if(sin<0 && cos<0)
+            //{
+            //    return (sin, cos);
+            //}
+            //else
+            //{
+            //    return (sin, cos);
+            //}
+            return (sin, cos);
+        }
 
-
+      
         static public Transformator CameraTransform3D(Camera camera, bool perspective = true)
         {
             var center = camera.Position;
@@ -153,10 +180,11 @@ namespace AffineTransforms_3D
             var sinY = 1.0;
             if (r != 0)
             {
-                sinY = -cameraVector.X / r;
+                sinY = cameraVector.X / r;
                 cosY = cameraVector.Z / r;
+                (sinY, cosY) = SinCosWithQuater(sinY, cosY);
                 resMatrix = Helpers.MultiplyMatrix(resMatrix,
-               rotateMatrix(sinY, cosY, Axis.Y));
+               rotateMatrix(-sinY, cosY, Axis.Y));
             }
             var cosX = 0.0;
             var sinX = 1.0;
@@ -165,19 +193,29 @@ namespace AffineTransforms_3D
             {
                 sinX = cameraVector.Y / r;
                 cosX = cameraVector.Z / r;
+                (sinX, cosX) = SinCosWithQuater(sinX, cosX);
                 resMatrix = Helpers.MultiplyMatrix(resMatrix,
                rotateMatrix(sinX, cosX, Axis.X));
             }
 
             //var transformator = new CustomMatrixTransformator(resMatrix);
-            //var p = new Point3D(center.X, center.Y, 1 + center.Z);
+            //var p = new Point3D(center.X, center.Y + 1, center.Z);
             //var p1 = transformator.Transform(p);
-            //r = Math.Sqrt(cameraVector.X * cameraVector.X + cameraVector.Y * cameraVector.Y);
-            //var sinZ = sinX * cosY + sinY * cosX;
-            //var cosZ = cosX * cosY - sinX * sinY;
-            //resMatrix = Helpers.MultiplyMatrix(resMatrix,
-            //rotateMatrix(-cosZ, sinZ, Axis.Z));
-            if (perspective)
+            //r = Math.Sqrt(p1.X * p1.X + p1.Y * p1.Y);
+            //var cosZ = 0.0;
+            //var sinZ = 1.0;
+            //if (r != 0)
+            //{
+            //    sinZ = -p1.X / r;
+            //    cosZ = p1.Y / r;
+            //    resMatrix = Helpers.MultiplyMatrix(resMatrix,
+            //    rotateMatrix(sinZ, cosZ, Axis.Z));
+            //}
+            //    //var sinZ = sinX * cosY + sinY * cosX;
+                //var cosZ = cosX * cosY - sinX * sinY;
+                //transformator = new CustomMatrixTransformator(resMatrix);
+                // var p2 = transformator.Transform(p);
+                if (perspective)
             {
                 resMatrix = Helpers.MultiplyMatrix(resMatrix,
                     PerspectiveCamera(camera.zFar, camera.zNear, camera.fovX, camera.fovY));

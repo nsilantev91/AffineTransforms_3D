@@ -800,7 +800,7 @@
             this.vectorYtextBox.Name = "vectorYtextBox";
             this.vectorYtextBox.Size = new System.Drawing.Size(41, 26);
             this.vectorYtextBox.TabIndex = 62;
-            this.vectorYtextBox.Text = "1";
+            this.vectorYtextBox.Text = "0";
             // 
             // label27
             // 
@@ -820,7 +820,7 @@
             this.vectorXtextBox.Name = "vectorXtextBox";
             this.vectorXtextBox.Size = new System.Drawing.Size(41, 26);
             this.vectorXtextBox.TabIndex = 60;
-            this.vectorXtextBox.Text = "1";
+            this.vectorXtextBox.Text = "0";
             // 
             // label28
             // 
@@ -889,7 +889,7 @@
             this.cameraYTextBox.Name = "cameraYTextBox";
             this.cameraYTextBox.Size = new System.Drawing.Size(41, 26);
             this.cameraYTextBox.TabIndex = 70;
-            this.cameraYTextBox.Text = "-300";
+            this.cameraYTextBox.Text = "0";
             // 
             // label31
             // 
@@ -909,7 +909,7 @@
             this.cameraXTextBox.Name = "cameraXTextBox";
             this.cameraXTextBox.Size = new System.Drawing.Size(41, 26);
             this.cameraXTextBox.TabIndex = 68;
-            this.cameraXTextBox.Text = "-300";
+            this.cameraXTextBox.Text = "0";
             // 
             // zFarTextBox
             // 
