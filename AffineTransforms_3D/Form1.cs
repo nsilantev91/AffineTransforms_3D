@@ -277,13 +277,13 @@ namespace AffineTransforms_3D
                    (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
             }
 
-            cameraFig = Transformator.Transform(axes,
-               AffineTransforms.CameraTransform3D(camera));
-            foreach (var r in cameraFig.Edges)
-            {
-                g.DrawLine(Pens.Red, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
-                   (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
-            }
+            //cameraFig = Transformator.Transform(axes,
+            //   AffineTransforms.CameraTransform3D(camera));
+            //foreach (var r in cameraFig.Edges)
+            //{
+            //    g.DrawLine(Pens.Red, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
+            //       (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+            //}
 
         }
 
@@ -509,8 +509,8 @@ namespace AffineTransforms_3D
                 var v = new Point3D(camera.Direction.X, camera.Direction.Y, camera.Direction.Z);
                 //var dirTransformator = AffineTransforms.RotateTransform3D(camera.Position,
                 //                   degree, axis.Item1, axis.Item2, axis.Item3);
-                // v = transformator.Transform(v);
-                // camera.Direction =new Vector3D(v.X, v.Y, v.Z);
+                //v = transformator.Transform(v);
+                //camera.Direction = new Vector3D(v.X, v.Y, v.Z);
                 camera.Direction = new Vector3D(-camera.Position.X, -camera.Position.Y, -camera.Position.Z);
                 ReDraw();
             }
