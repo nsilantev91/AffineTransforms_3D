@@ -277,7 +277,7 @@ namespace AffineTransforms_3D
                               AffineTransforms.CameraTransform3D(camera, selectedProjetion == Projection.Perspective));
                 figures.Add(cameraFig);
             }
-
+        
             if (usingZBuffer)
             {
                 pictureBox1.Invalidate();
@@ -285,11 +285,20 @@ namespace AffineTransforms_3D
             }
             else
                 foreach (var cameraFig in figures)
-                    foreach (var r in cameraFig.Edges)
-                    {
-                        g.DrawLine(Pens.Red, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
-                          (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
-                    }
+                    if (RemoveEdges.Checked)
+                        foreach (var side in cameraFig.VisibleFaces(camera.Position))
+                            foreach (var edge in side.edges)
+                            {
+                                g.DrawLine(Pens.Black,
+                                    (int)(edge.begin.X + centerX), (int)(edge.begin.Y + centerY),
+                                    (int)(edge.end.X + centerX), (int)(edge.end.Y + centerY));
+                            }
+                    else
+                        foreach (var r in cameraFig.Edges)
+                        {
+                            g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
+                               (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+                        }
         }
 
 
@@ -344,6 +353,12 @@ namespace AffineTransforms_3D
                         break;
                     }
             }
+        }
+        public Vector3D ActualFuckingVector(Point3D camera, Figure figure)
+        {
+            var res = camera - figure.FigureCenter();
+            res.Normalize();
+            return res;
         }
 
         CoordinatePlane parsePlane()
@@ -563,6 +578,11 @@ namespace AffineTransforms_3D
         private void zBuf_check_btn_CheckedChanged(object sender, EventArgs e)
         {
             usingZBuffer = !usingZBuffer;
+        }
+
+        private void forming_y_box_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

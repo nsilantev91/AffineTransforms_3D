@@ -116,6 +116,7 @@
             this.fovXtextBox = new System.Windows.Forms.TextBox();
             this.rotateCameraButton = new System.Windows.Forms.Button();
             this.RemoveEdges = new System.Windows.Forms.CheckBox();
+            this.label36 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -482,7 +483,7 @@
             // 
             this.usingLineCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.usingLineCheckBox.AutoSize = true;
-            this.usingLineCheckBox.Location = new System.Drawing.Point(1194, 168);
+            this.usingLineCheckBox.Location = new System.Drawing.Point(1193, 152);
             this.usingLineCheckBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.usingLineCheckBox.Name = "usingLineCheckBox";
             this.usingLineCheckBox.Size = new System.Drawing.Size(163, 21);
@@ -529,6 +530,7 @@
             this.forming_y_box.Size = new System.Drawing.Size(37, 22);
             this.forming_y_box.TabIndex = 39;
             this.forming_y_box.Text = "0";
+            this.forming_y_box.TextChanged += new System.EventHandler(this.forming_y_box_TextChanged);
             // 
             // label17
             // 
@@ -764,7 +766,7 @@
             // 
             this.zBuf_check_btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.zBuf_check_btn.AutoSize = true;
-            this.zBuf_check_btn.Location = new System.Drawing.Point(1194, 193);
+            this.zBuf_check_btn.Location = new System.Drawing.Point(1194, 176);
             this.zBuf_check_btn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.zBuf_check_btn.Name = "zBuf_check_btn";
             this.zBuf_check_btn.Size = new System.Drawing.Size(115, 21);
@@ -1016,14 +1018,24 @@
             // 
             this.RemoveEdges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.RemoveEdges.AutoSize = true;
-            this.RemoveEdges.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.RemoveEdges.Location = new System.Drawing.Point(880, 184);
+            this.RemoveEdges.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.RemoveEdges.Location = new System.Drawing.Point(1194, 201);
             this.RemoveEdges.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.RemoveEdges.Name = "RemoveEdges";
-            this.RemoveEdges.Size = new System.Drawing.Size(114, 19);
+            this.RemoveEdges.Size = new System.Drawing.Size(128, 21);
             this.RemoveEdges.TabIndex = 85;
             this.RemoveEdges.Text = "remove unseen";
             this.RemoveEdges.UseVisualStyleBackColor = true;
+            // 
+            // label36
+            // 
+            this.label36.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(1237, 234);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(17, 17);
+            this.label36.TabIndex = 86;
+            this.label36.Text = "Y";
             // 
             // Form1
             // 
@@ -1031,6 +1043,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1387, 688);
+            this.Controls.Add(this.label36);
             this.Controls.Add(this.RemoveEdges);
             this.Controls.Add(this.zBuf_check_btn);
             this.Controls.Add(this.rotateCameraButton);
@@ -1216,6 +1229,7 @@
         private System.Windows.Forms.TextBox fovXtextBox;
         private System.Windows.Forms.Button rotateCameraButton;
         private System.Windows.Forms.CheckBox RemoveEdges;
+        private System.Windows.Forms.Label label36;
     }
 }
 
