@@ -165,10 +165,19 @@ namespace AffineTransforms_3D
         }
 
 
-        public List<Face> VisibleFaces(Point3D camera)
+        public List<Face> VisibleFaces(Camera cam)
         {
+            var camera = cam.Position;
             var res = new List<Face>();
             var center = FigureCenter();
+            var matrix = AffineTransforms.FullRotationMatrix(cam.Direction);
+            matrix = Helpers.MultiplyMatrix(matrix,
+                   AffineTransforms.PerspectiveCamera(cam.zFar, cam.zNear, cam.fovX, cam.fovY));
+            var transformator = new CustomMatrixTransformator(matrix);
+            var p0 = new Point3D(0, 0, 0);
+            var p1 = new Point3D(0, 0, -1);
+            p1 = transformator.Transform(p1);
+            camera = transformator.Transform(camera);
             foreach (var i in faces)
             {
 
@@ -176,21 +185,23 @@ namespace AffineTransforms_3D
                 var CenToFace = i.SideCenter() - center;
                 if (Vector3D.DotProduct(t, CenToFace) < 0)
                     t *= -1;
-                var visVector = i.SideCenter()-camera;
+                //var visVector = i.SideCenter()-camera;
+                var visVector = p1 - camera;
 
                 /*
                 var angle = Math.Acos(
-                    (t.X * visVector.X + t.Y * visVector.Y + t.Z * visVector.Z) /
-                    (Math.Sqrt(t.X * t.X + t.Y * t.Y + t.Z * t.Z) + Math.Sqrt(visVector.X * visVector.X + visVector.Y * visVector.Y + visVector.Z * visVector.Z)));
+                (t.X * visVector.X + t.Y * visVector.Y + t.Z * visVector.Z) /
+                (Math.Sqrt(t.X * t.X + t.Y * t.Y + t.Z * t.Z) + Math.Sqrt(visVector.X * visVector.X + visVector.Y * visVector.Y + visVector.Z * visVector.Z)));
                 if (angle % 180 < 90)
-                    res.Add(i);
+                res.Add(i);
                 */
-                if (Vector3D.DotProduct(visVector,t) < 0)
+                if (Vector3D.DotProduct(visVector, t) < 0)
                     res.Add(i);
             }
             return res;
         }
     }
-
-
 }
+
+
+
