@@ -619,7 +619,7 @@
             // Saver
             // 
             this.Saver.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Saver.Location = new System.Drawing.Point(1193, 566);
+            this.Saver.Location = new System.Drawing.Point(1194, 507);
             this.Saver.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Saver.Name = "Saver";
             this.Saver.Size = new System.Drawing.Size(138, 25);
@@ -631,7 +631,7 @@
             // Opener
             // 
             this.Opener.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Opener.Location = new System.Drawing.Point(1193, 602);
+            this.Opener.Location = new System.Drawing.Point(1194, 543);
             this.Opener.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Opener.Name = "Opener";
             this.Opener.Size = new System.Drawing.Size(138, 25);
@@ -764,7 +764,7 @@
             // 
             this.zBuf_check_btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.zBuf_check_btn.AutoSize = true;
-            this.zBuf_check_btn.Location = new System.Drawing.Point(882, 159);
+            this.zBuf_check_btn.Location = new System.Drawing.Point(1194, 193);
             this.zBuf_check_btn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.zBuf_check_btn.Name = "zBuf_check_btn";
             this.zBuf_check_btn.Size = new System.Drawing.Size(115, 21);
