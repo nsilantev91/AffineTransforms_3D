@@ -108,12 +108,13 @@ namespace AffineTransforms_3D
         public Octahedron() : base()
         {
             var hex = new Hexahedron();
-            var a = hex.faces[0].SideCenter();
-            var b = hex.faces[1].SideCenter();
-            var c = hex.faces[2].SideCenter();
-            var d = hex.faces[3].SideCenter();
-            var e = hex.faces[4].SideCenter();
-            var f = hex.faces[5].SideCenter();
+            var faces = hex.Faces.ToList();
+            var a = faces[0].SideCenter();
+            var b = faces[1].SideCenter();
+            var c = faces[2].SideCenter();
+            var d = faces[3].SideCenter();
+            var e = faces[4].SideCenter();
+            var f = faces[5].SideCenter();
             AddFace(new[] { a, f, b });
             AddFace(new[] { b, c, f });
             AddFace(new[] { c, d, f });
@@ -152,20 +153,16 @@ namespace AffineTransforms_3D
         {
             for(int i = 0; i < 20; i++)
             {
-                var face = new Side();
+                var face = new Point3D[3];
                 for(int j = 0; j < 3; j++)
                 {
                     var p1 = vertices[triangles[i, j]];
-                    var p2 = vertices[triangles[i, (j + 1) % 3]];
                     p1.X *= c;
                     p1.Y *= c;
-                    p1.Z*= c;
-                    p2.X *= c;
-                    p2.Y *= c;
-                    p2.Z *= c;
-                    face.addEdge(new Edge(p1, p2));
+                    p1.Z *= c;
+                    face[j] = p1;
                 }
-                this.faces.Add(face);
+                AddFace(face);
                 
             }
         }
@@ -306,6 +303,16 @@ namespace AffineTransforms_3D
             }
         }
 
+    }
+
+    public class Axes: Figure
+    {
+        public Axes()
+        {
+            AddFace(new Point3D[] { new Point3D(0, 0, 0), new Point3D(10000, 0, 0) });
+            AddFace(new Point3D[] { new Point3D(0, 0, 0), new Point3D(0, 100, 0) });
+            AddFace(new Point3D[] { new Point3D(0, 0, 0), new Point3D(0, 0, 10000) });
+        }
     }
 
 

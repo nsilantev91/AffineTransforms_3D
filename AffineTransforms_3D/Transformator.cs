@@ -14,7 +14,7 @@ namespace AffineTransforms_3D
         static public Figure Transform(Figure f, Transformator transformator)
         {
             var figure = new Figure();
-            foreach (var face in f.faces)
+            foreach (var face in f.Faces)
             {
                 var edges = face.edges;
                 List<Point3D> ed = new List<Point3D>();
