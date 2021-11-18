@@ -273,7 +273,7 @@ namespace AffineTransforms_3D
             g.DrawPie(new Pen(Color.Red), new RectangleF(10,10,50,50), 0, curDeg);
             var centerX = pictureBox1.Size.Width / 2;
             var centerY = pictureBox1.Size.Height / 2 ;
-var cameraFig = Transformator.Transform(currentFigure,
+            var cameraFig = Transformator.Transform(currentFigure,
                 AffineTransforms.CameraTransform3D(camera, selectedProjetion==Projection.Perspective));
             if (usingZBuffer)
             {
@@ -290,13 +290,32 @@ var cameraFig = Transformator.Transform(currentFigure,
                 
             }
 
+
+            cameraFig = Transformator.Transform(axes,
+               AffineTransforms.CameraTransform3D(camera));
+            foreach (var r in cameraFig.Edges)
+            {
+                g.DrawLine(Pens.Red, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
+                   (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+            }
+
+            /*foreach(var face in projection.faces)
+            {
+                var pen = new Pen(Color.FromArgb(rand.Next(0, 255), rand.Next(0, 255), rand.Next(0, 255)), 2);
+                foreach(var r in face.edges)
+                {
+                    g.DrawLine(pen, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
+                    (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+                }
+            }*/
+            //ZBuffer.Triangulate(projection);
             //cameraFig = Transformator.Transform(axes,
             //   AffineTransforms.CameraTransform3D(camera));
             //foreach (var r in cameraFig.Edges)
             //{
             //    g.DrawLine(Pens.Red, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
             //       (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
-            //}
+            //
 
         }
 
@@ -372,14 +391,14 @@ var cameraFig = Transformator.Transform(currentFigure,
         {
             /*if (currentFigure.faces.Count == 0)
                 return;*/
-            g.Clear(BackColor);
-            var centerX = Size.Width / 2 - 200;
-            var centerY = Size.Height / 2 - 150;
-           /* if (usingZBuffer)
-            {
-                pictureBox1.Image = ZBuffer.zBuffer(pictureBox1.Width, pictureBox1.Height, currentFigure);
-            }
-            else*/
+            //g.Clear(BackColor);
+            //var centerX = Size.Width / 2 - 200;
+            //var centerY = Size.Height / 2 - 150;
+            //if (usingZBuffer)
+            //{
+            //    pictureBox1.Image = ZBuffer.zBuffer(pictureBox1.Width, pictureBox1.Height, currentFigure);
+            //}
+            
             //{
                 /*foreach (var r in currentFigure.edges)
                 {
