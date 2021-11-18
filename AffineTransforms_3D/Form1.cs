@@ -39,11 +39,10 @@ namespace AffineTransforms_3D
    
     public partial class Form1 : Form
     {
-        String lastfig = "";
         Graphics g;
         List<(Transform,List<double>)> transforms = new List<(Transform, List<double>)>();
         Projection selectedProjetion;
-        Figure currentFigure;
+        List<Figure> currentFigures;
         bool figureCenter;
         bool usingLine = false;
         bool usingZBuffer = false;
@@ -126,7 +125,7 @@ namespace AffineTransforms_3D
             figures_box.SelectedIndex = 0;
             funComboBox.SelectedIndex = 0;
             selectedProjetion = Projection.Perspective;
-            currentFigure = new Figure();
+            currentFigures = new List<Figure>();
             forming = new List<Point3D>();
             axis_box.SelectedIndex = 0;
             showForming = new List<Point3D>();
@@ -139,31 +138,31 @@ namespace AffineTransforms_3D
         {
             string figure = (string)figures_box.SelectedItem;
                 if (figure == "Тетраэдр")
-                    currentFigure = Figures.Tetrahedron;
+                    currentFigures.Add(Figures.Tetrahedron);
 
                 if (figure == "Гексаэдр")
 
-                    currentFigure = Figures.Hexahedron;
+                    currentFigures.Add(Figures.Hexahedron);
 
                 if (figure == "Октаэдр")
-                    currentFigure = Figures.Octahedron;
+                    currentFigures.Add(Figures.Octahedron);
 
                 if (figure == "Икосаэдр")
-                    currentFigure = new Icosahedron(150);
+                    currentFigures.Add(new Icosahedron(150));
 
                 if (figure == "Додэкаэдр")
-                    currentFigure = new Dodecahedron(150);
+                    currentFigures.Add(new Dodecahedron(150));
                 if (figure == "График")
                 {
                     syncGraph();
-                    currentFigure = new Graph(graphData);
+                    currentFigures.Add(new Graph(graphData));
                 }
-                   
-                lastfig = figure;
-                if (figure == "Пользовательская")
-                    lastfig = "Сustom figure";
-            var center = currentFigure.FigureCenter();
-            currentFigure.Transform(AffineTransforms.TranslateTransform3D(-center.X, -center.Y, -center.Z));
+
+            for (int i = 0; i < currentFigures.Count; i++)
+            {
+                var center = currentFigures[i].FigureCenter();
+                currentFigures[i].Transform(AffineTransforms.TranslateTransform3D(-center.X, -center.Y, -center.Z));
+            }
             ReDraw();
         }
 
@@ -181,7 +180,7 @@ namespace AffineTransforms_3D
        /// <param name="e"></param>
         private void transformButton_Click(object sender, EventArgs e)
         {
-            if (currentFigure == null)
+            if (currentFigures.Count == 0)
                 return;
             var transform = parseTransform();
                 switch (transform)
@@ -209,14 +208,14 @@ namespace AffineTransforms_3D
                                 var v1 = new Vector3D(point1.X, point1.Y, point1.Z);
                                 var v2 = new Vector3D(point2.X, point2.Y, point2.Z);
                                 var v = v2 - v1;
-                                currentFigure.Transform(
+                                currentFigures[0].Transform(
                                   AffineTransforms.RotateTransform3D(point1,
                                   degree, v.X, v.Y, v.Z));
                              } 
                             else
                             {
-                                var point = figureCenter ? currentFigure.FigureCenter() : new Point3D(0, 0, 0);
-                                currentFigure.Transform(
+                                var point = figureCenter ? currentFigures[0].FigureCenter() : new Point3D(0, 0, 0);
+                                currentFigures[0].Transform(
                                     AffineTransforms.RotateTransform3D(point,
                                     degree, axis.Item1, axis.Item2, axis.Item3));
                                
@@ -229,7 +228,7 @@ namespace AffineTransforms_3D
                             var x = double.Parse(textBox2.Text);
                             var y = double.Parse(textBox3.Text);
                             var z = double.Parse(textBox4.Text);
-                            currentFigure.Transform(
+                            currentFigures[0].Transform(
                                 AffineTransforms.TranslateTransform3D(x, y, z));
                           
                         break;
@@ -239,15 +238,15 @@ namespace AffineTransforms_3D
                             var x = double.Parse(textBox2.Text);
                             var y = double.Parse(textBox3.Text);
                             var z = double.Parse(textBox4.Text);
-                            var point = figureCenter ? currentFigure.FigureCenter() : new Point3D(0, 0, 0);
-                            if (!figureCenter)  currentFigure.Transform(
+                            var point = figureCenter ? currentFigures[0].FigureCenter() : new Point3D(0, 0, 0);
+                            if (!figureCenter)  currentFigures[0].Transform(
                                 AffineTransforms.ScaleTransform3D(point,
                                 x, y, z));
                             break;
                         }
                     case Transform.Reflect:
                         {
-                            currentFigure.Transform(
+                            currentFigures[0].Transform(
                                 AffineTransforms.ReflectionTransform(plane));
                         break;
                         }             
@@ -266,40 +265,31 @@ namespace AffineTransforms_3D
         /// </summary>
         void ReDraw()
         {
-           /* if (currentFigure.Faces. == 0)
-                return;*/
             syncCamera();
             g.Clear(BackColor);
-            g.DrawPie(new Pen(Color.Red), new RectangleF(10,10,50,50), 0, curDeg);
+            g.DrawPie(new Pen(Color.Red), new RectangleF(10, 10, 50, 50), 0, curDeg);
             var centerX = pictureBox1.Size.Width / 2;
-            var centerY = pictureBox1.Size.Height / 2 ;
-            var cameraFig = Transformator.Transform(currentFigure,
-                AffineTransforms.CameraTransform3D(camera, selectedProjetion==Projection.Perspective));
+            var centerY = pictureBox1.Size.Height / 2;
+            List<Figure> figures = new List<Figure>();
+            foreach (var currentFigure in currentFigures)
+            {
+                var cameraFig = Transformator.Transform(currentFigure,
+                              AffineTransforms.CameraTransform3D(camera, selectedProjetion == Projection.Perspective));
+                figures.Add(cameraFig);
+            }
 
-            /*
             if (usingZBuffer)
             {
                 pictureBox1.Invalidate();
-                pictureBox1.Image = ZBuffer.zBuffer(pictureBox1.Width, pictureBox1.Height, cameraFig);
+                pictureBox1.Image = ZBuffer.zBuffer(pictureBox1.Width, pictureBox1.Height, figures);
             }
             else
-            
-            foreach (var r in cameraFig.Edges)
-            {
-                
-                    g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
-                       (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
-                
-            }*/
-
-            //cameraFig = Transformator.Transform(axes,
-            //   AffineTransforms.CameraTransform3D(camera));
-            foreach (var r in cameraFig.Edges)
-            {
-                g.DrawLine(Pens.Red, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
-                  (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
-            }
-
+                foreach (var cameraFig in figures)
+                    foreach (var r in cameraFig.Edges)
+                    {
+                        g.DrawLine(Pens.Red, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
+                          (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+                    }
         }
 
 
@@ -312,7 +302,7 @@ namespace AffineTransforms_3D
         private void clear_btn_Click(object sender, EventArgs e)
         {
             g.Clear(BackColor);
-            currentFigure = new Figure();
+            currentFigures = new List<Figure>();
             transforms.Clear();
             forming.Clear();
             showForming.Clear();
@@ -433,7 +423,7 @@ namespace AffineTransforms_3D
             if (axis_box.SelectedIndex == 2)
                 xyz.Item3 = 1;
             var res = Figures.createRotateFigure(forming.ToArray(), int.Parse(num_parts_box.Text),xyz);
-            currentFigure = res;
+            currentFigures.Add(res);
             ReDraw();
         }
 
@@ -473,7 +463,7 @@ namespace AffineTransforms_3D
 
         private void Saver_Click(object sender, EventArgs e)
         {
-            if (currentFigure!=null)
+            if (currentFigures.Count != 0)
             { 
                 SaveFileDialog saveFile = saveFileDialog1;
                 saveFile.InitialDirectory = "c:\\";
@@ -482,7 +472,7 @@ namespace AffineTransforms_3D
                 if (saveFile.ShowDialog()==DialogResult.OK)
                 {
                     var path = Path.GetFullPath(saveFile.FileName);
-                    var t = new FileWorker(currentFigure, selectedProjetion,(string)figures_box.SelectedItem);
+                    var t = new FileWorker(currentFigures, selectedProjetion,(string)figures_box.SelectedItem);
                     FileHelper.WriteToBinaryFile(path, t);
                 }
             }
@@ -500,9 +490,8 @@ namespace AffineTransforms_3D
 
                 var path = Path.GetFullPath(openFile.FileName);
                 var t = FileHelper.ReadFromBinaryFile<FileWorker>(path);
-                currentFigure = t.fig;
+                currentFigures = t.fig;
                 selectedProjetion = t.proj;
-                lastfig = t.fname;
                 proj_box.SelectedIndex = (int)t.proj;
                 figures_box.SelectedIndex = figures_box.Items.IndexOf(t.fname);
                 ReDraw();
