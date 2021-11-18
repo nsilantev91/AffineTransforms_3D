@@ -112,14 +112,14 @@ namespace AffineTransforms_3D
             syncCamera();
             planeComboBox.SelectedIndex = 0;
             transformComboBox.SelectedIndex = 0;
-            /*AutoSize = true;
+            AutoSize = true;
             AutoScaleMode = AutoScaleMode.Font;
             Font = new Font("Trebuchet MS",
-                12.0f,
+                10.0f,
                 FontStyle.Regular,
                 GraphicsUnit.Point,
                 ((byte)(204))
-            );*/
+            );
             g = pictureBox1.CreateGraphics();
             proj_box.SelectedIndex = 0;
             figures_box.SelectedIndex = 0;
