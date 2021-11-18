@@ -273,7 +273,7 @@ namespace AffineTransforms_3D
             g.DrawPie(new Pen(Color.Red), new RectangleF(10,10,50,50), 0, curDeg);
             var centerX = pictureBox1.Size.Width / 2;
             var centerY = pictureBox1.Size.Height / 2 ;
-var cameraFig = Transformator.Transform(currentFigure,
+            var cameraFig = Transformator.Transform(currentFigure,
                 AffineTransforms.CameraTransform3D(camera, selectedProjetion==Projection.Perspective));
 
             /*
@@ -283,27 +283,22 @@ var cameraFig = Transformator.Transform(currentFigure,
                 pictureBox1.Image = ZBuffer.zBuffer(pictureBox1.Width, pictureBox1.Height, cameraFig);
             }
             else
-            
-            foreach (var r in cameraFig.Edges)
-            {
-                
-                    g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
-                       (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
-                
-            }
             */
-
-            foreach (var side in cameraFig.Faces)
-                Console.WriteLine(side.NormalVec());
-
-            foreach (var side in cameraFig.VisibleFaces(camera.Direction))
-                            foreach (var edge in side.edges)
-                            {
-                                g.DrawLine(Pens.Black,
-                                    (int)(edge.begin.X + centerX), (int)(edge.begin.Y + centerY),
-                                    (int)(edge.end.X + centerX), (int)(edge.end.Y + centerY));
-                            }
-                 
+            if (RemoveEdges.Checked)
+                foreach (var side in cameraFig.VisibleFaces(camera.Position))
+                    foreach (var edge in side.edges)
+                    {
+                        g.DrawLine(Pens.Black,
+                            (int)(edge.begin.X + centerX), (int)(edge.begin.Y + centerY),
+                            (int)(edge.end.X + centerX), (int)(edge.end.Y + centerY));
+                    }
+            else
+                foreach (var r in cameraFig.Edges)
+                {
+                        g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
+                           (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+                }
+            
             //cameraFig = Transformator.Transform(axes,
             //   AffineTransforms.CameraTransform3D(camera));
             //foreach (var r in cameraFig.Edges)
@@ -366,6 +361,13 @@ var cameraFig = Transformator.Transform(currentFigure,
                         break;
                     }
             }
+        }
+
+        public Vector3D ActualFuckingVector(Point3D camera, Figure figure)
+        {
+            var res =  camera - figure.FigureCenter();
+            res.Normalize();
+            return res;
         }
 
         CoordinatePlane parsePlane()

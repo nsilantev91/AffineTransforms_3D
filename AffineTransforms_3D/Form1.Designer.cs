@@ -115,12 +115,13 @@
             this.label35 = new System.Windows.Forms.Label();
             this.fovXtextBox = new System.Windows.Forms.TextBox();
             this.rotateCameraButton = new System.Windows.Forms.Button();
+            this.RemoveEdges = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // showFigure_btn
             // 
-            this.showFigure_btn.Location = new System.Drawing.Point(8, 201);
+            this.showFigure_btn.Location = new System.Drawing.Point(10, 176);
             this.showFigure_btn.Name = "showFigure_btn";
             this.showFigure_btn.Size = new System.Drawing.Size(163, 29);
             this.showFigure_btn.TabIndex = 1;
@@ -144,7 +145,7 @@
             this.proj_box.Items.AddRange(new object[] {
             "Перспективная",
             "Ортогональная"});
-            this.proj_box.Location = new System.Drawing.Point(9, 215);
+            this.proj_box.Location = new System.Drawing.Point(9, 212);
             this.proj_box.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.proj_box.Name = "proj_box";
             this.proj_box.Size = new System.Drawing.Size(163, 24);
@@ -170,7 +171,7 @@
             // 
             // clear_btn
             // 
-            this.clear_btn.Location = new System.Drawing.Point(8, 236);
+            this.clear_btn.Location = new System.Drawing.Point(9, 241);
             this.clear_btn.Name = "clear_btn";
             this.clear_btn.Size = new System.Drawing.Size(163, 29);
             this.clear_btn.TabIndex = 5;
@@ -514,7 +515,10 @@
             // 
             this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(0, 0);
             this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(0, 17);
+            this.label16.TabIndex = 84;
             // 
             // forming_y_box
             // 
@@ -768,13 +772,14 @@
             this.zBuf_check_btn.Text = "using ZBuffer";
             this.zBuf_check_btn.UseVisualStyleBackColor = true;
             this.zBuf_check_btn.CheckedChanged += new System.EventHandler(this.zBuf_check_btn_CheckedChanged);
+            // 
             // label25
             // 
             this.label25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label25.AutoSize = true;
             this.label25.Location = new System.Drawing.Point(1111, 73);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(19, 20);
+            this.label25.Size = new System.Drawing.Size(17, 17);
             this.label25.TabIndex = 65;
             this.label25.Text = "Z";
             // 
@@ -784,7 +789,7 @@
             this.vectorZtextBox.Location = new System.Drawing.Point(1116, 93);
             this.vectorZtextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.vectorZtextBox.Name = "vectorZtextBox";
-            this.vectorZtextBox.Size = new System.Drawing.Size(41, 26);
+            this.vectorZtextBox.Size = new System.Drawing.Size(41, 22);
             this.vectorZtextBox.TabIndex = 64;
             this.vectorZtextBox.Text = "0";
             // 
@@ -794,7 +799,7 @@
             this.label26.AutoSize = true;
             this.label26.Location = new System.Drawing.Point(1065, 73);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(20, 20);
+            this.label26.Size = new System.Drawing.Size(17, 17);
             this.label26.TabIndex = 63;
             this.label26.Text = "Y";
             // 
@@ -804,7 +809,7 @@
             this.vectorYtextBox.Location = new System.Drawing.Point(1067, 93);
             this.vectorYtextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.vectorYtextBox.Name = "vectorYtextBox";
-            this.vectorYtextBox.Size = new System.Drawing.Size(41, 26);
+            this.vectorYtextBox.Size = new System.Drawing.Size(41, 22);
             this.vectorYtextBox.TabIndex = 62;
             this.vectorYtextBox.Text = "0";
             // 
@@ -814,7 +819,7 @@
             this.label27.AutoSize = true;
             this.label27.Location = new System.Drawing.Point(1018, 73);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(20, 20);
+            this.label27.Size = new System.Drawing.Size(17, 17);
             this.label27.TabIndex = 61;
             this.label27.Text = "X";
             // 
@@ -824,7 +829,7 @@
             this.vectorXtextBox.Location = new System.Drawing.Point(1018, 93);
             this.vectorXtextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.vectorXtextBox.Name = "vectorXtextBox";
-            this.vectorXtextBox.Size = new System.Drawing.Size(41, 26);
+            this.vectorXtextBox.Size = new System.Drawing.Size(41, 22);
             this.vectorXtextBox.TabIndex = 60;
             this.vectorXtextBox.Text = "0";
             // 
@@ -833,7 +838,7 @@
             this.label28.AutoSize = true;
             this.label28.Location = new System.Drawing.Point(989, 1);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(0, 20);
+            this.label28.Size = new System.Drawing.Size(0, 17);
             this.label28.TabIndex = 66;
             this.label28.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
@@ -863,7 +868,7 @@
             this.label29.AutoSize = true;
             this.label29.Location = new System.Drawing.Point(1111, 192);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(19, 20);
+            this.label29.Size = new System.Drawing.Size(17, 17);
             this.label29.TabIndex = 73;
             this.label29.Text = "Z";
             // 
@@ -873,7 +878,7 @@
             this.cameraZTextBox.Location = new System.Drawing.Point(1116, 212);
             this.cameraZTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cameraZTextBox.Name = "cameraZTextBox";
-            this.cameraZTextBox.Size = new System.Drawing.Size(41, 26);
+            this.cameraZTextBox.Size = new System.Drawing.Size(41, 22);
             this.cameraZTextBox.TabIndex = 72;
             this.cameraZTextBox.Text = "300";
             // 
@@ -883,7 +888,7 @@
             this.label30.AutoSize = true;
             this.label30.Location = new System.Drawing.Point(1065, 192);
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(20, 20);
+            this.label30.Size = new System.Drawing.Size(17, 17);
             this.label30.TabIndex = 71;
             this.label30.Text = "Y";
             // 
@@ -893,7 +898,7 @@
             this.cameraYTextBox.Location = new System.Drawing.Point(1067, 212);
             this.cameraYTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cameraYTextBox.Name = "cameraYTextBox";
-            this.cameraYTextBox.Size = new System.Drawing.Size(41, 26);
+            this.cameraYTextBox.Size = new System.Drawing.Size(41, 22);
             this.cameraYTextBox.TabIndex = 70;
             this.cameraYTextBox.Text = "20";
             // 
@@ -903,7 +908,7 @@
             this.label31.AutoSize = true;
             this.label31.Location = new System.Drawing.Point(1018, 192);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(20, 20);
+            this.label31.Size = new System.Drawing.Size(17, 17);
             this.label31.TabIndex = 69;
             this.label31.Text = "X";
             // 
@@ -913,7 +918,7 @@
             this.cameraXTextBox.Location = new System.Drawing.Point(1018, 212);
             this.cameraXTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cameraXTextBox.Name = "cameraXTextBox";
-            this.cameraXTextBox.Size = new System.Drawing.Size(41, 26);
+            this.cameraXTextBox.Size = new System.Drawing.Size(41, 22);
             this.cameraXTextBox.TabIndex = 68;
             this.cameraXTextBox.Text = "20";
             // 
@@ -923,7 +928,7 @@
             this.zFarTextBox.Location = new System.Drawing.Point(1018, 277);
             this.zFarTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.zFarTextBox.Name = "zFarTextBox";
-            this.zFarTextBox.Size = new System.Drawing.Size(41, 26);
+            this.zFarTextBox.Size = new System.Drawing.Size(41, 22);
             this.zFarTextBox.TabIndex = 75;
             this.zFarTextBox.Text = "600";
             // 
@@ -933,7 +938,7 @@
             this.label33.AutoSize = true;
             this.label33.Location = new System.Drawing.Point(1018, 257);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(42, 20);
+            this.label33.Size = new System.Drawing.Size(38, 17);
             this.label33.TabIndex = 76;
             this.label33.Text = "Z far";
             // 
@@ -943,7 +948,7 @@
             this.zNearTextBox.Location = new System.Drawing.Point(1067, 277);
             this.zNearTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.zNearTextBox.Name = "zNearTextBox";
-            this.zNearTextBox.Size = new System.Drawing.Size(41, 26);
+            this.zNearTextBox.Size = new System.Drawing.Size(41, 22);
             this.zNearTextBox.TabIndex = 77;
             this.zNearTextBox.Text = "300";
             // 
@@ -953,7 +958,7 @@
             this.label32.AutoSize = true;
             this.label32.Location = new System.Drawing.Point(1065, 257);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(55, 20);
+            this.label32.Size = new System.Drawing.Size(50, 17);
             this.label32.TabIndex = 78;
             this.label32.Text = "Z near";
             // 
@@ -963,7 +968,7 @@
             this.label34.AutoSize = true;
             this.label34.Location = new System.Drawing.Point(1069, 321);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(45, 20);
+            this.label34.Size = new System.Drawing.Size(40, 17);
             this.label34.TabIndex = 82;
             this.label34.Text = "fov Y";
             // 
@@ -973,7 +978,7 @@
             this.fovYtextBox.Location = new System.Drawing.Point(1071, 341);
             this.fovYtextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.fovYtextBox.Name = "fovYtextBox";
-            this.fovYtextBox.Size = new System.Drawing.Size(41, 26);
+            this.fovYtextBox.Size = new System.Drawing.Size(41, 22);
             this.fovYtextBox.TabIndex = 81;
             this.fovYtextBox.Text = "90";
             // 
@@ -983,7 +988,7 @@
             this.label35.AutoSize = true;
             this.label35.Location = new System.Drawing.Point(1022, 321);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(45, 20);
+            this.label35.Size = new System.Drawing.Size(40, 17);
             this.label35.TabIndex = 80;
             this.label35.Text = "fov X";
             // 
@@ -993,7 +998,7 @@
             this.fovXtextBox.Location = new System.Drawing.Point(1022, 341);
             this.fovXtextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.fovXtextBox.Name = "fovXtextBox";
-            this.fovXtextBox.Size = new System.Drawing.Size(41, 26);
+            this.fovXtextBox.Size = new System.Drawing.Size(41, 22);
             this.fovXtextBox.TabIndex = 79;
             this.fovXtextBox.Text = "90";
             // 
@@ -1007,14 +1012,27 @@
             this.rotateCameraButton.UseVisualStyleBackColor = true;
             this.rotateCameraButton.Click += new System.EventHandler(this.rotateCameraButton_Click);
             // 
+            // RemoveEdges
+            // 
+            this.RemoveEdges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.RemoveEdges.AutoSize = true;
+            this.RemoveEdges.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.RemoveEdges.Location = new System.Drawing.Point(880, 184);
+            this.RemoveEdges.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.RemoveEdges.Name = "RemoveEdges";
+            this.RemoveEdges.Size = new System.Drawing.Size(114, 19);
+            this.RemoveEdges.TabIndex = 85;
+            this.RemoveEdges.Text = "remove unseen";
+            this.RemoveEdges.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1054, 550);
-            this.Controls.Add(this.zBuf_check_btn);
             this.ClientSize = new System.Drawing.Size(1387, 688);
+            this.Controls.Add(this.RemoveEdges);
+            this.Controls.Add(this.zBuf_check_btn);
             this.Controls.Add(this.rotateCameraButton);
             this.Controls.Add(this.label34);
             this.Controls.Add(this.fovYtextBox);
@@ -1197,6 +1215,7 @@
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.TextBox fovXtextBox;
         private System.Windows.Forms.Button rotateCameraButton;
+        private System.Windows.Forms.CheckBox RemoveEdges;
     }
 }
 

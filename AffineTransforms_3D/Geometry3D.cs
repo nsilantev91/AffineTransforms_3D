@@ -165,13 +165,19 @@ namespace AffineTransforms_3D
         }
 
 
-        public List<Face> VisibleFaces(Vector3D visVector)
+        public List<Face> VisibleFaces(Point3D camera)
         {
             var res = new List<Face>();
-            visVector.Normalize();
+            var center = this.FigureCenter();
             foreach (var i in faces)
             {
+
                 var t = i.NormalVec();
+                var CenToFace = i.SideCenter() - center;
+                if (Vector3D.DotProduct(t, CenToFace) < 0)
+                    t *= -1;
+                var visVector = i.SideCenter()-camera;
+
                 /*
                 var angle = Math.Acos(
                     (t.X * visVector.X + t.Y * visVector.Y + t.Z * visVector.Z) /
