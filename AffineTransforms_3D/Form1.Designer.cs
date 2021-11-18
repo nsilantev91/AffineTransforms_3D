@@ -115,12 +115,13 @@
             this.label35 = new System.Windows.Forms.Label();
             this.fovXtextBox = new System.Windows.Forms.TextBox();
             this.rotateCameraButton = new System.Windows.Forms.Button();
+            this.RemoveEdges = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // showFigure_btn
             // 
-            this.showFigure_btn.Location = new System.Drawing.Point(8, 204);
+            this.showFigure_btn.Location = new System.Drawing.Point(10, 176);
             this.showFigure_btn.Name = "showFigure_btn";
             this.showFigure_btn.Size = new System.Drawing.Size(163, 29);
             this.showFigure_btn.TabIndex = 1;
@@ -144,7 +145,7 @@
             this.proj_box.Items.AddRange(new object[] {
             "Перспективная",
             "Ортогональная"});
-            this.proj_box.Location = new System.Drawing.Point(8, 173);
+            this.proj_box.Location = new System.Drawing.Point(9, 212);
             this.proj_box.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.proj_box.Name = "proj_box";
             this.proj_box.Size = new System.Drawing.Size(163, 24);
@@ -170,7 +171,7 @@
             // 
             // clear_btn
             // 
-            this.clear_btn.Location = new System.Drawing.Point(8, 241);
+            this.clear_btn.Location = new System.Drawing.Point(9, 241);
             this.clear_btn.Name = "clear_btn";
             this.clear_btn.Size = new System.Drawing.Size(163, 29);
             this.clear_btn.TabIndex = 5;
@@ -1011,12 +1012,26 @@
             this.rotateCameraButton.UseVisualStyleBackColor = true;
             this.rotateCameraButton.Click += new System.EventHandler(this.rotateCameraButton_Click);
             // 
+            // RemoveEdges
+            // 
+            this.RemoveEdges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.RemoveEdges.AutoSize = true;
+            this.RemoveEdges.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.RemoveEdges.Location = new System.Drawing.Point(880, 184);
+            this.RemoveEdges.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.RemoveEdges.Name = "RemoveEdges";
+            this.RemoveEdges.Size = new System.Drawing.Size(114, 19);
+            this.RemoveEdges.TabIndex = 85;
+            this.RemoveEdges.Text = "remove unseen";
+            this.RemoveEdges.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1387, 688);
+            this.Controls.Add(this.RemoveEdges);
             this.Controls.Add(this.zBuf_check_btn);
             this.Controls.Add(this.rotateCameraButton);
             this.Controls.Add(this.label34);
@@ -1200,6 +1215,7 @@
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.TextBox fovXtextBox;
         private System.Windows.Forms.Button rotateCameraButton;
+        private System.Windows.Forms.CheckBox RemoveEdges;
     }
 }
 
