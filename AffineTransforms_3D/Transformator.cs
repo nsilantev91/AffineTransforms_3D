@@ -31,7 +31,7 @@ namespace AffineTransforms_3D
        
     }
 
-    class StandardMatrixTransformator : Transformator
+    public class StandardMatrixTransformator : Transformator
     {
         Transform3D transform3D;
 
@@ -45,7 +45,7 @@ namespace AffineTransforms_3D
         }
     }
 
-    class CustomMatrixTransformator : Transformator
+    public class CustomMatrixTransformator : Transformator
     {
         double[,] matrix;
         public CustomMatrixTransformator(double[,] m)
@@ -56,8 +56,7 @@ namespace AffineTransforms_3D
         {
             var pointMatrix = new double[,] { { point.X, point.Y, point.Z, 1 } };
             var res = Helpers.MultiplyMatrix(pointMatrix, matrix);
-            if (res[0, 3] == 0) return point;
-            return new Point3D(res[0,0]/res[0,3], res[0,1]/res[0,3], res[0,2]/res[0,3]);
+            return new Point3D(res[0,0]/res[0,3], res[0,1]/res[0,3], point.Z);
         }
     }
 

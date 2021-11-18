@@ -309,9 +309,9 @@ namespace AffineTransforms_3D
     {
         public Axes()
         {
-            AddFace(new Point3D[] { new Point3D(0, 0, 0), new Point3D(10000, 0, 0) });
+            AddFace(new Point3D[] { new Point3D(0, 0, 0), new Point3D(100, 0, 0) });
             AddFace(new Point3D[] { new Point3D(0, 0, 0), new Point3D(0, 100, 0) });
-            AddFace(new Point3D[] { new Point3D(0, 0, 0), new Point3D(0, 0, 10000) });
+            AddFace(new Point3D[] { new Point3D(0, 0, 0), new Point3D(0, 0, 100) });
         }
     }
 

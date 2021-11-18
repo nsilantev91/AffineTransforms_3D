@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace AffineTransforms_3D
 {
-    static class Helpers
+    static public  class Helpers
     {
         static public double[,] MultiplyMatrix(double[,] A, double[,] B)
         {
