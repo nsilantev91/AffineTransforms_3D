@@ -46,6 +46,7 @@ namespace AffineTransforms_3D
         Figure currentFigure;
         bool figureCenter;
         bool usingLine = false;
+        bool usingZBuffer = false;
         bool rotatingCamera = false;
         CoordinatePlane plane;
         Point3D point1 = new Point3D(0,0,0);
@@ -264,29 +265,38 @@ namespace AffineTransforms_3D
         /// Получение проекции currentFigure и её отрисовка
         /// </summary>
         void ReDraw()
-        {  
-            if (currentFigure == null)
-                return;
+        {
+           /* if (currentFigure.Faces. == 0)
+                return;*/
             syncCamera();
             g.Clear(BackColor);
             g.DrawPie(new Pen(Color.Red), new RectangleF(10,10,50,50), 0, curDeg);
             var centerX = pictureBox1.Size.Width / 2;
-            var centerY = pictureBox1.Size.Height / 2;
-            var cameraFig = Transformator.Transform(currentFigure,
+            var centerY = pictureBox1.Size.Height / 2 ;
+var cameraFig = Transformator.Transform(currentFigure,
                 AffineTransforms.CameraTransform3D(camera, selectedProjetion==Projection.Perspective));
+            if (usingZBuffer)
+            {
+                pictureBox1.Invalidate();
+                pictureBox1.Image = ZBuffer.zBuffer(pictureBox1.Width, pictureBox1.Height, cameraFig);
+            }
+            else
+            
             foreach (var r in cameraFig.Edges)
             {
-                g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
-                   (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+                
+                    g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
+                       (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+                
             }
 
-            cameraFig = Transformator.Transform(axes,
-               AffineTransforms.CameraTransform3D(camera));
-            foreach (var r in cameraFig.Edges)
-            {
-                g.DrawLine(Pens.Red, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
-                   (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
-            }
+            //cameraFig = Transformator.Transform(axes,
+            //   AffineTransforms.CameraTransform3D(camera));
+            //foreach (var r in cameraFig.Edges)
+            //{
+            //    g.DrawLine(Pens.Red, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
+            //       (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+            //}
 
         }
 
@@ -310,6 +320,7 @@ namespace AffineTransforms_3D
             num_parts_box.Text = "0";
             create_fig_btn.Enabled = false;
             num_parts_box.Enabled = false;
+
 
         }
 
@@ -359,6 +370,33 @@ namespace AffineTransforms_3D
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
+            /*if (currentFigure.faces.Count == 0)
+                return;*/
+            g.Clear(BackColor);
+            var centerX = Size.Width / 2 - 200;
+            var centerY = Size.Height / 2 - 150;
+           /* if (usingZBuffer)
+            {
+                pictureBox1.Image = ZBuffer.zBuffer(pictureBox1.Width, pictureBox1.Height, currentFigure);
+            }
+            else*/
+            //{
+                /*foreach (var r in currentFigure.edges)
+                {
+                    g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
+                       (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+                }*/
+            //}
+        }
+
+        private void textBox8_TextChanged(object sender, EventArgs e)
+        {
+            point1.X=double.Parse(((TextBox)sender).Text);
+        }
+
+        private void textBoxY1_TextChanged(object sender, EventArgs e)
+        {
+            point1.Y = double.Parse(((TextBox)sender).Text);
             //if (currentFigure == null)
             //    return;
             //g.Clear(BackColor);
@@ -529,6 +567,11 @@ namespace AffineTransforms_3D
             curDeg = 0;
             rotatingCamera = false;
             camera.Direction = cVec;
+        }
+
+        private void zBuf_check_btn_CheckedChanged(object sender, EventArgs e)
+        {
+            usingZBuffer = !usingZBuffer;
         }
     }
 
