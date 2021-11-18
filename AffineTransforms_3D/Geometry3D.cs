@@ -168,7 +168,7 @@ namespace AffineTransforms_3D
         public List<Face> VisibleFaces(Point3D camera)
         {
             var res = new List<Face>();
-            var center = this.FigureCenter();
+            var center = FigureCenter();
             foreach (var i in faces)
             {
 

@@ -298,14 +298,6 @@ namespace AffineTransforms_3D
                         g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
                            (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
                 }
-            
-            //cameraFig = Transformator.Transform(axes,
-            //   AffineTransforms.CameraTransform3D(camera));
-            foreach (var r in cameraFig.Edges)
-            {
-                g.DrawLine(Pens.Red, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
-                  (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
-            }
 
         }
 
