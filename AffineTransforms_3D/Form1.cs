@@ -275,6 +275,8 @@ namespace AffineTransforms_3D
             var centerY = pictureBox1.Size.Height / 2 ;
             var cameraFig = Transformator.Transform(currentFigure,
                 AffineTransforms.CameraTransform3D(camera, selectedProjetion==Projection.Perspective));
+
+            /*
             if (usingZBuffer)
             {
                 pictureBox1.Invalidate();
@@ -290,25 +292,6 @@ namespace AffineTransforms_3D
                 
             }
 
-
-            cameraFig = Transformator.Transform(axes,
-               AffineTransforms.CameraTransform3D(camera));
-            foreach (var r in cameraFig.Edges)
-            {
-                g.DrawLine(Pens.Red, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
-                   (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
-            }
-
-            /*foreach(var face in projection.faces)
-            {
-                var pen = new Pen(Color.FromArgb(rand.Next(0, 255), rand.Next(0, 255), rand.Next(0, 255)), 2);
-                foreach(var r in face.edges)
-                {
-                    g.DrawLine(pen, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
-                    (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
-                }
-            }*/
-            //ZBuffer.Triangulate(projection);
             //cameraFig = Transformator.Transform(axes,
             //   AffineTransforms.CameraTransform3D(camera));
             //foreach (var r in cameraFig.Edges)
