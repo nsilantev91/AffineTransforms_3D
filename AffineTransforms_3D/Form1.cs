@@ -62,6 +62,9 @@ namespace AffineTransforms_3D
             camera.Position.X = double.Parse(cameraXTextBox.Text);
             camera.Position.Y = double.Parse(cameraYTextBox.Text);
             camera.Position.Z= double.Parse(cameraZTextBox.Text);
+            //camera.Direction.X = double.Parse(cameraXTextBox.Text);
+            //camera.Direction.Y = double.Parse(cameraYTextBox.Text);
+            //camera.Direction.Z = double.Parse(cameraZTextBox.Text);
             camera.Direction.X = double.Parse(vectorXtextBox.Text);
             camera.Direction.Y = double.Parse(vectorYtextBox.Text);
             camera.Direction.Z = double.Parse(vectorZtextBox.Text);
@@ -277,13 +280,13 @@ namespace AffineTransforms_3D
                    (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
             }
 
-            //cameraFig = Transformator.Transform(axes,
-            //   AffineTransforms.CameraTransform3D(camera));
-            //foreach (var r in cameraFig.Edges)
-            //{
-            //    g.DrawLine(Pens.Red, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
-            //       (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
-            //}
+            cameraFig = Transformator.Transform(axes,
+               AffineTransforms.CameraTransform3D(camera));
+            foreach (var r in cameraFig.Edges)
+            {
+                g.DrawLine(Pens.Red, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
+                   (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
+            }
 
         }
 
@@ -497,6 +500,7 @@ namespace AffineTransforms_3D
 
             }
             var p = camera.Position;
+            var cVec = camera.Direction;
             var transformator = AffineTransforms.RotateTransform3D(new Point3D(0,0,0),
                                     degree, axis.Item1, axis.Item2, axis.Item3);
            
@@ -504,19 +508,27 @@ namespace AffineTransforms_3D
             for (int i = 0; i < 360/degree; i+=degree)
             {
                 curDeg += degree;
-                Thread.Sleep(30);
+                Thread.Sleep(10);
                 camera.Position = transformator.Transform(camera.Position);
-                var v = new Point3D(camera.Direction.X, camera.Direction.Y, camera.Direction.Z);
-                //var dirTransformator = AffineTransforms.RotateTransform3D(camera.Position,
-                //                   degree, axis.Item1, axis.Item2, axis.Item3);
-                //v = transformator.Transform(v);
-                //camera.Direction = new Vector3D(v.X, v.Y, v.Z);
-                camera.Direction = new Vector3D(-camera.Position.X, -camera.Position.Y, -camera.Position.Z);
+                switch (plane)
+                {
+                    case CoordinatePlane.XY:
+                        camera.Direction.Z += degree;
+                        break;
+                    case CoordinatePlane.XZ:
+                        camera.Direction.Y += degree;
+                        break;
+                    case CoordinatePlane.YZ:
+                        camera.Direction.X += degree;
+                        break;
+
+                }
                 ReDraw();
             }
 
             curDeg = 0;
-            rotatingCamera = false;     
+            rotatingCamera = false;
+            camera.Direction = cVec;
         }
     }
 

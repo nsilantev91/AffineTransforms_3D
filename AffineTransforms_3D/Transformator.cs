@@ -31,7 +31,7 @@ namespace AffineTransforms_3D
        
     }
 
-    class StandardMatrixTransformator : Transformator
+    public class StandardMatrixTransformator : Transformator
     {
         Transform3D transform3D;
 
@@ -45,7 +45,7 @@ namespace AffineTransforms_3D
         }
     }
 
-    class CustomMatrixTransformator : Transformator
+    public class CustomMatrixTransformator : Transformator
     {
         double[,] matrix;
         public CustomMatrixTransformator(double[,] m)
