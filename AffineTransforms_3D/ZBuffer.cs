@@ -47,8 +47,8 @@ namespace AffineTransforms_3D
                 var colors = new List<Color> { Color.Black, Color.BlueViolet, Color.Coral, Color.DarkSeaGreen, Color.DimGray, Color.DeepPink };
                 for (int j = 0; j< points.Count; j++)
                 {
-                    int x = (int)(points[j].X + centerX - figureCenterX);
-                    int y = (int)(points[j].Y + centerY - figureCenterY);
+                    int x = (int)(points[j].X + centerX - figureCenterX) + 200;
+                    int y = (int)(points[j].Y + centerY - figureCenterY) + 200;
                     if (x < width && y < height && x > 0 && y > 0)
                     {
                         if (points[j].Z > zbuff[x, y])
@@ -66,7 +66,7 @@ namespace AffineTransforms_3D
             Dictionary<int,List<List<Edge>>> res = new Dictionary<int, List<List<Edge>>>();
             List<Edge> currTriang = new List<Edge>();
             int count = 1;
-            foreach (var face in figure.faces)
+            foreach (var face in figure.Faces)
             {
                 if (face.edges.Count == 3)
                     res.Add(count,new List<List<Edge>> { face.edges });

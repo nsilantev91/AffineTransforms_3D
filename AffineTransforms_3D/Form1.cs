@@ -263,31 +263,28 @@ namespace AffineTransforms_3D
         /// </summary>
         void ReDraw()
         {
-            if (currentFigure.faces.Count == 0)
-                return;
+           /* if (currentFigure.Faces. == 0)
+                return;*/
             syncCamera();
             g.Clear(BackColor);
             g.DrawPie(new Pen(Color.Red), new RectangleF(10,10,50,50), 0, curDeg);
             var centerX = pictureBox1.Size.Width / 2;
             var centerY = pictureBox1.Size.Height / 2 ;
-
-            var projection = Projections.Apply(currentFigure, selectedProjetion);
+var cameraFig = Transformator.Transform(currentFigure,
+                AffineTransforms.CameraTransform3D(camera, selectedProjetion==Projection.Perspective));
             if (usingZBuffer)
             {
                 pictureBox1.Invalidate();
-                pictureBox1.Image = ZBuffer.zBuffer(pictureBox1.Width, pictureBox1.Height, projection);
+                pictureBox1.Image = ZBuffer.zBuffer(pictureBox1.Width, pictureBox1.Height, cameraFig);
             }
             else
-            var centerY = pictureBox1.Size.Height / 2;
-            var cameraFig = Transformator.Transform(currentFigure,
-                AffineTransforms.CameraTransform3D(camera, selectedProjetion==Projection.Perspective));
+            
             foreach (var r in cameraFig.Edges)
             {
-                foreach (var r in projection.edges)
-                {
+                
                     g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
                        (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
-                }
+                
             }
 
 
@@ -381,8 +378,8 @@ namespace AffineTransforms_3D
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            if (currentFigure.faces.Count == 0)
-                return;
+            /*if (currentFigure.faces.Count == 0)
+                return;*/
             g.Clear(BackColor);
             var centerX = Size.Width / 2 - 200;
             var centerY = Size.Height / 2 - 150;
@@ -392,11 +389,11 @@ namespace AffineTransforms_3D
             }
             else*/
             //{
-                foreach (var r in currentFigure.edges)
+                /*foreach (var r in currentFigure.edges)
                 {
                     g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
                        (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
-                }
+                }*/
             //}
         }
 
