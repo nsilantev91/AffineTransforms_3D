@@ -77,9 +77,12 @@ namespace AffineTransforms_3D
         {
             var p1 = edges[0].begin;
             var p2 = edges[0].end;
-            var p3 = edges[1].end;
+            var p3 = edges.Last().begin;
 
-            return Vector3D.CrossProduct(p2 - p1, p3 - p2);
+            var res = Vector3D.CrossProduct(p2 - p1, p3 - p1);
+            res.Normalize();
+
+            return res;
         }
     }
 
@@ -165,13 +168,18 @@ namespace AffineTransforms_3D
         public List<Face> VisibleFaces(Vector3D visVector)
         {
             var res = new List<Face>();
+            visVector.Normalize();
             foreach (var i in faces)
             {
                 var t = i.NormalVec();
+                /*
                 var angle = Math.Acos(
                     (t.X * visVector.X + t.Y * visVector.Y + t.Z * visVector.Z) /
                     (Math.Sqrt(t.X * t.X + t.Y * t.Y + t.Z * t.Z) + Math.Sqrt(visVector.X * visVector.X + visVector.Y * visVector.Y + visVector.Z * visVector.Z)));
                 if (angle % 180 < 90)
+                    res.Add(i);
+                */
+                if (Vector3D.DotProduct(visVector,t) < 0)
                     res.Add(i);
             }
             return res;
