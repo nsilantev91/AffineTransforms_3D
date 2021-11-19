@@ -177,7 +177,7 @@ namespace AffineTransforms_3D
                 if (Vector3D.DotProduct(t, CenToFace) < 0)
                     t *= -1;
                 var visVector = i.SideCenter()-camera;
-
+                visVector.Normalize();
                 /*
                 var angle = Math.Acos(
                     (t.X * visVector.X + t.Y * visVector.Y + t.Z * visVector.Z) /
