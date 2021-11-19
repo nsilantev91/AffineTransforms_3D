@@ -13,9 +13,9 @@ namespace AffineTransforms_3D
     {
         public string fname;
         public Projection proj;
-        public Figure fig;
+        public List<Figure> fig;
      
-        public FileWorker(Figure f, Projection pr,string fn)
+        public FileWorker(List<Figure> f, Projection pr,string fn)
         {
             fname = fn;
             fig = f;
