@@ -171,11 +171,14 @@ namespace AffineTransforms_3D
             var res = new List<Face>();
             var center = FigureCenter();
             var matrix = AffineTransforms.FullRotationMatrix(cam.Direction);
-            matrix = Helpers.MultiplyMatrix(matrix,
-                   AffineTransforms.PerspectiveCamera(cam.zFar, cam.zNear, cam.fovX, cam.fovY));
+            //matrix =
+            //    Helpers.MultiplyMatrix(AffineTransforms.translateMatrix(center.X, center.Y, center.Z), matrix);
+            //matrix = Helpers.MultiplyMatrix(matrix,
+            //       AffineTransforms.PerspectiveCamera(cam.zFar, cam.zNear, cam.fovX, cam.fovY));
+            //matrix = Helpers.MultiplyMatrix(matrix,
+            //        AffineTransforms.Scale(cam.width / 2, cam.height / 2, 1));
             var transformator = new CustomMatrixTransformator(matrix);
-            var p0 = new Point3D(0, 0, 0);
-            var p1 = new Point3D(0, 0, -1);
+            var p1 = new Point3D(0,0,-1);
             p1 = transformator.Transform(p1);
             camera = transformator.Transform(camera);
             foreach (var i in faces)
