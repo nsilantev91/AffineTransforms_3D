@@ -20,6 +20,16 @@ namespace AffineTransforms_3D
             begin = beg;
             this.end = end;
         }
+        static public bool operator ==(Edge edge1, Edge edge2)
+        {
+            return edge1.begin == edge2.begin && edge1.end == edge2.end;
+        }
+
+        static public bool operator !=(Edge edge1, Edge edge2)
+        {
+            return !(edge1 == edge2);
+        }
+
     }
 
     //грань фигуры 
@@ -106,7 +116,7 @@ namespace AffineTransforms_3D
         }
 
         //можно и нужно переопределять, если использовать другой способ хранения фигуры
-        public virtual IEnumerable<Point3D> Vertexes
+        public virtual IEnumerable<Tuple<Point3D, Vector3D>> Vertexes
         {
             get
             {
@@ -114,7 +124,11 @@ namespace AffineTransforms_3D
                 {
                     foreach (var e in f.edges)
                     {
-                        yield return e.begin;
+                        var adjacentFaces = faces.FindAll(face => face.edges.Any(edge => edge == e));
+                        var sumVect = new Vector3D(0, 0, 0);
+                        foreach (var face in adjacentFaces)
+                            sumVect += face.NormalVec();
+                        yield return new Tuple<Point3D, Vector3D>(e.begin, sumVect / adjacentFaces.Count);
                     }
                 }
             }
@@ -146,9 +160,9 @@ namespace AffineTransforms_3D
 
         public Point3D FigureCenter()
         {
-            var x = Vertexes.Average(point => point.X);
-            var y = Vertexes.Average(point => point.Y);
-            var z = Vertexes.Average(point => point.Z);
+            var x = Vertexes.Average(point => point.Item1.X);
+            var y = Vertexes.Average(point => point.Item1.Y);
+            var z = Vertexes.Average(point => point.Item1.Z);
             return new Point3D(x, y, z);
         }
 

@@ -120,7 +120,9 @@ namespace AffineTransforms_3D
                 GraphicsUnit.Point,
                 ((byte)(204))
             );
-            g = pictureBox1.CreateGraphics();
+            pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            g = Graphics.FromImage(pictureBox1.Image);
+            g.Clear(Color.White);
             proj_box.SelectedIndex = 0;
             figures_box.SelectedIndex = 0;
             funComboBox.SelectedIndex = 0;
@@ -266,7 +268,7 @@ namespace AffineTransforms_3D
         void ReDraw()
         {
             syncCamera();
-            g.Clear(BackColor);
+            g.Clear(Color.White);
             g.DrawPie(new Pen(Color.Red), new RectangleF(10, 10, 50, 50), 0, curDeg);
             var centerX = pictureBox1.Size.Width / 2;
             var centerY = pictureBox1.Size.Height / 2;
@@ -300,6 +302,7 @@ namespace AffineTransforms_3D
                             g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
                                (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
                         }
+            pictureBox1.Invalidate();
         }
 
 
@@ -311,7 +314,9 @@ namespace AffineTransforms_3D
 
         private void clear_btn_Click(object sender, EventArgs e)
         {
-            g.Clear(BackColor);
+            g.Clear(Color.White);
+            pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            g = Graphics.FromImage(pictureBox1.Image);
             currentFigures = new List<Figure>();
             transforms.Clear();
             forming.Clear();
@@ -322,8 +327,6 @@ namespace AffineTransforms_3D
             num_parts_box.Text = "0";
             create_fig_btn.Enabled = false;
             num_parts_box.Enabled = false;
-
-
         }
 
 
@@ -528,6 +531,8 @@ namespace AffineTransforms_3D
 
         private void rotateCameraButton_Click(object sender, EventArgs e)
         {
+            g.Clear(Color.White);
+            g = pictureBox1.CreateGraphics();
             rotatingCamera = true;
             var degree = 1;
             (double, double, double) axis = (0, 0, 0);
@@ -574,6 +579,7 @@ namespace AffineTransforms_3D
             curDeg = 0;
             rotatingCamera = false;
             camera.Direction = cVec;
+            g = Graphics.FromImage(pictureBox1.Image);
         }
 
         private void zBuf_check_btn_CheckedChanged(object sender, EventArgs e)

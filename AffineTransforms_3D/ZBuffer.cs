@@ -45,6 +45,7 @@ namespace AffineTransforms_3D
                 var figureCenterY = (figRightY - figLeftY) / 2;
                 var centerX = width / 2;
                 var centerY = height / 2;
+               
                 Random r = new Random();
                 for (int i = 0; i < rastFigure.Count; i++)
                 {
