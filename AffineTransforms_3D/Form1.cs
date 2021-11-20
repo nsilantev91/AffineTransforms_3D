@@ -5,7 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Windows.Media.Media3D;
 using System.Threading;
-
+using FastBitmapLib;
 
 namespace AffineTransforms_3D
 {
@@ -277,11 +277,12 @@ namespace AffineTransforms_3D
                               AffineTransforms.CameraTransform3D(camera, selectedProjetion == Projection.Perspective));
                 figures.Add(cameraFig);
             }
-        
+
             if (usingZBuffer)
             {
+                var img = ZBuffer.zBuffer(pictureBox1.Width, pictureBox1.Height, figures);
+                pictureBox1.Image = img;
                 pictureBox1.Invalidate();
-                pictureBox1.Image = ZBuffer.zBuffer(pictureBox1.Width, pictureBox1.Height, figures);
             }
             else
                 foreach (var cameraFig in figures)

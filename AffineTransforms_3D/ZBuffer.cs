@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 using System.Drawing;
+using FastBitmapLib;
 
 namespace AffineTransforms_3D
 {
@@ -13,15 +14,16 @@ namespace AffineTransforms_3D
         static public Bitmap zBuffer(int width, int height, List<Figure> figures)
         {
             Bitmap image = new Bitmap(width, height);
-            for (int i = 0; i < width; i++)
-                for (int j = 0; j < height; j++)
-                    image.SetPixel(i, j, Color.White);
+            FastBitmap fastBtm = new FastBitmap(image);
+            fastBtm.Lock();
+            fastBtm.Clear(Color.White);
+            fastBtm.Unlock();
             double[,] zbuff = new double[width, height];
 
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
                     zbuff[i, j] = float.MinValue;
-
+            fastBtm.Lock();
             foreach (var figure in figures)
             {
                 var triags = Triangulate(figure);
@@ -58,12 +60,13 @@ namespace AffineTransforms_3D
                             if (points[j].Z > zbuff[x, y])
                             {
                                 zbuff[x, y] = points[j].Z;
-                                image.SetPixel(x, y, BackColor/*colors[i % colors.Count]*/ );
+                                fastBtm.SetPixel(x, y, BackColor/*colors[i % colors.Count]*/ );
                             }
                         }
                     }
                 }
             }
+            fastBtm.Unlock();
             return image;
         }
         static public Dictionary<int, List<List<Edge>>> Triangulate(Figure figure)
@@ -119,7 +122,9 @@ namespace AffineTransforms_3D
             var zLeft = interpolate(z1, y1, z2, y2);
             var zRight = interpolate(z2, y2, z3, y3);
             var zBase = interpolate(z1, y1, z3, y3);
+            xLeft.RemoveAt(xLeft.Count - 1);
             xLeft.AddRange(xRight);
+            zLeft.RemoveAt(zLeft.Count - 1);
             zLeft.AddRange(zRight);
             int centerPointIndex = xLeft.Count / 2;
             if (xBase[centerPointIndex] < xLeft[centerPointIndex])
