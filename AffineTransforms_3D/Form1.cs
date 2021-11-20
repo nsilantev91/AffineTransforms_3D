@@ -287,7 +287,7 @@ namespace AffineTransforms_3D
             else
                 foreach (var cameraFig in figures)
                     if (RemoveEdges.Checked)
-                        foreach (var side in cameraFig.VisibleFaces(camera.Position))
+                        foreach (var side in cameraFig.VisibleFaces(camera))
                             foreach (var edge in side.edges)
                             {
                                 g.DrawLine(Pens.Black,
