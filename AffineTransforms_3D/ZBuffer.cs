@@ -51,7 +51,7 @@ namespace AffineTransforms_3D
                 {
                     var points = rastFigure[i + 1];
                     var BackColor = Color.FromArgb(r.Next(256), r.Next(256), r.Next(256));
-                    var colors = new List<Color> { Color.Black, Color.BlueViolet, Color.Coral, Color.DarkSeaGreen, Color.DimGray, Color.DeepPink };
+                    var colors = new List<Color> { Color.Black, Color.BlueViolet, Color.Coral, Color.DarkSeaGreen, Color.DimGray, Color.DeepPink, Color.Cornsilk, Color.Gainsboro, Color.Khaki, Color.Lavender };
                     for (int j = 0; j < points.Count; j++)
                     {
                         int x = (int)(points[j].X + centerX - figureCenterX) + 200;
@@ -61,7 +61,7 @@ namespace AffineTransforms_3D
                             if (points[j].Z > zbuff[x, y])
                             {
                                 zbuff[x, y] = points[j].Z;
-                                fastBtm.SetPixel(x, y, BackColor/*colors[i % colors.Count]*/ );
+                                fastBtm.SetPixel(x, y, colors[i % colors.Count]);
                             }
                         }
                     }
@@ -137,15 +137,16 @@ namespace AffineTransforms_3D
                 return helpFunc(xLeft, xBase, zLeft, zBase, y1, y3);
             }
         }
+
         static List<Point3D> helpFunc(List<int> x_left, List<int> x_right, List<int> z_left, List<int> z_right, int y1, int y2)
         {
             List<Point3D> res = new List<Point3D>();
             for (int y = y1; y < y2; y++)
             {
-                var intCurrZ = interpolate(z_left[y - y1], x_left[y - y1], z_right[y - y1], x_right[y - y1]);
+                var currZ = interpolate(z_left[y - y1], x_left[y - y1], z_right[y - y1], x_right[y - y1]);
                 for (int x = x_left[y - y1]; x < x_right[y - y1]; x++)
                 {
-                    res.Add(new Point3D(x, y, intCurrZ[x - x_left[y - y1]]));
+                    res.Add(new Point3D(x, y, currZ[x - x_left[y - y1]]));
                 }
             }
             return res;

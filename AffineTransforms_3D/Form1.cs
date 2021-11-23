@@ -112,14 +112,6 @@ namespace AffineTransforms_3D
             syncCamera();
             planeComboBox.SelectedIndex = 0;
             transformComboBox.SelectedIndex = 0;
-            AutoSize = true;
-            AutoScaleMode = AutoScaleMode.Font;
-            Font = new Font("Trebuchet MS",
-                10.0f,
-                FontStyle.Regular,
-                GraphicsUnit.Point,
-                ((byte)(204))
-            );
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             g = Graphics.FromImage(pictureBox1.Image);
             g.Clear(Color.White);
@@ -590,6 +582,16 @@ namespace AffineTransforms_3D
         private void forming_y_box_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void apply_guro_btn_Click(object sender, EventArgs e)
+        {
+            var cameraFig = Transformator.Transform(currentFigures[0],
+                             AffineTransforms.CameraTransform3D(camera, selectedProjetion == Projection.Perspective));
+            var normVect = new Vector3D(int.Parse(guroX_box.Text), int.Parse(guroY_box.Text), int.Parse(guroZ_box.Text));
+            var bmp = Lighting.lighting(pictureBox1.Width, pictureBox1.Height, cameraFig, normVect);
+            pictureBox1.Image = bmp;
+            pictureBox1.Invalidate();
         }
     }
 

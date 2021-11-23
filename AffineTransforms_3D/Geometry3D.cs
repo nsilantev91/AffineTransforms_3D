@@ -9,6 +9,7 @@ using System.Windows.Media.Media3D;
 namespace AffineTransforms_3D
 {
 
+   
     //ребро
     [Serializable]
     public class Edge
