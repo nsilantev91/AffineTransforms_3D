@@ -33,14 +33,7 @@ namespace AffineTransforms_3D
                 {
                     rastFigure[triag.Key].AddRange(Rasterize(triag.Value[i], normal));
                 }
-            }
-            var figLeftX = rastFigure.Values.Where(lst => lst.Count != 0).Min(p => p.Min(pp => pp.Item2.X));
-            var figRightX = rastFigure.Values.Where(lst => lst.Count != 0).Max(p => p.Max(pp => pp.Item2.X));
-            var figLeftY = rastFigure.Values.Where(lst => lst.Count != 0).Min(p => p.Min(pp => pp.Item2.Y));
-            var figRightY = rastFigure.Values.Where(lst => lst.Count != 0).Max(p => p.Max(pp => pp.Item2.Y));
-
-            var figureCenterX = (figRightX - figLeftX) / 2;
-            var figureCenterY = (figRightY - figLeftY) / 2;
+            }        
             var centerX = width / 2;
             var centerY = height / 2;
             var color = Color.Red;
@@ -50,8 +43,8 @@ namespace AffineTransforms_3D
                 var points = rastFigure[i + 1];
                 for (int j = 0; j < points.Count; j++)
                 {
-                    int x = (int)(points[j].Item2.X + centerX - figureCenterX) + 200;
-                    int y = (int)(points[j].Item2.Y + centerY - figureCenterY) + 200;
+                    int x = (int)(points[j].Item2.X + centerX);
+                    int y = (int)(points[j].Item2.Y + centerY);
                     if (x < width && y < height && x > 0 && y > 0)
                     {
                         if (points[j].Item2.Z > zbuff[x, y])
