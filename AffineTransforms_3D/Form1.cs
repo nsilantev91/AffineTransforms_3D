@@ -593,6 +593,11 @@ namespace AffineTransforms_3D
             pictureBox1.Image = bmp;
             pictureBox1.Invalidate();
         }
+
+        private void x0FunTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 
 
