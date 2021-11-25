@@ -38,9 +38,6 @@ namespace AffineTransforms_3D
             var centerY = height / 2;
             var color = Color.AliceBlue;
             fastBmp.Lock();
-            var pictureBmp = new Bitmap("cat.jpg");
-            //FastBitmap pictureFastBmp = new FastBitmap(pictureBmp);
-           // pictureFastBmp.Lock();
             for (int i = 0; i < rastFigure.Count; i++)
             {
                 var points = rastFigure[i + 1];

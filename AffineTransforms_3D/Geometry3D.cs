@@ -131,7 +131,7 @@ namespace AffineTransforms_3D
                 {
                     foreach (var e in f.edges)
                     {
-                        var adjacentFaces = faces.FindAll(face => face.edges.Any(edge => edge == e));
+                        var adjacentFaces = faces.FindAll(face => face.edges.Any(edge => edge != e));
                         var sumVect = new Vector3D(0, 0, 0);
                         foreach (var face in adjacentFaces)
                             sumVect += face.NormalVec();
