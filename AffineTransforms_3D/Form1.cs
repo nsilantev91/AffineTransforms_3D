@@ -589,7 +589,7 @@ namespace AffineTransforms_3D
             var cameraFig = Transformator.Transform(currentFigures[0],
                              AffineTransforms.CameraTransform3D(camera, selectedProjetion == Projection.Perspective));
             var normVect = new Vector3D(int.Parse(guroX_box.Text), int.Parse(guroY_box.Text), int.Parse(guroZ_box.Text));
-            var bmp = Lighting.lighting(pictureBox1.Width, pictureBox1.Height, cameraFig, normVect);
+            var bmp = Lighting.texturing(pictureBox1.Width, pictureBox1.Height, cameraFig, normVect);
             pictureBox1.Image = bmp;
             pictureBox1.Invalidate();
         }
