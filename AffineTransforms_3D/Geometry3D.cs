@@ -122,6 +122,20 @@ namespace AffineTransforms_3D
             }
         }
 
+        private List<Face> FindAdjacentFaces(Edge e)
+        {
+            var faces = new List<Face>();
+            foreach (var face in Faces)
+            {
+                foreach (var edge in face.edges)
+                {
+                    if (edge == e || edge.begin == e.begin)
+                        faces.Add(face);
+                }
+            }
+            return faces;
+        }
+
         //можно и нужно переопределять, если использовать другой способ хранения фигуры
         public virtual IEnumerable<Tuple<Point3D, Vector3D>> Vertexes
         {
@@ -131,7 +145,7 @@ namespace AffineTransforms_3D
                 {
                     foreach (var e in f.edges)
                     {
-                        var adjacentFaces = faces.FindAll(face => face.edges.Any(edge => edge != e));
+                        var adjacentFaces = FindAdjacentFaces(e);
                         var sumVect = new Vector3D(0, 0, 0);
                         foreach (var face in adjacentFaces)
                             sumVect += face.NormalVec();

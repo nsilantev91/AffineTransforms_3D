@@ -123,7 +123,7 @@ namespace AffineTransforms_3D
             var centerY = height / 2;
             var color = Color.AliceBlue;
             fastBmp.Lock();
-            var pictureBmp = new Bitmap("cat.jpg");
+            var pictureBmp = new Bitmap("../../cat.jpg");
             //FastBitmap pictureFastBmp = new FastBitmap(pictureBmp);
             // pictureFastBmp.Lock();
             for (int i = 0; i < rastFigure.Count; i++)
@@ -144,7 +144,7 @@ namespace AffineTransforms_3D
                             color = pictureBmp.GetPixel(xPic, yPic);
                             zbuff[x, y] = points[j].Item4.Z;
                             var light =withLight? points[j].Item3:1;
-                            var col = Color.FromArgb((int)(color.R * light) % 256, (int)(color.G * light) % 256, (int)(color.B * light) % 256);
+                            var col = Color.FromArgb((int)(color.R * light), (int)(color.G * light), (int)(color.B * light));
                             fastBmp.SetPixel(x, y, col);
                         }
                     }
