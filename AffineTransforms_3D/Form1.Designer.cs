@@ -126,6 +126,8 @@
             this.label41 = new System.Windows.Forms.Label();
             this.label42 = new System.Windows.Forms.Label();
             this.label43 = new System.Windows.Forms.Label();
+            this.texturingButton = new System.Windows.Forms.Button();
+            this.lightingCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -1112,7 +1114,7 @@
             this.apply_guro_btn.Name = "apply_guro_btn";
             this.apply_guro_btn.Size = new System.Drawing.Size(208, 31);
             this.apply_guro_btn.TabIndex = 94;
-            this.apply_guro_btn.Text = "Create";
+            this.apply_guro_btn.Text = "Осветить";
             this.apply_guro_btn.UseVisualStyleBackColor = true;
             this.apply_guro_btn.Click += new System.EventHandler(this.apply_guro_btn_Click);
             // 
@@ -1156,12 +1158,35 @@
             this.label43.TabIndex = 98;
             this.label43.Text = "Фигура вращения";
             // 
+            // texturingButton
+            // 
+            this.texturingButton.Location = new System.Drawing.Point(11, 762);
+            this.texturingButton.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.texturingButton.Name = "texturingButton";
+            this.texturingButton.Size = new System.Drawing.Size(208, 31);
+            this.texturingButton.TabIndex = 99;
+            this.texturingButton.Text = "Отекстурить";
+            this.texturingButton.UseVisualStyleBackColor = true;
+            this.texturingButton.Click += new System.EventHandler(this.texturingButton_Click);
+            // 
+            // lightingCheckBox
+            // 
+            this.lightingCheckBox.AutoSize = true;
+            this.lightingCheckBox.Location = new System.Drawing.Point(242, 763);
+            this.lightingCheckBox.Name = "lightingCheckBox";
+            this.lightingCheckBox.Size = new System.Drawing.Size(138, 29);
+            this.lightingCheckBox.TabIndex = 100;
+            this.lightingCheckBox.Text = "Со светом";
+            this.lightingCheckBox.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1718, 804);
+            this.Controls.Add(this.lightingCheckBox);
+            this.Controls.Add(this.texturingButton);
             this.Controls.Add(this.label43);
             this.Controls.Add(this.label40);
             this.Controls.Add(this.label41);
@@ -1369,6 +1394,8 @@
         private System.Windows.Forms.Label label41;
         private System.Windows.Forms.Label label42;
         private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.Button texturingButton;
+        private System.Windows.Forms.CheckBox lightingCheckBox;
     }
 }
 

@@ -55,7 +55,8 @@ namespace AffineTransforms_3D
         Camera camera = new Camera();
         Axes axes = new Axes();
         int curDeg = 0;
-      
+        Bitmap bmp;
+        bool texturing = false;
        private void syncCamera()
         {
             if (rotatingCamera) return;
@@ -274,13 +275,23 @@ namespace AffineTransforms_3D
 
             if (usingZBuffer)
             {
-                var img = ZBuffer.zBuffer(pictureBox1.Width, pictureBox1.Height, figures);
-                pictureBox1.Image = img;
-                pictureBox1.Invalidate();
+                bmp= ZBuffer.zBuffer(pictureBox1.Width, pictureBox1.Height, figures);
+                pictureBox1.Image = bmp;
             }
             else
+            {
                 foreach (var cameraFig in figures)
+                {
+                    if (bmp != null)
+                    {
+                        var normVect = new Vector3D(int.Parse(guroX_box.Text), int.Parse(guroY_box.Text), int.Parse(guroZ_box.Text));
+                        bmp =texturing? Lighting.texturing(pictureBox1.Width, pictureBox1.Height, cameraFig, normVect, lightingCheckBox.Checked):
+                            Lighting.lighting(pictureBox1.Width, pictureBox1.Height, cameraFig, normVect);
+                        pictureBox1.Image = bmp;
+                        pictureBox1.Invalidate();
+                    }
                     if (RemoveEdges.Checked)
+                    {
                         foreach (var side in cameraFig.VisibleFaces(camera))
                             foreach (var edge in side.edges)
                             {
@@ -288,12 +299,18 @@ namespace AffineTransforms_3D
                                     (int)(edge.begin.X + centerX), (int)(edge.begin.Y + centerY),
                                     (int)(edge.end.X + centerX), (int)(edge.end.Y + centerY));
                             }
+                    }
                     else
+                    {
                         foreach (var r in cameraFig.Edges)
                         {
                             g.DrawLine(Pens.Black, (int)(r.begin.X + centerX), (int)(r.begin.Y + centerY),
                                (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
                         }
+                    }
+
+                }
+            }       
             pictureBox1.Invalidate();
         }
 
@@ -589,7 +606,7 @@ namespace AffineTransforms_3D
             var cameraFig = Transformator.Transform(currentFigures[0],
                              AffineTransforms.CameraTransform3D(camera, selectedProjetion == Projection.Perspective));
             var normVect = new Vector3D(int.Parse(guroX_box.Text), int.Parse(guroY_box.Text), int.Parse(guroZ_box.Text));
-            var bmp = Lighting.texturing(pictureBox1.Width, pictureBox1.Height, cameraFig, normVect);
+            bmp = Lighting.lighting(pictureBox1.Width, pictureBox1.Height, cameraFig, normVect);
             pictureBox1.Image = bmp;
             pictureBox1.Invalidate();
         }
@@ -597,6 +614,17 @@ namespace AffineTransforms_3D
         private void x0FunTextBox_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void texturingButton_Click(object sender, EventArgs e)
+        {
+            texturing = true;
+            var cameraFig = Transformator.Transform(currentFigures[0],
+                            AffineTransforms.CameraTransform3D(camera, selectedProjetion == Projection.Perspective));
+            var normVect = new Vector3D(int.Parse(guroX_box.Text), int.Parse(guroY_box.Text), int.Parse(guroZ_box.Text));
+            bmp = Lighting.texturing(pictureBox1.Width, pictureBox1.Height, cameraFig, normVect, lightingCheckBox.Checked);
+            pictureBox1.Image = bmp;
+            pictureBox1.Invalidate();
         }
     }
 
