@@ -99,7 +99,7 @@ namespace AffineTransforms_3D
             return ((int)xMin, (int)yMin, (int)xMax,(int) yMax);
         }
 
-        public static Bitmap texturing(int width, int height, Figure figure, Vector3D normal)
+        public static Bitmap texturing(int width, int height, Figure figure, Vector3D normal, bool withLight=false)
         {
             Bitmap bmp = new Bitmap(width, height);
             FastBitmap fastBmp = new FastBitmap(bmp);
@@ -112,7 +112,7 @@ namespace AffineTransforms_3D
                     zbuff[i, j] = float.MinValue;
             vertexes = figure.Vertexes;
             var triags = ZBuffer.Triangulate(figure);
-            var rastFigure = new Dictionary<int, List<Tuple<double, double, Point3D>>>();
+            var rastFigure = new Dictionary<int, List<Tuple<double, double,double, Point3D>>>();
             foreach (var triag in triags)
             {
                 (int xMin, int yMin,int  xMax,int yMax) = MinMaxValues(triag.Value);
@@ -134,20 +134,20 @@ namespace AffineTransforms_3D
                 var points = rastFigure[i + 1];
                 for (int j = 0; j < points.Count; j++)
                 {
-                    int x = (int)(points[j].Item3.X + centerX);
-                    int y = (int)(points[j].Item3.Y + centerY);
+                    int x = (int)(points[j].Item4.X + centerX);
+                    int y = (int)(points[j].Item4.Y + centerY);
                     if (x < width && y < height && x > 0 && y > 0)
                     {
-                        if (points[j].Item3.Z > zbuff[x, y])
+                        if (points[j].Item4.Z > zbuff[x, y])
                         {
                             var u = points[j].Item1;
                             var v = points[j].Item2;
                             var xPic =(int) (pictureBmp.Width * u);
                             var yPic =(int) (pictureBmp.Height * v);
                             color = pictureBmp.GetPixel(xPic, yPic);
-                            zbuff[x, y] = points[j].Item3.Z;
-                            var light = points[j].Item1;
-                            var col = Color.FromArgb(color.R, color.G, color.B);
+                            zbuff[x, y] = points[j].Item4.Z;
+                            var light =withLight? points[j].Item3:1;
+                            var col = Color.FromArgb((int)(color.R * light) % 256, (int)(color.G * light) % 256, (int)(color.B * light) % 256);
                             fastBmp.SetPixel(x, y, col);
                         }
                     }
@@ -219,7 +219,7 @@ namespace AffineTransforms_3D
             }
         }
 
-        static public List<Tuple<double, double, Point3D>> RasterizeWithUV(List<Edge> triangle, Vector3D lightPoint, int xMin, int yMin, int xMax, int yMax)
+        static public List<Tuple<double, double, double, Point3D>> RasterizeWithUV(List<Edge> triangle, Vector3D lightPoint, int xMin, int yMin, int xMax, int yMax)
         {
             List<Point3D> points = new List<Point3D>();
             foreach (var edge in triangle)
@@ -289,10 +289,10 @@ namespace AffineTransforms_3D
             return res;
         }
 
-        static List<Tuple<double, double, Point3D>> helpUVFunc(List<int> x_left, List<int> x_right, List<int> z_left, List<int> z_right,
+        static List<Tuple<double, double, double, Point3D>> helpUVFunc(List<int> x_left, List<int> x_right, List<int> z_left, List<int> z_right,
             List<double> h_left, List<double> h_right, int y1, int y2, int xMin, int yMin, int xMax, int yMax)
         {
-            List<Tuple<double, double, Point3D>> res = new List<Tuple<double, double, Point3D>>();
+            List<Tuple<double, double, double, Point3D>> res = new List<Tuple<double, double,double, Point3D>>();
             var dx = (double) xMax - xMin;
             var dy = (double)yMax - yMin;
             for (int y = y1; y < y2; y++)
@@ -303,7 +303,7 @@ namespace AffineTransforms_3D
                 for (int x = x_left[y - y1]; x < x_right[y - y1]; x++)
                 {
                     var u = (x - xMin) * 1.0 / dx;
-                    res.Add(new Tuple<double, double, Point3D>(u, v, new Point3D(x, y, currZ[x - x_left[y - y1]])));
+                    res.Add(new Tuple<double, double, double, Point3D>(u, v, currH[x - x_left[y - y1]], new Point3D(x, y, currZ[x - x_left[y - y1]])));
                 }
             }
             return res;
