@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 using System.Drawing;
+using FastBitmapLib;
 
 namespace AffineTransforms_3D
 {
@@ -13,15 +14,16 @@ namespace AffineTransforms_3D
         static public Bitmap zBuffer(int width, int height, List<Figure> figures)
         {
             Bitmap image = new Bitmap(width, height);
-            for (int i = 0; i < width; i++)
-                for (int j = 0; j < height; j++)
-                    image.SetPixel(i, j, Color.White);
+            FastBitmap fastBtm = new FastBitmap(image);
+            fastBtm.Lock();
+            fastBtm.Clear(Color.White);
+            fastBtm.Unlock();
             double[,] zbuff = new double[width, height];
 
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
                     zbuff[i, j] = float.MinValue;
-
+            fastBtm.Lock();
             foreach (var figure in figures)
             {
                 var triags = Triangulate(figure);
@@ -43,12 +45,13 @@ namespace AffineTransforms_3D
                 var figureCenterY = (figRightY - figLeftY) / 2;
                 var centerX = width / 2;
                 var centerY = height / 2;
+               
                 Random r = new Random();
                 for (int i = 0; i < rastFigure.Count; i++)
                 {
                     var points = rastFigure[i + 1];
                     var BackColor = Color.FromArgb(r.Next(256), r.Next(256), r.Next(256));
-                    var colors = new List<Color> { Color.Black, Color.BlueViolet, Color.Coral, Color.DarkSeaGreen, Color.DimGray, Color.DeepPink };
+                    var colors = new List<Color> { Color.Black, Color.BlueViolet, Color.Coral, Color.DarkSeaGreen, Color.DimGray, Color.DeepPink, Color.Cornsilk, Color.Gainsboro, Color.Khaki, Color.Lavender };
                     for (int j = 0; j < points.Count; j++)
                     {
                         int x = (int)(points[j].X + centerX - figureCenterX) + 200;
@@ -58,12 +61,13 @@ namespace AffineTransforms_3D
                             if (points[j].Z > zbuff[x, y])
                             {
                                 zbuff[x, y] = points[j].Z;
-                                image.SetPixel(x, y, BackColor/*colors[i % colors.Count]*/ );
+                                fastBtm.SetPixel(x, y, colors[i % colors.Count]);
                             }
                         }
                     }
                 }
             }
+            fastBtm.Unlock();
             return image;
         }
         static public Dictionary<int, List<List<Edge>>> Triangulate(Figure figure)
@@ -119,7 +123,9 @@ namespace AffineTransforms_3D
             var zLeft = interpolate(z1, y1, z2, y2);
             var zRight = interpolate(z2, y2, z3, y3);
             var zBase = interpolate(z1, y1, z3, y3);
+            xLeft.RemoveAt(xLeft.Count - 1);
             xLeft.AddRange(xRight);
+            zLeft.RemoveAt(zLeft.Count - 1);
             zLeft.AddRange(zRight);
             int centerPointIndex = xLeft.Count / 2;
             if (xBase[centerPointIndex] < xLeft[centerPointIndex])
@@ -131,15 +137,16 @@ namespace AffineTransforms_3D
                 return helpFunc(xLeft, xBase, zLeft, zBase, y1, y3);
             }
         }
+
         static List<Point3D> helpFunc(List<int> x_left, List<int> x_right, List<int> z_left, List<int> z_right, int y1, int y2)
         {
             List<Point3D> res = new List<Point3D>();
             for (int y = y1; y < y2; y++)
             {
-                var intCurrZ = interpolate(z_left[y - y1], x_left[y - y1], z_right[y - y1], x_right[y - y1]);
+                var currZ = interpolate(z_left[y - y1], x_left[y - y1], z_right[y - y1], x_right[y - y1]);
                 for (int x = x_left[y - y1]; x < x_right[y - y1]; x++)
                 {
-                    res.Add(new Point3D(x, y, intCurrZ[x - x_left[y - y1]]));
+                    res.Add(new Point3D(x, y, currZ[x - x_left[y - y1]]));
                 }
             }
             return res;

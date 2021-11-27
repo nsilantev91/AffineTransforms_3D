@@ -9,10 +9,17 @@ using System.Windows.Media.Media3D;
 namespace AffineTransforms_3D
 {
 
+   
     //ребро
     [Serializable]
     public class Edge
     {
+        public IEnumerable<Point3D> Points()
+        {
+            yield return begin;
+            yield return end;
+        }
+
         public Point3D begin { get; set; }
         public Point3D end { get; set; }
         public Edge(Point3D beg, Point3D end)
@@ -20,6 +27,16 @@ namespace AffineTransforms_3D
             begin = beg;
             this.end = end;
         }
+        static public bool operator ==(Edge edge1, Edge edge2)
+        {
+            return edge1.begin == edge2.begin && edge1.end == edge2.end;
+        }
+
+        static public bool operator !=(Edge edge1, Edge edge2)
+        {
+            return !(edge1 == edge2);
+        }
+
     }
 
     //грань фигуры 
@@ -149,8 +166,22 @@ namespace AffineTransforms_3D
             }
         }
 
+        private List<Face> FindAdjacentFaces(Edge e)
+        {
+            var faces = new List<Face>();
+            foreach (var face in Faces)
+            {
+                foreach (var edge in face.edges)
+                {
+                    if (edge == e || edge.begin == e.begin)
+                        faces.Add(face);
+                }
+            }
+            return faces;
+        }
+
         //можно и нужно переопределять, если использовать другой способ хранения фигуры
-        public virtual IEnumerable<Point3D> Vertexes
+        public virtual IEnumerable<Tuple<Point3D, Vector3D>> Vertexes
         {
             get
             {
@@ -158,7 +189,11 @@ namespace AffineTransforms_3D
                 {
                     foreach (var e in f.edges)
                     {
-                        yield return e.begin;
+                        var adjacentFaces = FindAdjacentFaces(e);
+                        var sumVect = new Vector3D(0, 0, 0);
+                        foreach (var face in adjacentFaces)
+                            sumVect += face.NormalVec();
+                        yield return new Tuple<Point3D, Vector3D>(e.begin, sumVect / adjacentFaces.Count);
                     }
                 }
             }
@@ -190,9 +225,9 @@ namespace AffineTransforms_3D
 
         public Point3D FigureCenter()
         {
-            var x = Vertexes.Average(point => point.X);
-            var y = Vertexes.Average(point => point.Y);
-            var z = Vertexes.Average(point => point.Z);
+            var x = Vertexes.Average(point => point.Item1.X);
+            var y = Vertexes.Average(point => point.Item1.Y);
+            var z = Vertexes.Average(point => point.Item1.Z);
             return new Point3D(x, y, z);
         }
 
