@@ -122,10 +122,9 @@
             // 
             // showFigure_btn
             // 
-            this.showFigure_btn.Location = new System.Drawing.Point(10, 138);
-            this.showFigure_btn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.showFigure_btn.Location = new System.Drawing.Point(10, 176);
             this.showFigure_btn.Name = "showFigure_btn";
-            this.showFigure_btn.Size = new System.Drawing.Size(174, 36);
+            this.showFigure_btn.Size = new System.Drawing.Size(163, 29);
             this.showFigure_btn.TabIndex = 1;
             this.showFigure_btn.Text = "Отобразить";
             this.showFigure_btn.UseVisualStyleBackColor = true;
@@ -134,9 +133,9 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 62);
+            this.label1.Location = new System.Drawing.Point(5, 153);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(87, 20);
+            this.label1.Size = new System.Drawing.Size(77, 17);
             this.label1.TabIndex = 2;
             this.label1.Text = "Проекция:";
             // 
@@ -146,13 +145,11 @@
             this.proj_box.FormattingEnabled = true;
             this.proj_box.Items.AddRange(new object[] {
             "Перспективная",
-            "Изометрическая",
-            "Триметрическая",
-            "Диметрическая"});
-            this.proj_box.Location = new System.Drawing.Point(10, 88);
+            "Ортогональная"});
+            this.proj_box.Location = new System.Drawing.Point(9, 212);
             this.proj_box.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.proj_box.Name = "proj_box";
-            this.proj_box.Size = new System.Drawing.Size(174, 28);
+            this.proj_box.Size = new System.Drawing.Size(163, 24);
             this.proj_box.TabIndex = 3;
             this.proj_box.SelectedIndexChanged += new System.EventHandler(this.proj_box_SelectedIndexChanged);
             // 
@@ -169,18 +166,16 @@
             "Пользовательская",
             "График",
             "Плавающий горизонт"});
-            this.figures_box.Location = new System.Drawing.Point(10, 15);
-            this.figures_box.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.figures_box.Location = new System.Drawing.Point(8, 12);
             this.figures_box.Name = "figures_box";
-            this.figures_box.Size = new System.Drawing.Size(174, 28);
+            this.figures_box.Size = new System.Drawing.Size(163, 24);
             this.figures_box.TabIndex = 4;
             // 
             // clear_btn
             // 
-            this.clear_btn.Location = new System.Drawing.Point(10, 194);
-            this.clear_btn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.clear_btn.Location = new System.Drawing.Point(9, 241);
             this.clear_btn.Name = "clear_btn";
-            this.clear_btn.Size = new System.Drawing.Size(174, 36);
+            this.clear_btn.Size = new System.Drawing.Size(163, 29);
             this.clear_btn.TabIndex = 5;
             this.clear_btn.Text = "Очистить";
             this.clear_btn.UseVisualStyleBackColor = true;
@@ -1048,10 +1043,10 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1624, 1050);
+            this.ClientSize = new System.Drawing.Size(1371, 643);
             this.Controls.Add(this.label36);
             this.Controls.Add(this.RemoveEdges);
             this.Controls.Add(this.zBuf_check_btn);
@@ -1139,7 +1134,6 @@
             this.Controls.Add(this.proj_box);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.showFigure_btn);
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);

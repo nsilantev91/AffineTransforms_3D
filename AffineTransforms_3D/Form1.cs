@@ -147,10 +147,10 @@ namespace AffineTransforms_3D
                     currentFigures.Add(Figures.Octahedron);
 
                 if (figure == "Икосаэдр")
-                    currentFigures.Add(new Icosahedron(100));
+                    currentFigures.Add(new Icosahedron(150));
 
                 if (figure == "Додэкаэдр")
-                    currentFigures.Add(new Dodecahedron(100));
+                    currentFigures.Add(new Dodecahedron(150));
                 if (figure == "График")
                     currentFigures.Add(new Graph(graphData));
                 if (figure == "Плавающий горизонт")
@@ -162,6 +162,8 @@ namespace AffineTransforms_3D
                     else if ((string)funComboBox.SelectedItem == "y = 10*(x/100)*(z/100)(3D)")
                         currentFigures.Add(new Graph3D(100, 100, 5, 5, Function3D.complex));
             }
+
+
 
             for (int i = 0; i < currentFigures.Count; i++)
             {
