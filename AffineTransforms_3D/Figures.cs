@@ -11,10 +11,10 @@ namespace AffineTransforms_3D
     static public class Figures
     {
         static public Figure Tetrahedron = new Tetrahedron();
-        static public Figure Hexahedron  = new Hexahedron();
+        static public Figure Hexahedron = new Hexahedron();
         static public Figure Octahedron = new Octahedron();
 
-        
+
 
         static public Figure createRotateFigure(Point3D[] forming, int partsNumber, (int, int, int) xyz)
         {
@@ -64,7 +64,7 @@ namespace AffineTransforms_3D
         public Tetrahedron() : base()
         {
             AddFace(new[] { a, d, c });
-            AddFace(new[] { a, d, b});
+            AddFace(new[] { a, d, b });
             AddFace(new[] { c, d, b });
             AddFace(new[] { a, c, b });
         }
@@ -82,7 +82,7 @@ namespace AffineTransforms_3D
         Point3D b1 = new Point3D(220, 220, 0);
         Point3D c1 = new Point3D(220, 220, 220);
         Point3D d1 = new Point3D(0, 220, 220);
-        
+
         public Hexahedron() : base()
         {
             AddFace(new[] { a, b, b1, a1 });
@@ -134,14 +134,14 @@ namespace AffineTransforms_3D
         const double Z = 0.850650808352039932;
         const double N = 0.0;
 
-        static Point3D[] vertices = new Point3D [12]
+        static Point3D[] vertices = new Point3D[12]
         {
             new Point3D(-X,N,Z), new Point3D(X,N,Z),new Point3D(-X,N,-Z), new Point3D(X,N,-Z),
             new Point3D(N,Z,X), new Point3D(N,Z,-X), new Point3D(N,-Z,X), new Point3D(N,-Z,-X),
             new Point3D (Z,X,N), new Point3D(-Z,X, N), new Point3D(Z,-X,N), new Point3D(-Z,-X, N)
         };
 
-        static int[,] triangles = new int[20,3]
+        static int[,] triangles = new int[20, 3]
         {
             {0,4,1},{0,9,4},{9,5,4},{4,5,8},{4,8,1},
             {8,10,1},{8,3,10},{5,3,8},{5,2,3},{2,7,3},
@@ -151,10 +151,10 @@ namespace AffineTransforms_3D
 
         public Icosahedron(double c)
         {
-            for(int i = 0; i < 20; i++)
+            for (int i = 0; i < 20; i++)
             {
                 var face = new Point3D[3];
-                for(int j = 0; j < 3; j++)
+                for (int j = 0; j < 3; j++)
                 {
                     var p1 = vertices[triangles[i, j]];
                     p1.X *= c;
@@ -163,13 +163,13 @@ namespace AffineTransforms_3D
                     face[j] = p1;
                 }
                 AddFace(face);
-                
+
             }
         }
     }
 
     [Serializable]
-    public class Dodecahedron:Figure
+    public class Dodecahedron : Figure
     {
         private void MakeVertices(double sLen)
         {
@@ -224,7 +224,7 @@ namespace AffineTransforms_3D
 
 
             Point3D[][] faces = new Point3D[12][];
-            faces[0] = new Point3D[5] {A, B, C, D, E };
+            faces[0] = new Point3D[5] { A, B, C, D, E };
             faces[1] = new Point3D[5] { A, F, K, G, B };
             faces[2] = new Point3D[5] { B, G, L, H, C };
             faces[3] = new Point3D[5] { C, H, M, I, D };
@@ -233,11 +233,11 @@ namespace AffineTransforms_3D
 
             faces[6] = new Point3D[5] { T, P, Q, R, S };
             faces[7] = new Point3D[5] { T, O, F, K, P };
-            faces[8] = new Point3D[5] { P, K, G, L, Q};
+            faces[8] = new Point3D[5] { P, K, G, L, Q };
             faces[9] = new Point3D[5] { Q, L, H, M, R };
-            faces[10] = new Point3D[5] { R, M, I, N, S};
+            faces[10] = new Point3D[5] { R, M, I, N, S };
             faces[11] = new Point3D[5] { S, N, J, O, T };
-            foreach(var f in faces)
+            foreach (var f in faces)
             {
                 AddFace(f);
             }
@@ -245,14 +245,14 @@ namespace AffineTransforms_3D
 
         }
 
-       public Dodecahedron(double sideLen)
-       {
+        public Dodecahedron(double sideLen)
+        {
             MakeVertices(sideLen);
-       }
+        }
     }
 
     [Serializable]
-    public class Graph:Figure
+    public class Graph : Figure
     {
         int X0 { get; }
         int X1 { get; }
@@ -260,7 +260,7 @@ namespace AffineTransforms_3D
         int Y1 { get; }
         int Step { get; }
 
-        Func<int,int,double> Fun { get; }
+        Func<int, int, double> Fun { get; }
 
         public Graph(Func<int, int, double> fun, int x0, int x1, int y0, int y1, int step)
         {
@@ -271,7 +271,7 @@ namespace AffineTransforms_3D
             Step = step;
             Debug.Assert(X1 > X0);
             Debug.Assert(Y1 > Y0);
-            Debug.Assert((X1-X0)/Step>1);
+            Debug.Assert((X1 - X0) / Step > 1);
             Debug.Assert((Y1 - Y0) / Step > 1);
             Fun = fun;
             AddFaces();
@@ -280,32 +280,32 @@ namespace AffineTransforms_3D
         public Graph(GraphData graphData) : this(graphData.Fun.Fun(), graphData.X0, graphData.X1,
             graphData.Y0, graphData.Y1, graphData.StepCount)
         { }
-        
+
 
         void AddFaces()
         {
             var dx = (X1 - X0) / Step;
             var dy = (Y1 - Y0) / Step;
-            for (var x = X0; x <= X1-dx; x += dx)
+            for (var x = X0; x <= X1 - dx; x += dx)
             {
-                for (var y = Y0; y <= Y1-dy; y += dy)
+                for (var y = Y0; y <= Y1 - dy; y += dy)
                 {
                     //var a = new Point3D(x, y, Fun(x,y));
                     //var b = new Point3D(x+dx, y, Fun(x+dx, y));
                     //var c = new Point3D(x+dx, y+dy, Fun(x+dx, y+dy));
                     //var d = new Point3D(x, y+dy, Fun(x, y+dy));
                     var a = new Point3D(x, Fun(x, y), y);
-                    var b = new Point3D(x + dx,  Fun(x + dx, y), y);
-                    var c = new Point3D(x + dx,  Fun(x + dx, y + dy), y + dy);
-                    var d = new Point3D(x,  Fun(x, y + dy), y + dy);
-                    AddFace(new Point3D[] { a,b,c,d});
+                    var b = new Point3D(x + dx, Fun(x + dx, y), y);
+                    var c = new Point3D(x + dx, Fun(x + dx, y + dy), y + dy);
+                    var d = new Point3D(x, Fun(x, y + dy), y + dy);
+                    AddFace(new Point3D[] { a, b, c, d });
                 }
             }
         }
 
     }
 
-    public class Axes: Figure
+    public class Axes : Figure
     {
         public Axes()
         {
@@ -315,5 +315,59 @@ namespace AffineTransforms_3D
         }
     }
 
+
+    [Serializable]
+    public class Graph3D : Figure
+    {
+        public Graph3D(List<List<Point3D>> curves) : base()
+        {
+            foreach (var curve in curves)
+                AddFace(curve.ToArray());
+
+            //OX
+            //AddFace(new Point3D[2] { new Point3D(-200, 0, 0), new Point3D(200, 0, 0) });
+            //OY
+            //AddFace(new Point3D[2] { new Point3D(0, -200, 0), new Point3D(0, 200, 0) });
+            //OZ
+            //AddFace(new Point3D[2] { new Point3D(0, 0, -200), new Point3D(0, 0, 200) });
+        }
+
+        /*
+        public List<List<bool>> VisiblePoints()
+        {
+            var res = new List<List<bool>>(); 
+            var faces = Faces.ToList();
+            var maxY = new SortedDictionary<int, double>();
+            if (faces[0].edges[0].begin.Z < faces[1].edges[0].begin.Z)
+                faces.Reverse();
+            foreach (var i in faces)
+            {
+                res.Add(new List<bool>());
+                foreach (var j in i.edges)
+                {
+                    var x = Convert.ToInt32(j.begin.X);
+                    var y = j.begin.Y;
+                    if (maxY.ContainsKey(x))
+                    {
+                        if (maxY[x]>y)
+                        {
+                            res.Last().Add(true);
+                            maxY[x] = y;
+                        }
+                        else
+                            res.Last().Add(false);
+                    }
+                    else
+                    {
+                        maxY.Add(x, y);
+                        res.Last().Add(true);
+                    }
+                }
+            }
+            return res;
+        }
+        */
+        public Graph3D(int z, int x, int stepZ,int stepX, Func<double, double, double> func) : this(Function3D.EvaluateFunction(z, x, stepZ,stepX, func)) { }
+    }
 
 }

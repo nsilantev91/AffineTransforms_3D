@@ -164,7 +164,8 @@
             "Икосаэдр",
             "Додэкаэдр",
             "Пользовательская",
-            "График"});
+            "График",
+            "Плавающий горизонт"});
             this.figures_box.Location = new System.Drawing.Point(8, 12);
             this.figures_box.Name = "figures_box";
             this.figures_box.Size = new System.Drawing.Size(163, 24);
@@ -663,7 +664,10 @@
             "x - y",
             "10*(x/100)*(y/100)",
             "100*Sin(x/100)*Cos(y/100)",
-            "100*Sin(x/100)"});
+            "100*Sin(x/100)",
+            "y = x + z (3D)",
+            "y = 100*Sin(x/100)*Cos(z/100)(3D)",
+            "y = 10*(x/100)*(z/100)(3D)"});
             this.funComboBox.Location = new System.Drawing.Point(8, 57);
             this.funComboBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.funComboBox.Name = "funComboBox";

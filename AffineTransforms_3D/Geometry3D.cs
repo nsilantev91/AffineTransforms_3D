@@ -39,7 +39,7 @@ namespace AffineTransforms_3D
             }
             return new Point3D(x / edges.Count, y / edges.Count, z / edges.Count);
         }
-        public List<Edge> edges { get; }
+        public List<Edge> edges { get; set; }
 
         public Face()
         {
@@ -90,7 +90,51 @@ namespace AffineTransforms_3D
     [Serializable]
     public class Figure
     {
-       //можно и нужно переопределять, если использовать другой способ хранения фигуры
+        public List<List<bool>> VisiblePoints()
+        {
+            var res = new List<List<bool>>();
+            var faces = Faces.ToList();
+            var maxY = new SortedDictionary<int, double>();
+            var minY = new SortedDictionary<int, double>();
+            if (faces[0].edges[0].begin.Z < faces[1].edges[0].begin.Z)
+                faces.Reverse();
+            foreach (var i in faces)
+            {
+                res.Add(new List<bool>());
+                foreach (var j in i.edges)
+                {
+                    var x = Convert.ToInt32(j.begin.X);
+                    var y = j.begin.Y;
+                    if (maxY.ContainsKey(x))
+                    {
+                        if (maxY[x] <= y)
+                        {
+                            res.Last().Add(true);
+                            //Console.WriteLine(maxY[x] + " max was swapped out for " + y + " at position " + x);
+                            maxY[x] = y;
+                        }
+                        else if (minY[x] >=y )
+                        {
+                            res.Last().Add(true);
+                            //Console.WriteLine(maxY[x] + " min was swapped out for " + y + " at position " + x);
+                            minY[x] = y;
+                        }
+                        else
+                            res.Last().Add(false);
+                    }
+                    else
+                    {
+                        maxY.Add(x, y);
+                        minY.Add(x, y);
+                        res.Last().Add(true);
+                    }
+                }
+            }
+            return res;
+        }
+
+
+        //можно и нужно переопределять, если использовать другой способ хранения фигуры
         public virtual IEnumerable<Edge> Edges
         {
             get
@@ -121,7 +165,7 @@ namespace AffineTransforms_3D
         }
 
         //в базовой реализации хранятся грани, точки и рёбра вычисляются по граням
-        List<Face> faces;
+        public List<Face> faces;
 
         //можно и нужно переопределять, если использовать другой способ хранения фигуры
         public virtual IEnumerable<Face> Faces => faces;

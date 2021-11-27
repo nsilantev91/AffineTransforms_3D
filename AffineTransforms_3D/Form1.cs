@@ -12,7 +12,7 @@ namespace AffineTransforms_3D
     enum Projection { Perspective, Orthogonal};
     enum Transform {Transposition, Rotate, Scale, Reflect }
 
-    public  enum Function { Plus, Minus, Prod, SinCos, Sin }
+    public  enum Function { Plus, Minus, Prod, SinCos, Sin, Plus3D, Prod3D }
 
     public struct GraphData
     {
@@ -141,7 +141,6 @@ namespace AffineTransforms_3D
                     currentFigures.Add(Figures.Tetrahedron);
 
                 if (figure == "Гексаэдр")
-
                     currentFigures.Add(Figures.Hexahedron);
 
                 if (figure == "Октаэдр")
@@ -153,10 +152,18 @@ namespace AffineTransforms_3D
                 if (figure == "Додэкаэдр")
                     currentFigures.Add(new Dodecahedron(150));
                 if (figure == "График")
-                {
-                    syncGraph();
                     currentFigures.Add(new Graph(graphData));
-                }
+                if (figure == "Плавающий горизонт")
+                {
+                    if ((string)funComboBox.SelectedItem == "y = x + z (3D)")
+                        currentFigures.Add(new Graph3D(100, 100, 3, 1, Function3D.Sum));
+                    else if ((string)funComboBox.SelectedItem == "y = 100*Sin(x/100)*Cos(z/100)(3D)")
+                        currentFigures.Add(new Graph3D(100, 100, 10, 1, Function3D.Sin));
+                    else if ((string)funComboBox.SelectedItem == "y = 10*(x/100)*(z/100)(3D)")
+                        currentFigures.Add(new Graph3D(100, 100, 5, 5, Function3D.complex));
+            }
+
+
 
             for (int i = 0; i < currentFigures.Count; i++)
             {
@@ -285,7 +292,30 @@ namespace AffineTransforms_3D
             }
             else
                 foreach (var cameraFig in figures)
-                    if (RemoveEdges.Checked)
+                    if ((string)figures_box.SelectedItem=="Плавающий горизонт")
+                    {
+                        for(var i=0; i<cameraFig.faces.Count; i++)
+                            for (var j=0; j<cameraFig.faces[i].edges.Count;j++)
+                            {
+                                cameraFig.faces[i].edges[j].begin = new Point3D(Convert.ToInt32(cameraFig.faces[i].edges[j].begin.X), cameraFig.faces[i].edges[j].begin.Y, cameraFig.faces[i].edges[j].begin.Z);
+                                cameraFig.faces[i].edges[j].end = new Point3D(Convert.ToInt32(cameraFig.faces[i].edges[j].end.X), cameraFig.faces[i].edges[j].end.Y, cameraFig.faces[i].edges[j].end.Z);
+                            }
+                        var visibles = cameraFig.VisiblePoints();
+                        var t = new List<Face>(cameraFig.Faces);
+                        if (t[0].edges[0].begin.Z < t[1].edges[0].begin.Z)
+                            t.Reverse();
+                        for (var i=0;i<t.Count;i++)
+                        {
+                            for(var j =0;j<t[i].edges.Count-1;j++)
+                            {
+                                if (visibles[i][j] && visibles[i][j+1])
+                                    g.DrawLine(Pens.Black,
+                                                (int)(t[i].edges[j].begin.X + centerX), (int)(t[i].edges[j].begin.Y + centerY),
+                                                (int)(t[i].edges[j].end.X + centerX), (int)(t[i].edges[j].end.Y + centerY));
+                            }
+                        }
+                    }
+                    else if (RemoveEdges.Checked)
                         foreach (var side in cameraFig.VisibleFaces(camera))
                             foreach (var edge in side.edges)
                             {
@@ -625,7 +655,8 @@ namespace AffineTransforms_3D
                 case "100*Sin(x/100)":
                     return Function.Sin;
                 default:
-                    throw new ArgumentException("Задана некорректная функция");
+                    return Function.Plus;
+                    //throw new ArgumentException("Задана некорректная функция");
             }
         }
      }    

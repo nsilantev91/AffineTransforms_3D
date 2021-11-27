@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Windows.Media.Media3D;
 
 namespace AffineTransforms_3D
 {
@@ -40,6 +41,19 @@ namespace AffineTransforms_3D
             return null;
         }
 
+        static public List<Point3D> BetweenPoint(Point3D first, Point3D second)
+        {
+            int len;
+            if (first.X > second.X)
+                len = Convert.ToInt32(Math.Floor(first.X + 1) - Math.Ceiling(second.X - 1));
+            else
+                len = Convert.ToInt32(Math.Floor(second.X + 1) - Math.Ceiling(first.X - 1));
+
+            var res = new List<Point3D>();
+            for (int i=0; i<len;i++)
+                res.Add(new Point3D(Convert.ToInt32(Math.Abs(first.X - second.X) / len * i + first.X), Math.Abs(first.Y - second.Y) / len * i + first.Y, Math.Abs(first.Z - second.Z) / len * i + first.Z));
+            return res;
+        }
     }
 
 
