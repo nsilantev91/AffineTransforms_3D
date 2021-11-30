@@ -27,6 +27,11 @@ namespace AffineTransforms_3D
             begin = beg;
             this.end = end;
         }
+
+        public bool Contains(Point3D point)
+        {
+            return begin == point || end == point;
+        }
         static public bool operator ==(Edge edge1, Edge edge2)
         {
             return edge1.begin == edge2.begin && edge1.end == edge2.end;
@@ -58,6 +63,7 @@ namespace AffineTransforms_3D
         }
         public List<Edge> edges { get; set; }
 
+
         public Face()
         {
             edges = new List<Edge>();
@@ -72,6 +78,16 @@ namespace AffineTransforms_3D
             if (edge.begin == edge.end)
                 return;
             edges.Add(edge);
+        }
+
+        public bool ContainsPoint(Point3D point)
+        {
+            foreach (var e in edges)
+            {
+                if (e.begin == point || e.end == point)
+                    return true;
+            }
+            return false;
         }
         /*
         public List<double> SideEquation()
@@ -166,20 +182,6 @@ namespace AffineTransforms_3D
             }
         }
 
-        private List<Face> FindAdjacentFaces(Edge e)
-        {
-            var faces = new List<Face>();
-            foreach (var face in Faces)
-            {
-                foreach (var edge in face.edges)
-                {
-                    if (edge == e || edge.begin == e.begin)
-                        faces.Add(face);
-                }
-            }
-            return faces;
-        }
-
         //можно и нужно переопределять, если использовать другой способ хранения фигуры
         public virtual IEnumerable<Tuple<Point3D, Vector3D>> Vertexes
         {
@@ -189,11 +191,11 @@ namespace AffineTransforms_3D
                 {
                     foreach (var e in f.edges)
                     {
-                        var adjacentFaces = FindAdjacentFaces(e);
+                        var adjacentFaces = Faces.Where(face => face.ContainsPoint(e.begin)).ToList();
                         var sumVect = new Vector3D(0, 0, 0);
                         foreach (var face in adjacentFaces)
                             sumVect += face.NormalVec();
-                        yield return new Tuple<Point3D, Vector3D>(e.begin, sumVect / adjacentFaces.Count);
+                        yield return  new Tuple<Point3D, Vector3D>(e.begin, sumVect / adjacentFaces.Count);
                     }
                 }
             }

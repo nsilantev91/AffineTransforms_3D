@@ -9,10 +9,10 @@ using FastBitmapLib;
 
 namespace AffineTransforms_3D
 {
-    enum Projection { Perspective, Orthogonal};
-    enum Transform {Transposition, Rotate, Scale, Reflect }
+    enum Projection { Perspective, Orthogonal };
+    enum Transform { Transposition, Rotate, Scale, Reflect }
 
-    public  enum Function { Plus, Minus, Prod, SinCos, Sin, Plus3D, Prod3D }
+    public enum Function { Plus, Minus, Prod, SinCos, Sin, Plus3D, Prod3D }
 
     public struct GraphData
     {
@@ -36,11 +36,11 @@ namespace AffineTransforms_3D
         public double height;
     }
 
-   
+
     public partial class Form1 : Form
     {
         Graphics g;
-        List<(Transform,List<double>)> transforms = new List<(Transform, List<double>)>();
+        List<(Transform, List<double>)> transforms = new List<(Transform, List<double>)>();
         Projection selectedProjetion;
         List<Figure> currentFigures;
         bool figureCenter;
@@ -48,21 +48,22 @@ namespace AffineTransforms_3D
         bool usingZBuffer = false;
         bool rotatingCamera = false;
         CoordinatePlane plane;
-        Point3D point1 = new Point3D(0,0,0);
-        Point3D point2 = new Point3D(1,1,1);
+        Point3D point1 = new Point3D(0, 0, 0);
+        Point3D point2 = new Point3D(1, 1, 1);
         List<Point3D> forming;
         List<Point3D> showForming;
         Camera camera = new Camera();
         Axes axes = new Axes();
         int curDeg = 0;
         Bitmap bmp;
+        Point3D lightPoint;
         bool texturing = false;
-       private void syncCamera()
+        private void syncCamera()
         {
             if (rotatingCamera) return;
             camera.Position.X = double.Parse(cameraXTextBox.Text);
             camera.Position.Y = double.Parse(cameraYTextBox.Text);
-            camera.Position.Z= double.Parse(cameraZTextBox.Text);
+            camera.Position.Z = double.Parse(cameraZTextBox.Text);
             //camera.Direction.X = double.Parse(cameraXTextBox.Text);
             //camera.Direction.Y = double.Parse(cameraYTextBox.Text);
             //camera.Direction.Z = double.Parse(cameraZTextBox.Text);
@@ -78,12 +79,12 @@ namespace AffineTransforms_3D
         }
 
         private void syncGraph()
-        {  
-             graphData.Y1 = int.Parse(y1FunTextBox.Text); 
-             graphData.X1 = int.Parse(x1FunTextBox.Text);
-             graphData.X0 = int.Parse(x0FunTextBox.Text);
-             graphData.Y0 = int.Parse(y0FunTextBox.Text);
-             graphData.StepCount = int.Parse(stepCountTextBox.Text);
+        {
+            graphData.Y1 = int.Parse(y1FunTextBox.Text);
+            graphData.X1 = int.Parse(x1FunTextBox.Text);
+            graphData.X0 = int.Parse(x0FunTextBox.Text);
+            graphData.Y0 = int.Parse(y0FunTextBox.Text);
+            graphData.StepCount = int.Parse(stepCountTextBox.Text);
         }
 
         private void syncLine()
@@ -132,30 +133,30 @@ namespace AffineTransforms_3D
         private void showFigure_btn_Click(object sender, EventArgs e)
         {
             string figure = (string)figures_box.SelectedItem;
-                if (figure == "Тетраэдр")
-                    currentFigures.Add(Figures.Tetrahedron);
+            if (figure == "Тетраэдр")
+                currentFigures.Add(Figures.Tetrahedron);
 
-                if (figure == "Гексаэдр")
-                    currentFigures.Add(Figures.Hexahedron);
+            if (figure == "Гексаэдр")
+                currentFigures.Add(Figures.Hexahedron);
 
-                if (figure == "Октаэдр")
-                    currentFigures.Add(Figures.Octahedron);
+            if (figure == "Октаэдр")
+                currentFigures.Add(Figures.Octahedron);
 
-                if (figure == "Икосаэдр")
-                    currentFigures.Add(new Icosahedron(150));
+            if (figure == "Икосаэдр")
+                currentFigures.Add(new Icosahedron(150));
 
-                if (figure == "Додэкаэдр")
-                    currentFigures.Add(new Dodecahedron(150));
-                if (figure == "График")
-                    currentFigures.Add(new Graph(graphData));
-                if (figure == "Плавающий горизонт")
-                {
-                    if ((string)funComboBox.SelectedItem == "y = x + z (3D)")
-                        currentFigures.Add(new Graph3D(100, 100, 3, 1, Function3D.Sum));
-                    else if ((string)funComboBox.SelectedItem == "y = 100*Sin(x/100)*Cos(z/100)(3D)")
-                        currentFigures.Add(new Graph3D(100, 100, 10, 1, Function3D.Sin));
-                    else if ((string)funComboBox.SelectedItem == "y = 10*(x/100)*(z/100)(3D)")
-                        currentFigures.Add(new Graph3D(100, 100, 5, 5, Function3D.complex));
+            if (figure == "Додэкаэдр")
+                currentFigures.Add(new Dodecahedron(150));
+            if (figure == "График")
+                currentFigures.Add(new Graph(graphData));
+            if (figure == "Плавающий горизонт")
+            {
+                if ((string)funComboBox.SelectedItem == "y = x + z (3D)")
+                    currentFigures.Add(new Graph3D(100, 100, 3, 1, Function3D.Sum));
+                else if ((string)funComboBox.SelectedItem == "y = 100*Sin(x/100)*Cos(z/100)(3D)")
+                    currentFigures.Add(new Graph3D(100, 100, 10, 1, Function3D.Sin));
+                else if ((string)funComboBox.SelectedItem == "y = 10*(x/100)*(z/100)(3D)")
+                    currentFigures.Add(new Graph3D(100, 100, 5, 5, Function3D.complex));
             }
 
 
@@ -168,90 +169,90 @@ namespace AffineTransforms_3D
             ReDraw();
         }
 
-       
+
 
         Transform parseTransform()
         {
-           return (Transform)Enum.Parse(typeof(Transform), transformComboBox.SelectedItem.ToString());
-        } 
+            return (Transform)Enum.Parse(typeof(Transform), transformComboBox.SelectedItem.ToString());
+        }
 
-       /// <summary>
-       /// применение афинного преобразования к currentFigure 
-       /// </summary>
-       /// <param name="sender"></param>
-       /// <param name="e"></param>
+        /// <summary>
+        /// применение афинного преобразования к currentFigure 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void transformButton_Click(object sender, EventArgs e)
         {
             if (currentFigures.Count == 0)
                 return;
             var transform = parseTransform();
-                switch (transform)
-                {
-                    case Transform.Rotate:
+            switch (transform)
+            {
+                case Transform.Rotate:
+                    {
+                        var degree = int.Parse(textBox1.Text);
+                        (double, double, double) axis = (0, 0, 0);
+                        switch (plane)
                         {
-                            var degree = int.Parse(textBox1.Text);
-                            (double, double, double) axis = (0, 0, 0);
-                            switch (plane)
-                            {
-                                case CoordinatePlane.XY:
-                                    axis = (0, 0, 1);
-                                    break;
-                                case CoordinatePlane.XZ:
-                                    axis = (0, 1, 0);
-                                    break;
-                                case CoordinatePlane.YZ:
-                                    axis = (1, 0, 0);
-                                    break;
+                            case CoordinatePlane.XY:
+                                axis = (0, 0, 1);
+                                break;
+                            case CoordinatePlane.XZ:
+                                axis = (0, 1, 0);
+                                break;
+                            case CoordinatePlane.YZ:
+                                axis = (1, 0, 0);
+                                break;
 
-                            }
-                            if (usingLine)
-                            {
-                                syncLine();
-                                var v1 = new Vector3D(point1.X, point1.Y, point1.Z);
-                                var v2 = new Vector3D(point2.X, point2.Y, point2.Z);
-                                var v = v2 - v1;
-                                currentFigures[0].Transform(
-                                  AffineTransforms.RotateTransform3D(point1,
-                                  degree, v.X, v.Y, v.Z));
-                             } 
-                            else
-                            {
-                                var point = figureCenter ? currentFigures[0].FigureCenter() : new Point3D(0, 0, 0);
-                                currentFigures[0].Transform(
-                                    AffineTransforms.RotateTransform3D(point,
-                                    degree, axis.Item1, axis.Item2, axis.Item3));
-                               
-                                    
-                        }                      
-                            break;
                         }
-                    case Transform.Transposition:
+                        if (usingLine)
                         {
-                            var x = double.Parse(textBox2.Text);
-                            var y = double.Parse(textBox3.Text);
-                            var z = double.Parse(textBox4.Text);
+                            syncLine();
+                            var v1 = new Vector3D(point1.X, point1.Y, point1.Z);
+                            var v2 = new Vector3D(point2.X, point2.Y, point2.Z);
+                            var v = v2 - v1;
                             currentFigures[0].Transform(
-                                AffineTransforms.TranslateTransform3D(x, y, z));
-                          
-                        break;
+                              AffineTransforms.RotateTransform3D(point1,
+                              degree, v.X, v.Y, v.Z));
                         }
-                    case Transform.Scale:
+                        else
                         {
-                            var x = double.Parse(textBox2.Text);
-                            var y = double.Parse(textBox3.Text);
-                            var z = double.Parse(textBox4.Text);
                             var point = figureCenter ? currentFigures[0].FigureCenter() : new Point3D(0, 0, 0);
-                            if (!figureCenter)  currentFigures[0].Transform(
-                                AffineTransforms.ScaleTransform3D(point,
-                                x, y, z));
-                            break;
+                            var trans = AffineTransforms.RotateTransform3D(point,
+                                degree, axis.Item1, axis.Item2, axis.Item3);
+                            currentFigures[0].Transform(trans);
+
+
                         }
-                    case Transform.Reflect:
-                        {
-                            currentFigures[0].Transform(
-                                AffineTransforms.ReflectionTransform(plane));
                         break;
-                        }             
+                    }
+                case Transform.Transposition:
+                    {
+                        var x = double.Parse(textBox2.Text);
+                        var y = double.Parse(textBox3.Text);
+                        var z = double.Parse(textBox4.Text);
+                        currentFigures[0].Transform(
+                            AffineTransforms.TranslateTransform3D(x, y, z));
+
+                        break;
+                    }
+                case Transform.Scale:
+                    {
+                        var x = double.Parse(textBox2.Text);
+                        var y = double.Parse(textBox3.Text);
+                        var z = double.Parse(textBox4.Text);
+                        var point = figureCenter ? currentFigures[0].FigureCenter() : new Point3D(0, 0, 0);
+                        if (!figureCenter) currentFigures[0].Transform(
+                           AffineTransforms.ScaleTransform3D(point,
+                           x, y, z));
+                        break;
+                    }
+                case Transform.Reflect:
+                    {
+                        currentFigures[0].Transform(
+                            AffineTransforms.ReflectionTransform(plane));
+                        break;
+                    }
             }
             ReDraw();
         }
@@ -282,16 +283,17 @@ namespace AffineTransforms_3D
 
             if (usingZBuffer)
             {
-                bmp= ZBuffer.zBuffer(pictureBox1.Width, pictureBox1.Height, figures);
+                bmp = ZBuffer.zBuffer(pictureBox1.Width, pictureBox1.Height, figures);
                 pictureBox1.Image = bmp;
             }
             else
             {
                 foreach (var cameraFig in figures)
-                    if ((string)figures_box.SelectedItem=="Плавающий горизонт")
+                {
+                    if ((string)figures_box.SelectedItem == "Плавающий горизонт")
                     {
-                        for(var i=0; i<cameraFig.faces.Count; i++)
-                            for (var j=0; j<cameraFig.faces[i].edges.Count;j++)
+                        for (var i = 0; i < cameraFig.faces.Count; i++)
+                            for (var j = 0; j < cameraFig.faces[i].edges.Count; j++)
                             {
                                 cameraFig.faces[i].edges[j].begin = new Point3D(Convert.ToInt32(cameraFig.faces[i].edges[j].begin.X), cameraFig.faces[i].edges[j].begin.Y, cameraFig.faces[i].edges[j].begin.Z);
                                 cameraFig.faces[i].edges[j].end = new Point3D(Convert.ToInt32(cameraFig.faces[i].edges[j].end.X), cameraFig.faces[i].edges[j].end.Y, cameraFig.faces[i].edges[j].end.Z);
@@ -300,11 +302,11 @@ namespace AffineTransforms_3D
                         var t = new List<Face>(cameraFig.Faces);
                         if (t[0].edges[0].begin.Z < t[1].edges[0].begin.Z)
                             t.Reverse();
-                        for (var i=0;i<t.Count;i++)
+                        for (var i = 0; i < t.Count; i++)
                         {
-                            for(var j =0;j<t[i].edges.Count-1;j++)
+                            for (var j = 0; j < t[i].edges.Count - 1; j++)
                             {
-                                if (visibles[i][j] && visibles[i][j+1])
+                                if (visibles[i][j] && visibles[i][j + 1])
                                     g.DrawLine(Pens.Black,
                                                 (int)(t[i].edges[j].begin.X + centerX), (int)(t[i].edges[j].begin.Y + centerY),
                                                 (int)(t[i].edges[j].end.X + centerX), (int)(t[i].edges[j].end.Y + centerY));
@@ -313,13 +315,13 @@ namespace AffineTransforms_3D
                     }
                     else if (bmp != null)
                     {
-                        var normVect = new Vector3D(int.Parse(guroX_box.Text), int.Parse(guroY_box.Text), int.Parse(guroZ_box.Text));
-                        bmp =texturing? Lighting.texturing(pictureBox1.Width, pictureBox1.Height, cameraFig, normVect, lightingCheckBox.Checked):
-                            Lighting.lighting(pictureBox1.Width, pictureBox1.Height, cameraFig, normVect);
+                       lightPoint = new Point3D(int.Parse(guroX_box.Text), int.Parse(guroY_box.Text), int.Parse(guroZ_box.Text));
+                        bmp = texturing ? Lighting.texturing(pictureBox1.Width, pictureBox1.Height, cameraFig, lightPoint, lightingCheckBox.Checked) :
+                            Lighting.lighting(pictureBox1.Width, pictureBox1.Height, cameraFig, lightPoint);
                         pictureBox1.Image = bmp;
-                        pictureBox1.Invalidate();
+                        //pictureBox1.Invalidate();
                     }
-                    if (RemoveEdges.Checked)
+                    else if (RemoveEdges.Checked)
                     {
                         foreach (var side in cameraFig.VisibleFaces(camera))
                             foreach (var edge in side.edges)
@@ -337,12 +339,12 @@ namespace AffineTransforms_3D
                                (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
                         }
                     }
-
                 }
-            }       
+            }
             pictureBox1.Invalidate();
         }
-
+        
+        
 
 
         private void proj_box_SelectedIndexChanged(object sender, EventArgs e)
@@ -632,10 +634,11 @@ namespace AffineTransforms_3D
 
         private void apply_guro_btn_Click(object sender, EventArgs e)
         {
-            var cameraFig = Transformator.Transform(currentFigures[0],
-                             AffineTransforms.CameraTransform3D(camera, selectedProjetion == Projection.Perspective));
-            var normVect = new Vector3D(int.Parse(guroX_box.Text), int.Parse(guroY_box.Text), int.Parse(guroZ_box.Text));
-            bmp = Lighting.lighting(pictureBox1.Width, pictureBox1.Height, cameraFig, normVect);
+            var trans = AffineTransforms.CameraTransform3D(camera, selectedProjetion == Projection.Perspective);
+            var cameraFig = Transformator.Transform(currentFigures[0],trans);
+            //var normVect = new Vector3D();
+            lightPoint = new Point3D(int.Parse(guroX_box.Text), int.Parse(guroY_box.Text), int.Parse(guroZ_box.Text));
+            bmp = Lighting.lighting(pictureBox1.Width, pictureBox1.Height, cameraFig, lightPoint);
             pictureBox1.Image = bmp;
             pictureBox1.Invalidate();
         }
@@ -650,8 +653,8 @@ namespace AffineTransforms_3D
             texturing = true;
             var cameraFig = Transformator.Transform(currentFigures[0],
                             AffineTransforms.CameraTransform3D(camera, selectedProjetion == Projection.Perspective));
-            var normVect = new Vector3D(int.Parse(guroX_box.Text), int.Parse(guroY_box.Text), int.Parse(guroZ_box.Text));
-            bmp = Lighting.texturing(pictureBox1.Width, pictureBox1.Height, cameraFig, normVect, lightingCheckBox.Checked);
+            lightPoint = new Point3D(int.Parse(guroX_box.Text), int.Parse(guroY_box.Text), int.Parse(guroZ_box.Text));
+            bmp = Lighting.texturing(pictureBox1.Width, pictureBox1.Height, cameraFig, lightPoint, lightingCheckBox.Checked);
             pictureBox1.Image = bmp;
             pictureBox1.Invalidate();
         }
