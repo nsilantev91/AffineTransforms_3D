@@ -151,11 +151,11 @@ namespace AffineTransforms_3D
                 if (figure == "Плавающий горизонт")
                 {
                     if ((string)funComboBox.SelectedItem == "y = x + z (3D)")
-                        currentFigures.Add(new Graph3D(100, 100, 3, 1, Function3D.Sum));
+                        currentFigures.Add(new Graph3D(20, 20, 5, 1, Function3D.Sum));
                     else if ((string)funComboBox.SelectedItem == "y = 100*Sin(x/100)*Cos(z/100)(3D)")
-                        currentFigures.Add(new Graph3D(100, 100, 10, 1, Function3D.Sin));
+                        currentFigures.Add(new Graph3D(20, 20, 5, 1, Function3D.veryComplex));
                     else if ((string)funComboBox.SelectedItem == "y = 10*(x/100)*(z/100)(3D)")
-                        currentFigures.Add(new Graph3D(100, 100, 5, 5, Function3D.complex));
+                        currentFigures.Add(new Graph3D(20, 20, 5, 1, Function3D.complex));
             }
 
 
@@ -288,10 +288,12 @@ namespace AffineTransforms_3D
             else
             {
                 foreach (var cameraFig in figures)
-                    if ((string)figures_box.SelectedItem=="Плавающий горизонт")
+                {
+                    if ((string)figures_box.SelectedItem == "Плавающий горизонт")
                     {
-                        for(var i=0; i<cameraFig.faces.Count; i++)
-                            for (var j=0; j<cameraFig.faces[i].edges.Count;j++)
+                        /*
+                        for (var i = 0; i < cameraFig.faces.Count; i++)
+                            for (var j = 0; j < cameraFig.faces[i].edges.Count; j++)
                             {
                                 cameraFig.faces[i].edges[j].begin = new Point3D(Convert.ToInt32(cameraFig.faces[i].edges[j].begin.X), cameraFig.faces[i].edges[j].begin.Y, cameraFig.faces[i].edges[j].begin.Z);
                                 cameraFig.faces[i].edges[j].end = new Point3D(Convert.ToInt32(cameraFig.faces[i].edges[j].end.X), cameraFig.faces[i].edges[j].end.Y, cameraFig.faces[i].edges[j].end.Z);
@@ -300,21 +302,27 @@ namespace AffineTransforms_3D
                         var t = new List<Face>(cameraFig.Faces);
                         if (t[0].edges[0].begin.Z < t[1].edges[0].begin.Z)
                             t.Reverse();
-                        for (var i=0;i<t.Count;i++)
+                        for (var i = 0; i < t.Count; i++)
                         {
-                            for(var j =0;j<t[i].edges.Count-1;j++)
+                            for (var j = 0; j < t[i].edges.Count - 1; j++)
                             {
-                                if (visibles[i][j] && visibles[i][j+1])
+                                if (visibles[i][j] && visibles[i][j + 1])
                                     g.DrawLine(Pens.Black,
                                                 (int)(t[i].edges[j].begin.X + centerX), (int)(t[i].edges[j].begin.Y + centerY),
                                                 (int)(t[i].edges[j].end.X + centerX), (int)(t[i].edges[j].end.Y + centerY));
                             }
                         }
+                        */
+                        var t = new List<Face>(cameraFig.Faces);
+                        if (t[0].edges[0].begin.Z < t[1].edges[0].begin.Z)
+                            t.Reverse();
+                        bmp = Function3D.DrawFloatingHorizon(pictureBox1.Width, pictureBox1.Height, t);
+                        pictureBox1.Image = bmp;
                     }
                     else if (bmp != null)
                     {
                         var normVect = new Vector3D(int.Parse(guroX_box.Text), int.Parse(guroY_box.Text), int.Parse(guroZ_box.Text));
-                        bmp =texturing? Lighting.texturing(pictureBox1.Width, pictureBox1.Height, cameraFig, normVect, lightingCheckBox.Checked):
+                        bmp = texturing ? Lighting.texturing(pictureBox1.Width, pictureBox1.Height, cameraFig, normVect, lightingCheckBox.Checked) :
                             Lighting.lighting(pictureBox1.Width, pictureBox1.Height, cameraFig, normVect);
                         pictureBox1.Image = bmp;
                         pictureBox1.Invalidate();
@@ -337,9 +345,8 @@ namespace AffineTransforms_3D
                                (int)(r.end.X + centerX), (int)(r.end.Y + centerY));
                         }
                     }
-
                 }
-            }       
+            }     
             pictureBox1.Invalidate();
         }
 
